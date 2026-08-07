@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chaufal Tech — Coming Soon</title>
+<meta name="description" content="Chaufal Tech — Building trust through technology. A new digital experience is on the way.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0D1B2A;
+    --navy:#1B263B;
+    --orange:#FF7A00;
+    --grey:#6B7280;
+    --mist:#F5F7FA;
+    --white:#FFFFFF;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Montserrat', sans-serif;
+    background:var(--navy-deep);
+    color:var(--white);
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  .page{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% 70%, rgba(255,122,0,0.06), transparent 60%),
+      linear-gradient(180deg, var(--navy-deep) 0%, #0A1420 100%);
+  }
+
+  canvas#mesh{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    opacity:0.55;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:28px 5vw 22px;
+    flex-wrap:wrap;
+    gap:16px;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .brand svg{ width:46px; height:46px; flex-shrink:0; }
+
+  .wordmark{ line-height:1; }
+
+  .wordmark .name{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:0.5px;
+    color:var(--white);
+  }
+  .wordmark .name span{ color:var(--orange); }
+
+  .wordmark .tagline{
+    font-family:'Montserrat',sans-serif;
+    font-size:8.5px;
+    letter-spacing:2.2px;
+    color:var(--grey);
+    text-transform:uppercase;
+    margin-top:2px;
+  }
+
+  nav{
+    display:flex;
+    align-items:center;
+    gap:34px;
+  }
+
+  nav a{
+    color:var(--white);
+    text-decoration:none;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    opacity:0.85;
+    transition:opacity .2s ease, color .2s ease;
+    position:relative;
+  }
+  nav a:hover{ opacity:1; color:var(--orange); }
+
+  .social-top{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+
+  .icon-btn{
+    width:32px;height:32px;
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--white);
+    text-decoration:none;
+    transition:all .2s ease;
+    flex-shrink:0;
+  }
+  .icon-btn:hover{
+    border-color:var(--orange);
+    background:var(--orange);
+    transform:translateY(-2px);
+  }
+  .icon-btn svg{ width:15px;height:15px; }
+
+  /* ---------- Hero ---------- */
+  main{
+    position:relative;
+    z-index:2;
+    flex:1;
+    display:flex;
+    align-items:center;
+    padding:64px 5vw;
+    gap:5vw;
+  }
+
+  .hero-left{
+    flex:1 1 420px;
+    max-width:560px;
+  }
+
+  .eyebrow{
+    color:var(--orange);
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    opacity:0;
+    animation:fadeUp .7s ease forwards;
+  }
+
+  h1{
+    font-family:'Poppins',sans-serif;
+    font-weight:800;
+    line-height:0.98;
+    font-size:clamp(48px, 7vw, 84px);
+    letter-spacing:-1px;
+  }
+  h1 .line{
+    display:block;
+    opacity:0;
+    animation:fadeUp .7s ease forwards;
+  }
+  h1 .line:first-child{ animation-delay:.08s; color:var(--white); }
+  h1 .line.accent{ animation-delay:.2s; color:var(--orange); }
+
+  .rule{
+    width:64px;
+    height:4px;
+    background:var(--orange);
+    margin:22px 0 22px;
+    opacity:0;
+    animation:fadeUp .7s ease forwards;
+    animation-delay:.32s;
+  }
+
+  .hero-copy{
+    color:#B9C2CE;
+    font-size:16px;
+    line-height:1.7;
+    max-width:420px;
+    margin-bottom:34px;
+    opacity:0;
+    animation:fadeUp .7s ease forwards;
+    animation-delay:.42s;
+  }
+
+  form.notify{
+    display:flex;
+    max-width:440px;
+    opacity:0;
+    animation:fadeUp .7s ease forwards;
+    animation-delay:.52s;
+  }
+  form.notify input{
+    flex:1;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-right:none;
+    border-radius:6px 0 0 6px;
+    padding:0 18px;
+    height:52px;
+    color:var(--white);
+    font-family:'Montserrat',sans-serif;
+    font-size:14px;
+    outline:none;
+    min-width:0;
+  }
+  form.notify input::placeholder{ color:#8290A0; }
+  form.notify input:focus{ border-color:var(--orange); }
+  form.notify button{
+    background:var(--orange);
+    border:none;
+    color:var(--white);
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:1.4px;
+    padding:0 26px;
+    border-radius:0 6px 6px 0;
+    cursor:pointer;
+    transition:background .2s ease, transform .2s ease;
+    white-space:nowrap;
+  }
+  form.notify button:hover{ background:#E56E00; }
+  form.notify button:focus-visible, form.notify input:focus-visible{
+    outline:2px solid var(--orange);
+    outline-offset:2px;
+  }
+
+  .form-msg{
+    margin-top:12px;
+    font-size:12.5px;
+    color:var(--orange);
+    min-height:16px;
+  }
+
+  /* divider */
+  .divider{
+    width:1px;
+    align-self:stretch;
+    background:linear-gradient(to bottom, transparent, rgba(255,255,255,0.18) 15%, rgba(255,255,255,0.18) 85%, transparent);
+    position:relative;
+    flex:0 0 1px;
+    display:none;
+  }
+  .divider::before{
+    content:'';
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:9px;height:9px;
+    background:var(--orange);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 0 5px rgba(255,122,0,0.15);
+  }
+
+  /* features */
+  .features{
+    flex:1 1 480px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:26px;
+  }
+
+  .feature{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:16px;
+    opacity:0;
+    animation:fadeUp .6s ease forwards;
+  }
+  .feature:nth-child(1){ animation-delay:.5s; }
+  .feature:nth-child(2){ animation-delay:.62s; }
+  .feature:nth-child(3){ animation-delay:.74s; }
+  .feature:nth-child(4){ animation-delay:.86s; }
+
+  .feature .ico{
+    width:56px;height:56px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--orange);
+  }
+  .feature .ico svg{ width:100%;height:100%; }
+
+  .feature .label{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    line-height:1.4;
+    color:var(--white);
+  }
+
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(16px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    position:relative;
+    z-index:2;
+  }
+
+  .stay-connected{
+    text-align:center;
+    padding:0 5vw 40px;
+  }
+  .stay-connected .sc-label{
+    color:var(--orange);
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:11px;
+    letter-spacing:2.4px;
+    text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .stay-connected .sc-icons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+  }
+
+  .copyright{
+    border-top:1px solid rgba(255,255,255,0.08);
+    background:rgba(0,0,0,0.2);
+    text-align:center;
+    padding:18px 20px;
+    font-size:12px;
+    color:var(--grey);
+    letter-spacing:0.3px;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (min-width:900px){
+    .divider{ display:block; }
+  }
+
+  @media (max-width:900px){
+    main{ flex-direction:column; align-items:flex-start; padding:48px 6vw 40px; }
+    .features{
+      grid-template-columns:repeat(2,1fr);
+      width:100%;
+      margin-top:44px;
+      gap:36px 20px;
+    }
+  }
+
+  @media (max-width:640px){
+    header{ padding:22px 6vw 18px; }
+    nav{ order:3; width:100%; justify-content:center; gap:22px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06); }
+    .social-top{ gap:10px; }
+    h1{ font-size:clamp(40px,13vw,58px); }
+    form.notify{ flex-direction:column; }
+    form.notify input{ border-right:1px solid rgba(255,255,255,0.18); border-radius:6px 6px 0 0; }
+    form.notify button{ border-radius:0 0 6px 6px; height:48px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow, h1 .line, .rule, .hero-copy, form.notify, .feature{
+      animation:none !important;
+      opacity:1 !important;
+      transform:none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <canvas id="mesh" aria-hidden="true"></canvas>
+
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 100 100" role="img" aria-label="Chaufal Tech logo">
+        <path d="M64,16 A34,34 0 1,0 64,84" fill="none" stroke="#F5F7FA" stroke-width="15" stroke-linecap="square"/>
+        <rect x="52" y="16" width="15" height="68" fill="#F5F7FA"/>
+        <rect x="52" y="16" width="34" height="15" fill="#F5F7FA"/>
+        <rect x="76" y="70" width="15" height="15" fill="#FF7A00"/>
+      </svg>
+      <div class="wordmark">
+        <div class="name">CHAUFAL <span>TECH</span></div>
+        <div class="tagline">Building trust through technology</div>
+      </div>
+    </div>
+
+    <nav aria-label="Primary">
+      <a href="#about">About Us</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="social-top">
+      <a class="icon-btn" href="#" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.83v1.98h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.62c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.54 1.72-2.54 3.49V23h-4V8.5z"/></svg>
+      </a>
+      <a class="icon-btn" href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a class="icon-btn" href="mailto:hello@chaufaltech.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero-left">
+      <p class="eyebrow">We Are</p>
+      <h1>
+        <span class="line">COMING</span>
+        <span class="line accent">SOON</span>
+      </h1>
+      <div class="rule"></div>
+      <p class="hero-copy">We're building something amazing! A new digital experience is on the way.</p>
+
+      <form class="notify" id="notifyForm">
+        <label for="email" class="visually-hidden" style="position:absolute;left:-9999px;">Email address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">NOTIFY ME</button>
+      </form>
+      <p class="form-msg" id="formMsg" role="status"></p>
+    </div>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2c2.5 2 4 5.5 4 9 0 2-1 4-1 4H9s-1-2-1-4c0-3.5 1.5-7 4-9z"/>
+            <circle cx="12" cy="9" r="1.6"/>
+            <path d="M8.5 15c-1.5 1-2 3-1.5 5 1.7-.3 3-1.3 3.8-2.6"/>
+            <path d="M15.5 15c1.5 1 2 3 1.5 5-1.7-.3-3-1.3-3.8-2.6"/>
+          </svg>
+        </div>
+        <div class="label">Innovative<br>Solutions</div>
+      </div>
+
+      <div class="feature">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>
+          </svg>
+        </div>
+        <div class="label">AI Automation<br>&amp; Integration</div>
+      </div>
+
+      <div class="feature">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="label">Reliable<br>&amp; Secure</div>
+      </div>
+
+      <div class="feature">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 20V10M9 20V4M15 20v-7M21 20V8"/>
+            <path d="M15 6l6-3 -1 4-4-1z" fill="currentColor" stroke="none" transform="translate(0,0)"/>
+          </svg>
+        </div>
+        <div class="label">Business<br>Growth</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="stay-connected">
+      <div class="sc-label">Stay Connected</div>
+      <div class="sc-icons">
+        <a class="icon-btn" href="#" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.83v1.98h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.62c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.54 1.72-2.54 3.49V23h-4V8.5z"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22H16.9l-5-6.5-5.7 6.5H2.9l8.1-9.3L1.9 2h6.6l4.5 6 5.9-6zM17.7 20h1.7L7.4 3.9H5.6L17.7 20z"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.05 11.05 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.27 5.67.42.36.78 1.07.78 2.16 0 1.56-.02 2.82-.02 3.2 0 .31.2.67.8.56A10.51 10.51 0 0023.5 12c0-6.27-5.23-11.5-11.5-11.5z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 Chaufal Tech. All Rights Reserved.</div>
+  </footer>
+</div>
+
+<script>
+  // Notify form (front-end only placeholder — wire to a real endpoint later)
+  const form = document.getElementById('notifyForm');
+  const msg = document.getElementById('formMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if(email){
+      msg.textContent = "Thanks — we'll let you know when we launch.";
+      form.reset();
+    }
+  });
+
+  // Ambient particle mesh (matches the flowing dot-grid backdrop in the brand design)
+  const canvas = document.getElementById('mesh');
+  const ctx = canvas.getContext('2d');
+  let w, h, points = [];
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+  }
+
+  function initPoints(){
+    points = [];
+    const cols = Math.floor(w / (55 * devicePixelRatio));
+    const rows = Math.floor(h / (55 * devicePixelRatio));
+    for(let i=0;i<cols;i++){
+      for(let j=0;j<rows;j++){
+        // bias density toward bottom-right, like the reference art
+        const bias = (i/cols) * (j/rows);
+        if(Math.random() < 0.35 + bias*0.5){
+          points.push({
+            x: (i/cols) * w + (Math.random()-0.5)*30,
+            y: (j/rows) * h + (Math.random()-0.5)*30,
+            baseY: (j/rows) * h,
+            phase: Math.random()*Math.PI*2
+          });
+        }
+      }
+    }
+  }
+
+  function draw(t){
+    ctx.clearRect(0,0,w,h);
+    for(const p of points){
+      const yOff = prefersReduced ? 0 : Math.sin(t*0.0006 + p.phase) * 6 * devicePixelRatio;
+      const dist = Math.hypot(p.x - w, p.y - h) / Math.hypot(w,h);
+      const alpha = Math.max(0, 0.55 - dist*0.5);
+      ctx.beginPath();
+      ctx.arc(p.x, p.baseY + yOff, 1.4*devicePixelRatio, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(90,140,190,${alpha})`;
+      ctx.fill();
+    }
+    if(!prefersReduced){
+      requestAnimationFrame(draw);
+    }
+  }
+
+  function start(){
+    resize();
+    initPoints();
+    draw(0);
+  }
+
+  window.addEventListener('resize', () => { resize(); initPoints(); if(prefersReduced) draw(0); });
+  start();
+</script>
+</body>
+</html>
