@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+  background: #ffffff;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Poppins', sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-orange;
+}
+
+.btn-primary {
+  @apply inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-semibold px-6 py-3.5 rounded-full transition-colors duration-200;
+}
+
+.btn-outline-dark {
+  @apply inline-flex items-center gap-2 border border-white/25 hover:border-white/60 text-white font-semibold px-6 py-3.5 rounded-full transition-colors duration-200;
+}
+
+.btn-outline-light {
+  @apply inline-flex items-center gap-2 border border-ink/15 hover:border-ink/40 text-ink font-semibold px-6 py-3.5 rounded-full transition-colors duration-200;
+}
+
+.section {
+  @apply max-w-7xl mx-auto px-6 lg:px-10;
+}
+
+/* Visible keyboard focus states */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #F2762E;
+  outline-offset: 3px;
+}
