@@ -5,16 +5,16 @@ export default {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#0B1229',
-          light: '#131B3A',
+          DEFAULT: '#0D1B2A',
+          light: '#1B263B',
           card: '#161F45',
         },
         orange: {
-          DEFAULT: '#F2762E',
+          DEFAULT: '#FF7A00',
           light: '#FF8A4C',
           dark: '#D85F1C',
         },
-        cream: '#FDEAE0',
+        cream: '#FSF7FA',
         ink: '#111827',
         muted: '#64748B',
       },

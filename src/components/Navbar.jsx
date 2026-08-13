@@ -16,9 +16,9 @@ function Logo() {
   return (
     <Link to="/" className="flex items-center shrink-0">
       <img
-        src="/logo/chaufaltech_primary_editable.svg"
+        src="/logo/logo-primary-dark-background.svg"
         alt="Chaufal Tech"
-        className="h-10 md:h-12 w-auto"
+        className="h-20 w-auto"
       />
     </Link>
   )
@@ -28,7 +28,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-navy/95 backdrop-blur border-b border-white/10">
+    <header className="sticky top-0 z-50 bg-navy backdrop-blur border-b border-white/10">
       <div className="section flex items-center justify-between h-20 lg:h-24">
         <Logo />
 

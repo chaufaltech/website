@@ -30,7 +30,7 @@ export default function Footer() {
       <div className="section py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
           <img
-            src="/logo/chaufaltech_primary_editable.svg"
+            src="/logo/logo-dark-background.svg"
             alt="Chaufal Tech"
             className="h-11 w-auto mb-4"
           />
