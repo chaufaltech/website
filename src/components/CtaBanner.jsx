@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Panel from './Panel.jsx'
 
 export default function CtaBanner({
   title = 'Ready to Solve Your Business Challenges?',
@@ -6,7 +7,10 @@ export default function CtaBanner({
 }) {
   return (
     <section className="section py-16">
-      <div className="bg-orange rounded-xl2 px-8 py-10 md:px-14 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      <Panel
+        color="text-navy/70"
+        className="bg-orange rounded-xl2 px-8 py-10 md:px-14 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6"
+      >
         <div className="flex items-center gap-5 text-center md:text-left">
           <div className="hidden sm:flex w-14 h-14 rounded-full bg-white/20 items-center justify-center shrink-0">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +29,7 @@ export default function CtaBanner({
         >
           Get in Touch <span aria-hidden>→</span>
         </Link>
-      </div>
+      </Panel>
     </section>
   )
 }

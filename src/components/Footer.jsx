@@ -53,7 +53,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-display font-semibold text-white mb-4">Quick Links</h4>
+          <h4 className="font-mono text-xs font-semibold tracking-widest uppercase text-white/70 mb-4">Quick Links</h4>
           <ul className="space-y-2.5 text-sm">
             {QUICK_LINKS.map((l) => (
               <li key={l.to}>
@@ -66,7 +66,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-display font-semibold text-white mb-4">Services</h4>
+          <h4 className="font-mono text-xs font-semibold tracking-widest uppercase text-white/70 mb-4">Services</h4>
           <ul className="space-y-2.5 text-sm">
             {SERVICES.map((s) => (
               <li key={s}>
@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-display font-semibold text-white mb-4">Contact Us</h4>
+          <h4 className="font-mono text-xs font-semibold tracking-widest uppercase text-white/70 mb-4">Contact Us</h4>
           <ul className="space-y-3 text-sm">
             {CONTACT_LINES.map((c) => (
               <li key={c.text} className="flex items-center gap-3">

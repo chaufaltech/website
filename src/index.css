@@ -8,12 +8,16 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
-  color: #111827;
-  background: #ffffff;
+  color: #12181F;
+  background: #FAF8F3;
 }
 
 h1, h2, h3, h4, .font-display {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sora', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -23,12 +27,40 @@ h1, h2, h3, h4, .font-display {
   }
 }
 
+/* Eyebrow: rendered as a schematic callout label — mono type, a leader
+   tick, tabular tracking. Encodes "this is an annotation", not decoration. */
 .eyebrow {
-  @apply inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-orange;
+  @apply inline-flex items-center gap-2 font-mono text-[11px] font-medium tracking-[0.18em] uppercase text-orange;
+}
+
+.eyebrow::before {
+  content: '';
+  @apply w-3 h-px bg-orange/70;
 }
 
 .btn-primary {
-  @apply inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-semibold px-6 py-3.5 rounded-full transition-colors duration-200;
+  @apply inline-flex items-center gap-2 text-white font-semibold px-6 py-3.5 rounded-full transition-all duration-150 ease-out;
+  background: linear-gradient(180deg, #FF8A4C 0%, #FF7A00 55%, #E8690A 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 3px 0 0 #B34F0F,
+    0 8px 16px -6px rgba(255, 122, 0, 0.5);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 4px 0 0 #B34F0F,
+    0 12px 20px -6px rgba(255, 122, 0, 0.55);
+}
+
+.btn-primary:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 1px 0 0 #B34F0F,
+    0 4px 10px -6px rgba(255, 122, 0, 0.4);
 }
 
 .btn-outline-dark {
@@ -43,11 +75,65 @@ h1, h2, h3, h4, .font-display {
   @apply max-w-7xl mx-auto px-6 lg:px-10;
 }
 
+/* Blueprint grid backdrop, used sparingly behind hero / dark sections */
+.bg-blueprint {
+  background-image:
+    linear-gradient(rgba(255, 122, 0, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 122, 0, 0.09) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Panel: a corner-bracketed frame — the page's signature device.
+   Four short L-shaped ticks mark the corners like a schematic callout
+   or a drafting crop-mark, instead of a generic shadowed card. */
+.panel {
+  @apply relative;
+}
+
+.panel::before,
+.panel::after,
+.panel .panel-tick-tr,
+.panel .panel-tick-bl {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.panel::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+}
+
+.panel::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+
+.panel .panel-tick-tr {
+  top: -1px;
+  right: -1px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+
+.panel .panel-tick-bl {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+}
+
 /* Visible keyboard focus states */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #F2762E;
+  outline: 2px solid #FF7A00;
   outline-offset: 3px;
 }

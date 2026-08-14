@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Icon from './Icon.jsx'
+import Panel from './Panel.jsx'
 
 export default function TestimonialCarousel({ testimonials, perPage = 3 }) {
   const pageCount = Math.max(1, testimonials.length - perPage + 1)
@@ -20,8 +21,9 @@ export default function TestimonialCarousel({ testimonials, perPage = 3 }) {
     <div>
       <div className="grid md:grid-cols-3 gap-6">
         {visible.map((t, i) => (
-          <div
+          <Panel
             key={`${t.name}-${i}`}
+            color="text-orange/40"
             className="border border-orange/30 rounded-xl2 p-7 bg-white/[0.02]"
           >
             <div className="flex items-start justify-between mb-4">
@@ -44,7 +46,7 @@ export default function TestimonialCarousel({ testimonials, perPage = 3 }) {
                 <p className="text-xs text-white/45">{t.role}</p>
               </div>
             </div>
-          </div>
+          </Panel>
         ))}
       </div>
 
