@@ -27,10 +27,10 @@ h1, h2, h3, h4, .font-display {
   }
 }
 
-/* Eyebrow: rendered as a schematic callout label — mono type, a leader
-   tick, tabular tracking. Encodes "this is an annotation", not decoration. */
+/* Eyebrow: schematic callout label — a leader tick + tracked uppercase
+   type. Encodes "this is an annotation", not decoration. */
 .eyebrow {
-  @apply inline-flex items-center gap-2 font-mono text-[11px] font-medium tracking-[0.18em] uppercase text-orange;
+  @apply inline-flex items-center gap-2 text-[15px] font-medium tracking-[0.18em] uppercase text-orange;
 }
 
 .eyebrow::before {
@@ -128,6 +128,16 @@ h1, h2, h3, h4, .font-display {
   border-bottom: 2px solid currentColor;
   border-left: 2px solid currentColor;
 }
+
+.animate-float-a { animation: floatA 7s ease-in-out infinite; }
+.animate-float-b { animation: floatB 8.5s ease-in-out infinite; animation-delay: 0.8s; }
+.animate-float-c { animation: floatC 6.5s ease-in-out infinite; animation-delay: 1.6s; }
+.animate-float-d { animation: floatD 9s ease-in-out infinite; animation-delay: 0.4s; }
+
+@keyframes floatA { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(5px, -12px); } }
+@keyframes floatB { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-7px, 9px); } }
+@keyframes floatC { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(4px, 11px); } }
+@keyframes floatD { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-5px, -10px); } }
 
 /* Visible keyboard focus states */
 a:focus-visible,

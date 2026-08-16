@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
 import CtaBanner from '../components/CtaBanner.jsx'
 import Panel from '../components/Panel.jsx'
-import BlueprintHero from '../components/BlueprintHero.jsx'
+import HeroBadges from '../components/HeroBadges.jsx'
 import ProcessTrail from '../components/ProcessTrail.jsx'
 import TestimonialCarousel from '../components/TestimonialCarousel.jsx'
 import {
@@ -11,18 +11,18 @@ import {
   STATS,
   TESTIMONIALS,
   PROJECTS,
-  TRUSTED_LOGOS,
 } from '../data/content.js'
 
 const STAT_ICONS = ['smile', 'users', 'target', 'check']
-const AVATAR_INITIALS = ['R', 'N', 'A']
 
 export default function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="bg-navy text-white overflow-hidden relative">
-        <div className="absolute inset-0 bg-blueprint [mask-image:linear-gradient(to_bottom,black,transparent)]" aria-hidden />
+      <section
+        className="bg-navy text-white overflow-hidden relative bg-[url('/images/home-hero-image.png')] bg-cover bg-right lg:bg-center bg-no-repeat"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/10 lg:to-navy/5" aria-hidden />
         <div className="section pt-36 pb-16 lg:pt-48 lg:pb-24 grid lg:grid-cols-2 gap-16 items-center relative">
           <div>
             <span className="eyebrow">Welcome to Chaufal Tech</span>
@@ -43,45 +43,24 @@ export default function Home() {
                 </span>
               </Link>
               <Link to="/services" className="btn-outline-dark">
-                Explore Our Services
+                Explore Services
               </Link>
             </div>
 
-            <div className="flex items-center gap-4 mt-10">
-              <div className="flex -space-x-3" aria-hidden>
-                {AVATAR_INITIALS.map((letter, i) => (
-                  <div
-                    key={i}
-                    className="w-11 h-11 rounded-full border-2 border-navy bg-orange/25 text-orange flex items-center justify-center text-sm font-semibold"
-                  >
-                    {letter}
-                  </div>
-                ))}
+            <div className="mt-10 inline-flex items-center gap-4 border border-white/15 rounded-2xl px-5 py-4">
+              <div className="w-14 h-14 rounded-full border border-orange/40 bg-orange/10 text-orange flex items-center justify-center shrink-0">
+                <Icon name="chart" className="w-6 h-6" />
               </div>
-              <p className="text-sm text-white/60 leading-snug">
-                Trusted by Businesses <br className="hidden sm:block" /> to deliver real results
-              </p>
+              <div>
+                <p className="font-display font-bold text-white">
+                  <span className="text-orange text-xl">50+</span> Projects Delivered
+                </p>
+                <p className="text-sm text-white/50 mt-1">Websites • Automation • Digital Solutions</p>
+              </div>
             </div>
           </div>
 
-          <BlueprintHero />
-        </div>
-      </section>
-
-      {/* TRUSTED BY STRIP */}
-      <section className="border-b border-black/5">
-        <div className="section py-10 flex flex-col md:flex-row items-center gap-6 md:gap-12">
-          <p className="font-display font-semibold text-ink shrink-0">
-            Trusted by Businesses <br className="hidden md:block" /> Like Yours
-          </p>
-          <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-            {TRUSTED_LOGOS.map((logo, i) => (
-              <div key={i} className="flex items-center gap-2 text-muted opacity-70">
-                <Icon name={logo.icon} className="w-4 h-4" />
-                <span className="text-sm font-medium">{logo.label}</span>
-              </div>
-            ))}
-          </div>
+          <HeroBadges />
         </div>
       </section>
 
