@@ -71,6 +71,10 @@ export default function Contact() {
     }
   }
 
+  function closeModal() {
+    setStatus('idle')
+  }
+
   return (
     <>
       {/* HERO */}
@@ -193,11 +197,6 @@ export default function Contact() {
                   )}
                 </button>
 
-                {status === 'sent' && (
-                  <p className="text-sm text-green-600 mt-3">
-                    Thanks — we&apos;ve got your message and will be in touch soon.
-                  </p>
-                )}
                 {status === 'error' && (
                   <p className="text-sm text-red-600 mt-3">{errorMessage}</p>
                 )}
@@ -236,6 +235,34 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
+      {status === 'sent' && (
+        <div
+          className="fixed inset-0 z-[100] bg-navy/60 backdrop-blur-sm flex items-center justify-center p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="success-modal-title"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-8 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-14 h-14 rounded-full bg-orange/10 text-orange flex items-center justify-center mx-auto">
+              <Icon name="check" className="w-6 h-6" strokeWidth={3} />
+            </div>
+            <h3 id="success-modal-title" className="font-display font-bold text-xl text-ink mt-5">
+              Message sent!
+            </h3>
+            <p className="text-sm text-muted mt-2 leading-relaxed">
+              Thanks — we&apos;ve got your message and will be in touch soon.
+            </p>
+            <button type="button" onClick={closeModal} className="btn-primary w-full justify-center mt-6">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   )
 }
