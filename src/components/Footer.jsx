@@ -175,8 +175,8 @@ export default function Footer() {
         <div className="section py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
           <span>© {new Date().getFullYear()} Chaufal Tech. All rights reserved.</span>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-orange transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-orange transition-colors">Terms of Service</a>
+            <Link to="/privacy-policy" className="hover:text-orange transition-colors">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="hover:text-orange transition-colors">Terms of Service</Link>
             <span>Building Trust Through Technology</span>
           </div>
         </div>
