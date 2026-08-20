@@ -8,15 +8,16 @@ export const TRUSTED_LOGOS = [
 
 export const SERVICES = [
   {
-    slug: 'websites-web-applications',
-    title: 'Websites & Web Applications',
-    icon: 'globe',
+    slug: 'web-design-development',
+    title: 'Web Design & Development',
+    icon: 'browser',
+    image: '/images/web-development-image-service-card.png',
     summary:
-      'We build fast, responsive and accessible websites and custom web applications tailored to your business goals.',
+      'Beautiful, fast, and responsive websites built to convert and deliver exceptional user experiences.',
     details: [
       'Marketing & corporate websites',
-      'Custom web applications',
       'E-commerce platforms',
+      'UI/UX design',
       'Performance & SEO optimization',
     ],
   },
@@ -24,8 +25,8 @@ export const SERVICES = [
     slug: 'automation-integrations',
     title: 'Automation & Integrations',
     icon: 'gear',
-    summary:
-      'We connect your tools and automate repetitive workflows, integrating the systems your team already relies on.',
+    image: '/images/automation-integration-image-service-card.png',
+    summary: 'Automate repetitive tasks and connect your tools to streamline workflows and save valuable time.',
     details: [
       'Workflow & process automation',
       'Third-party API integrations',
@@ -36,9 +37,9 @@ export const SERVICES = [
   {
     slug: 'digital-modernization',
     title: 'Digital Modernization',
-    icon: 'cloud',
-    summary:
-      'We modernize legacy systems and migrate infrastructure for better performance, security, and user experience.',
+    icon: 'database',
+    image: '/images/digital-modernisation-image-service-card.png',
+    summary: 'Modernize legacy systems and processes to improve efficiency, security, and scalability.',
     details: [
       'Legacy system upgrades',
       'Cloud migration',
@@ -50,13 +51,39 @@ export const SERVICES = [
     slug: 'technology-consulting',
     title: 'Technology Consulting',
     icon: 'chart',
-    summary:
-      'We help you plan, budget, and guide the right technology roadmap for long-term business outcomes.',
+    image: '/images/technology-consultant-uimage-service-card.png',
+    summary: 'Get expert guidance to make the right technology decisions and build a future-ready strategy.',
     details: [
       'Technology roadmapping',
       'Vendor & tool evaluation',
       'Digital transformation strategy',
       'Ongoing advisory',
+    ],
+  },
+  {
+    slug: 'custom-web-applications',
+    title: 'Custom Web Applications',
+    icon: 'smartphone',
+    image: '/images/custom-application-image-service-card.png',
+    summary: 'Powerful web applications tailored to your business needs and built for performance.',
+    details: [
+      'Custom web & internal apps',
+      'Dashboards & admin panels',
+      'API-driven architecture',
+      'Scalable, secure builds',
+    ],
+  },
+  {
+    slug: 'maintenance-support',
+    title: 'Maintenance & Support',
+    icon: 'cloud',
+    image: '/images/maintenance-support-image-service-card.png',
+    summary: 'Reliable support and maintenance to keep your digital systems secure, updated, and running smoothly.',
+    details: [
+      'Ongoing monitoring',
+      'Security patches & updates',
+      'Bug fixes & troubleshooting',
+      'Priority support channel',
     ],
   },
 ]

@@ -72,26 +72,66 @@ export default function Home() {
             Digital Solutions That Drive Growth
           </h2>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
-          {SERVICES.map((s, i) => (
-            <Panel
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-14">
+          {SERVICES.map((s) => (
+            <div
               key={s.slug}
-              color="text-orange/40"
-              className="border border-black/8 rounded-xl2 p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+              className="bg-white border border-black/5 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden"
             >
-              <span className="absolute top-4 right-5 font-mono text-[10px] text-muted/60 tracking-widest">
-                {String(i + 1).padStart(2, '0')}/{String(SERVICES.length).padStart(2, '0')}
-              </span>
-              <div className="w-12 h-12 rounded-xl bg-cream text-orange flex items-center justify-center mb-5">
-                <Icon name={s.icon} />
+              <div className="relative aspect-[16/10] bg-cream">
+                <img src={s.image} alt="" className="w-full h-full object-cover" />
+                <div className="absolute -bottom-5 left-6 w-12 h-12 rounded-xl bg-navy text-orange flex items-center justify-center shadow-md">
+                  <Icon name={s.icon} className="w-5 h-5" />
+                </div>
               </div>
-              <h3 className="font-display font-semibold text-lg text-ink">{s.title}</h3>
-              <p className="text-sm text-muted mt-3 leading-relaxed">{s.summary}</p>
-              <Link to="/services" className="inline-flex items-center gap-1.5 text-orange text-sm font-semibold mt-5">
-                Learn more <span aria-hidden>→</span>
-              </Link>
-            </Panel>
+              <div className="p-8 pt-9">
+                <h3 className="font-display font-bold text-lg text-ink">{s.title}</h3>
+                <span className="block w-8 h-0.5 bg-orange rounded-full mt-2 mb-4" />
+                <p className="text-sm text-muted leading-relaxed">{s.summary}</p>
+                <Link to="/services" className="inline-flex items-center gap-1.5 text-orange text-sm font-semibold mt-5">
+                  Learn more <span aria-hidden>→</span>
+                </Link>
+              </div>
+            </div>
           ))}
+        </div>
+
+        {/* TRUST STRIP */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 mt-16">
+          {[
+            { icon: 'rocket', title: 'Business-Focused', description: 'We build solutions that solve real business challenges.' },
+            { icon: 'shield', title: 'Reliable & Secure', description: 'Security, performance, and reliability are built into everything we do.' },
+            { icon: 'users', title: 'Transparent Process', description: 'Clear communication, regular updates, and no surprises.' },
+            { icon: 'target', title: 'Results That Matter', description: 'We focus on measurable results that drive your business forward.' },
+          ].map((f) => (
+            <div key={f.title} className="flex items-start gap-4">
+              <div className="w-[46px] h-[46px] rounded-full bg-navy text-orange flex items-center justify-center shrink-0">
+                <Icon name={f.icon} className="w-[19px] h-[19px]" />
+              </div>
+              <div>
+                <h4 className="font-display font-semibold text-ink text-sm">{f.title}</h4>
+                <p className="text-sm text-muted mt-1 leading-relaxed">{f.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* IN-SECTION CTA */}
+        <div className="bg-navy rounded-2xl mt-16 px-8 py-10 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative">
+          <div className="absolute inset-0 bg-blueprint opacity-40 [mask-image:radial-gradient(circle_at_left,black,transparent_70%)]" aria-hidden />
+          <div className="relative text-center md:text-left">
+            <h3 className="font-display font-bold text-white text-2xl md:text-3xl">
+              Let&apos;s build the right solution <br className="hidden md:block" />
+              <span className="text-orange">for your business.</span>
+            </h3>
+          </div>
+          <p className="relative text-white/60 max-w-xs text-center md:text-left">
+            Share your project with us and let&apos;s turn your ideas into real results.
+          </p>
+          <Link to="/contact" className="btn-primary relative shrink-0">
+            Start Your Project <span aria-hidden>→</span>
+          </Link>
         </div>
       </section>
 

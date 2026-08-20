@@ -223,8 +223,8 @@ export default function Contact() {
           <div className="bg-black/[0.03] rounded-2xl grid grid-cols-2 md:grid-cols-4 divide-y sm:divide-y-0 divide-x-0 md:divide-x divide-black/10">
             {TRUST_FEATURES.map((f) => (
               <div key={f.title} className="flex items-center gap-3 px-6 py-6">
-                <div className="w-10 h-10 rounded-full bg-orange/10 text-orange flex items-center justify-center shrink-0">
-                  <Icon name={f.icon} className="w-[18px] h-[18px]" />
+                <div className="w-[46px] h-[46px] rounded-full bg-navy text-orange flex items-center justify-center shrink-0">
+                  <Icon name={f.icon} className="w-[19px] h-[19px]" />
                 </div>
                 <div>
                   <p className="font-display font-semibold text-ink text-sm">{f.title}</p>

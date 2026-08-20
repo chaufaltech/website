@@ -88,6 +88,20 @@ const PATHS = {
       <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
     </>
   ),
+  browser: (
+    <>
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="M2 8h20" />
+      <path d="M6 6h.01" />
+    </>
+  ),
+  smartphone: (
+    <>
+      <rect x="6" y="2" width="12" height="20" rx="2" />
+      <path d="M9.5 15.5l2 2 4-4" strokeWidth="1.6" />
+      <path d="M11 5.5h2" />
+    </>
+  ),
 }
 
 export default function Icon({ name, className = 'w-6 h-6', strokeWidth = 1.8 }) {
