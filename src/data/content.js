@@ -148,47 +148,37 @@ export const STATS = [
   },
 ]
 
-export const CORE_VALUES = [
-  {
-    title: 'Customer First',
-    description: "We measure our success by our clients' success.",
-  },
-  {
-    title: 'Quality Without Compromise',
-    description: "Deliver solutions we're proud to stand behind.",
-  },
-  {
-    title: 'Innovation',
-    description: 'Use modern technologies, automation, and AI to solve real business problems.',
-  },
-  {
-    title: 'Integrity',
-    description: 'Be transparent, honest, and accountable in every interaction.',
-  },
-  {
-    title: 'Continuous Learning',
-    description: 'Technology evolves rapidly, and so do we.',
-  },
-  {
-    title: 'Ownership',
-    description: 'Take responsibility from idea to delivery.',
-  },
-  {
-    title: 'Fair Pricing Policy',
-    description:
-      'Every proposal clearly explains the business value delivered. Pricing reflects expertise, quality, and outcomes — not just hours spent.',
-  },
+export const ABOUT_CAPABILITIES = [
+  { icon: 'browser', title: 'Build', description: 'Custom solutions that fit your business.' },
+  { icon: 'gear', title: 'Automate', description: 'Streamline processes and save valuable time.' },
+  { icon: 'upload', title: 'Modernize', description: 'Upgrade systems for performance, security and scale.' },
+  { icon: 'chart', title: 'Grow', description: 'Use technology to drive better outcomes.' },
 ]
 
-export const PRINCIPLES = [
-  'Listen more than you speak.',
-  'Understand the business before suggesting technology.',
-  "Never recommend services the client doesn't need.",
-  'Be transparent about scope, pricing, and timelines.',
-  'Build long-term relationships, not one-time transactions.',
-  'Follow up professionally without being pushy.',
-  'Under promise and overdeliver.',
-  'Every interaction should build trust.',
+export const ABOUT_PRINCIPLES = [
+  { icon: 'users', title: 'Business Before Technology', description: 'We start with the problem, not the tool.' },
+  { icon: 'bulb', title: 'Keep It Practical', description: 'Solutions should be understandable, maintainable and useful.' },
+  { icon: 'shield', title: 'Build for the Long Term', description: "We think beyond launch day and build for what's next." },
+  { icon: 'message', title: 'Trust Through Transparency', description: 'Clear communication, realistic expectations and no unnecessary complexity.' },
+]
+
+export const ABOUT_APPROACH = [
+  { icon: 'users', title: 'Understand the Business', description: "Before recommending technology, we listen, analyze and understand what you're trying to achieve." },
+  { icon: 'browser', title: 'Build the Right Solution', description: 'We choose the right technology and design solutions that solve real problems.' },
+  { icon: 'shield-check', title: 'Stay for the Journey', description: 'We support, maintain and improve solutions so your business can continue to grow.' },
+]
+
+export const ABOUT_STATS = [
+  { icon: 'briefcase', value: '50+', label: 'Projects Delivered', description: 'Successful projects delivered across diverse industries.' },
+  { icon: 'users', value: '9+', label: 'Years of Experience', description: 'Years of hands-on experience in delivering digital solutions.' },
+  { icon: 'globe', value: 'Worldwide', label: 'Client Focus', description: 'We work with clients across countries and time zones.' },
+  { icon: 'browser', value: 'Multiple', label: 'Technology Disciplines', description: 'Expertise across development, automation, integration and modernization.' },
+]
+
+export const ABOUT_WHO_WE_WORK_WITH = [
+  { icon: 'building', title: 'Growing Businesses', description: 'that need a stronger digital presence or custom systems to scale.' },
+  { icon: 'gear', title: 'Teams With Manual Processes', description: 'that want to automate repetitive work and connect their tools.' },
+  { icon: 'cloud', title: 'Businesses Modernizing Technology', description: 'that need to improve legacy systems, infrastructure or digital operations.' },
 ]
 
 export const TESTIMONIALS = [

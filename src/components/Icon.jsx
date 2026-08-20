@@ -139,6 +139,22 @@ const PATHS = {
       <path d="M12 7v5l3.5 2" />
     </>
   ),
+  play: <path d="M7 4l13 8-13 8V4z" />,
+  upload: (
+    <>
+      <path d="M12 3v12" />
+      <path d="M7 8l5-5 5 5" />
+      <path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+    </>
+  ),
+  building: (
+    <>
+      <rect x="4" y="3" width="10" height="18" rx="1" />
+      <rect x="14" y="9" width="6" height="12" rx="1" />
+      <path d="M7 7h1M7 11h1M7 15h1M10.5 7h1M10.5 11h1M10.5 15h1" />
+      <path d="M17 13h.01M17 17h.01" />
+    </>
+  ),
 }
 
 export default function Icon({ name, className = 'w-6 h-6', strokeWidth = 1.8 }) {
