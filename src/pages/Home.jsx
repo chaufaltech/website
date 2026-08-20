@@ -1,19 +1,9 @@
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
-import CtaBanner from '../components/CtaBanner.jsx'
-import Panel from '../components/Panel.jsx'
+import ClosingCta from '../components/ClosingCta.jsx'
 import HeroBadges from '../components/HeroBadges.jsx'
 import ProcessTrail from '../components/ProcessTrail.jsx'
-import TestimonialCarousel from '../components/TestimonialCarousel.jsx'
-import {
-  SERVICES,
-  PROCESS_STEPS,
-  STATS,
-  TESTIMONIALS,
-  PROJECTS,
-} from '../data/content.js'
-
-const STAT_ICONS = ['smile', 'users', 'target', 'check']
+import { SERVICES, PROCESS_STEPS, STATS } from '../data/content.js'
 
 export default function Home() {
   return (
@@ -159,82 +149,55 @@ export default function Home() {
             At Chaufal Tech, we don&apos;t just deliver projects. We build relationships,
             create value, and earn long-term partnerships.
           </p>
-          <ul className="mt-6 space-y-3">
+          <ul className="mt-8 space-y-6">
             {[
-              '9+ Years of Industry Experience',
-              'Client-Focused & Result Driven',
-              'Quality Never Compromised',
-              'Transparent Communication',
-              'On Time Delivery, Every Time',
-            ].map((item) => (
-              <li key={item} className="flex items-center gap-3 text-sm text-ink/80">
-                <span className="w-5 h-5 rounded-full bg-orange/15 text-orange flex items-center justify-center shrink-0">
-                  <Icon name="check" className="w-3 h-3" strokeWidth={3} />
-                </span>
-                {item}
+              { icon: 'target', title: 'Business First', description: 'Solutions aligned with real business goals and measurable outcomes.' },
+              { icon: 'shield', title: 'Quality Without Compromise', description: 'Secure, reliable, and scalable technology built with best practices.' },
+              { icon: 'message', title: 'Clear Communication', description: 'Transparent updates, honest feedback, and no surprises—every step of the way.' },
+              { icon: 'handshake', title: 'Long-Term Partnership', description: 'We stay with you beyond delivery to support growth and long-term success.' },
+            ].map((item, i, arr) => (
+              <li
+                key={item.title}
+                className={`flex items-start gap-4 ${i < arr.length - 1 ? 'pb-6 border-b border-black/8' : ''}`}
+              >
+                <div className="w-12 h-12 rounded-full bg-navy text-orange flex items-center justify-center shrink-0">
+                  <Icon name={item.icon} className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-display font-bold text-ink">{item.title}</h3>
+                  <p className="text-sm text-muted mt-1 leading-relaxed">{item.description}</p>
+                </div>
               </li>
             ))}
           </ul>
         </div>
-        <div className="grid grid-cols-2 gap-5">
-          {STATS.map((stat, i) => (
-            <Panel key={stat.label} color="text-orange/30" className="border border-black/8 rounded-xl2 p-6">
-              <div className="w-11 h-11 rounded-full bg-cream text-orange flex items-center justify-center mb-4">
-                <Icon name={STAT_ICONS[i]} className="w-5 h-5" />
+        <div className="relative border border-black/8 rounded-3xl p-8 md:p-10">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-10">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="w-16 h-16 rounded-full bg-orange/10 text-orange flex items-center justify-center mx-auto">
+                  <Icon name={stat.icon} className="w-7 h-7" />
+                </div>
+                <p className="font-display font-bold text-5xl text-ink tracking-tight mt-4">{stat.value}</p>
+                <span className="block w-8 h-0.5 bg-orange rounded-full mx-auto mt-3 mb-3" />
+                <h4 className="font-display font-bold text-ink">{stat.label}</h4>
+                <p className="text-sm text-muted mt-1 leading-relaxed">{stat.description}</p>
               </div>
-              <p className="font-mono font-semibold text-3xl text-ink tracking-tight">{stat.value}</p>
-              <p className="text-sm text-muted mt-1">{stat.label}</p>
-            </Panel>
-          ))}
-        </div>
-      </section>
-
-      {/* WORK PREVIEW */}
-      <section className="bg-cream/40 py-20">
-        <div className="section flex items-end justify-between flex-wrap gap-4 mb-14">
-          <div>
-            <span className="eyebrow">Our Work</span>
-            <h2 className="font-display font-bold text-3xl md:text-4xl mt-3 text-ink">
-              Solutions That Speak for Themselves
-            </h2>
+            ))}
           </div>
-          <Link to="/work" className="btn-outline-light text-sm bg-white">
-            View All Projects <span aria-hidden>→</span>
-          </Link>
-        </div>
-        <div className="section grid md:grid-cols-3 gap-8">
-          {PROJECTS.map((p) => (
-            <Link to="/work" key={p.title} className="group block">
-              <div className="aspect-[4/3] rounded-xl2 overflow-hidden bg-gradient-to-br from-navy to-navy-light flex items-center justify-center text-white/20 font-display font-bold text-4xl shadow-md group-hover:from-orange group-hover:to-orange-light transition-colors duration-300">
-                {p.title.split(' ')[0][0]}
-              </div>
-              <Panel
-                as="div"
-                color="text-orange/50"
-                className="bg-white rounded-xl2 shadow-lg px-5 py-4 -mt-8 mx-4 relative"
-              >
-                <p className="text-xs text-orange font-mono font-semibold tracking-wide uppercase">{p.category}</p>
-                <h3 className="font-display font-semibold text-ink mt-1 text-sm">{p.title}</h3>
-              </Panel>
-            </Link>
-          ))}
+
+          {/* divider cross */}
+          <div className="hidden sm:block absolute top-8 bottom-8 left-1/2 -translate-x-1/2 w-px bg-black/10" aria-hidden />
+          <div className="hidden sm:block absolute left-8 right-8 top-1/2 -translate-y-1/2 h-px bg-black/10" aria-hidden />
+
+          {/* logo badge at the intersection */}
+          <div className="hidden sm:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white border border-black/10 shadow-md items-center justify-center">
+            <img src="/logo/logo-icon.svg" alt="" className="w-9 h-9" />
+          </div>
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="bg-navy text-white py-20">
-        <div className="section text-center">
-          <span className="eyebrow justify-center">What Our Clients Say</span>
-          <h2 className="font-display font-bold text-3xl md:text-4xl mt-3">
-            Trusted by Clients. Proven by Results.
-          </h2>
-        </div>
-        <div className="section mt-14">
-          <TestimonialCarousel testimonials={TESTIMONIALS} />
-        </div>
-      </section>
-
-      <CtaBanner />
+      <ClosingCta />
     </>
   )
 }

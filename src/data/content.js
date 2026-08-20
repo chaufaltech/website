@@ -122,10 +122,30 @@ export const PROCESS_STEPS = [
 ]
 
 export const STATS = [
-  { label: 'Projects Delivered', value: '50+' },
-  { label: 'Happy Clients', value: '30+' },
-  { label: 'Years of Experience', value: '9+' },
-  { label: 'Client Satisfaction', value: '100%' },
+  {
+    label: 'Projects Delivered',
+    value: '50+',
+    icon: 'briefcase',
+    description: 'Successful projects delivered across diverse industries.',
+  },
+  {
+    label: 'Clients Served',
+    value: '30+',
+    icon: 'users',
+    description: 'Trusted by startups, SMEs and enterprises worldwide.',
+  },
+  {
+    label: 'Years of Experience',
+    value: '9+',
+    icon: 'award',
+    description: 'Years of proven experience in delivering digital solutions.',
+  },
+  {
+    label: 'Commitment to Quality',
+    value: '100%',
+    icon: 'shield-check',
+    description: 'We are committed to delivering quality that exceeds expectations.',
+  },
 ]
 
 export const CORE_VALUES = [
