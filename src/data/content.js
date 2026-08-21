@@ -149,10 +149,10 @@ export const STATS = [
 ]
 
 export const ABOUT_CAPABILITIES = [
-  { icon: 'browser', title: 'Build', description: 'Custom solutions that fit your business.' },
-  { icon: 'gear', title: 'Automate', description: 'Streamline processes and save valuable time.' },
-  { icon: 'upload', title: 'Modernize', description: 'Upgrade systems for performance, security and scale.' },
-  { icon: 'chart', title: 'Grow', description: 'Use technology to drive better outcomes.' },
+  { icon: 'browser', title: 'Build', description: 'Websites, applications and digital tools.' },
+  { icon: 'gear', title: 'Automate', description: 'Reduce repetitive work and connect systems.' },
+  { icon: 'cloud-upload', title: 'Modernize', description: 'Improve outdated technology and processes.' },
+  { icon: 'chart', title: 'Grow', description: 'Use technology to support better business outcomes.' },
 ]
 
 export const ABOUT_PRINCIPLES = [

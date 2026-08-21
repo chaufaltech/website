@@ -43,32 +43,48 @@ export default function About() {
             Built Around a Simple Belief: Technology Should Make Business Better.
           </h2>
           <p className="text-muted mt-5 leading-relaxed">
-            Chaufal Tech was founded with the goal of helping businesses use technology
-            in the right way. We work closely with our clients to understand their
-            challenges and deliver solutions that are practical, reliable, and built
-            for the long run.
+            Chaufal Tech was built around a practical idea: technology should
+            simplify work, solve real problems, and create measurable value.
           </p>
           <p className="text-muted mt-4 leading-relaxed">
-            From web and software development to automation, digital modernization
-            and technology consulting — we bring the right skills and mindset to
-            help your business grow.
+            We combine web development, automation, digital modernization, and
+            technology consulting to help businesses move forward with clarity
+            and confidence.
+          </p>
+          <p className="text-muted mt-4 leading-relaxed">
+            Our focus is simple — understand the problem, prepare the right
+            approach, build with quality, and support what we deliver.
           </p>
         </div>
 
         <div className="relative border border-black/8 rounded-2xl p-8 md:p-10 overflow-hidden">
+          {/* dot-grid corner accents */}
+          <svg viewBox="0 0 60 60" className="absolute top-4 right-4 w-14 h-14 text-orange/30 pointer-events-none" aria-hidden>
+            <g fill="currentColor">
+              {Array.from({ length: 4 }).map((_, row) =>
+                Array.from({ length: 4 }).map((_, col) => (
+                  <circle key={`tr-${row}-${col}`} cx={4 + col * 14} cy={4 + row * 14} r="1.6" />
+                ))
+              )}
+            </g>
+          </svg>
+          <svg viewBox="0 0 60 60" className="absolute bottom-4 left-4 w-14 h-14 text-orange/30 pointer-events-none" aria-hidden>
+            <g fill="currentColor">
+              {Array.from({ length: 4 }).map((_, row) =>
+                Array.from({ length: 4 }).map((_, col) => (
+                  <circle key={`bl-${row}-${col}`} cx={4 + col * 14} cy={4 + row * 14} r="1.6" />
+                ))
+              )}
+            </g>
+          </svg>
+
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 relative">
             {ABOUT_CAPABILITIES.map((c, i) => (
               <div key={c.title} className="relative text-center">
                 {i < ABOUT_CAPABILITIES.length - 1 && (
-                  <span className="hidden sm:block absolute top-7 left-[calc(50%+28px)] right-[calc(-50%+28px)] h-px bg-orange/30" aria-hidden />
+                  <span className="hidden sm:block absolute top-6 left-[calc(50%+26px)] right-[calc(-50%+26px)] border-t border-dashed border-orange/40" aria-hidden />
                 )}
-                <div
-                  className={`relative w-14 h-14 rounded-full flex items-center justify-center mx-auto ${
-                    i % 2 === 0 ? 'bg-orange/10 text-orange' : 'bg-navy text-orange'
-                  }`}
-                >
-                  <Icon name={c.icon} className="w-6 h-6" />
-                </div>
+                <Icon name={c.icon} className="relative w-11 h-11 text-ink mx-auto" strokeWidth={1.6} />
                 <h3 className="font-display font-bold text-ink text-sm mt-4">{c.title}</h3>
                 <p className="text-xs text-muted mt-2 leading-relaxed">{c.description}</p>
               </div>

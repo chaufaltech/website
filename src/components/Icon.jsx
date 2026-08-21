@@ -147,6 +147,12 @@ const PATHS = {
       <path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
     </>
   ),
+  'cloud-upload': (
+    <>
+      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+      <path d="M12 20v-6M9 17l3-3 3 3" />
+    </>
+  ),
   building: (
     <>
       <rect x="4" y="3" width="10" height="18" rx="1" />
