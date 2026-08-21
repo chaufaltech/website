@@ -163,9 +163,9 @@ export const ABOUT_PRINCIPLES = [
 ]
 
 export const ABOUT_APPROACH = [
-  { icon: 'users', title: 'Understand the Business', description: "Before recommending technology, we listen, analyze and understand what you're trying to achieve." },
-  { icon: 'browser', title: 'Build the Right Solution', description: 'We choose the right technology and design solutions that solve real problems.' },
-  { icon: 'shield-check', title: 'Stay for the Journey', description: 'We support, maintain and improve solutions so your business can continue to grow.' },
+  { title: 'Understand Before We Build', description: 'We take the time to understand your goals, challenges, existing systems and priorities before recommending a solution.' },
+  { title: 'Keep You Involved', description: 'Clear communication and regular collaboration keep you informed and involved throughout the project — without unnecessary technical complexity.' },
+  { title: 'Think Beyond Delivery', description: 'We build with performance, maintainability, security, and future growth in mind, so the solution continues to create value after launch.' },
 ]
 
 export const ABOUT_STATS = [

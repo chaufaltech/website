@@ -4,7 +4,6 @@ import {
   ABOUT_CAPABILITIES,
   ABOUT_PRINCIPLES,
   ABOUT_APPROACH,
-  ABOUT_STATS,
   ABOUT_WHO_WE_WORK_WITH,
 } from '../data/content.js'
 
@@ -127,47 +126,66 @@ export default function About() {
       </section>
 
       {/* OUR APPROACH */}
-      <section id="approach" className="bg-navy text-white py-20 scroll-mt-28">
-        <div className="section grid lg:grid-cols-[minmax(0,1fr)_2fr] gap-12 items-center">
+      <section id="approach" className="bg-paper py-20 scroll-mt-28">
+        <div className="section grid lg:grid-cols-2 gap-12 items-center">
+          {/* LEFT: editorial content */}
           <div>
             <span className="eyebrow">Our Approach</span>
-            <h2 className="font-display font-bold text-3xl mt-3 leading-tight">
-              Technology With a Business-First Mindset.
+            <h2 className="font-display font-bold text-3xl md:text-4xl mt-3 text-ink leading-tight">
+              Practical Technology.
+              <br />
+              Thoughtful Execution<span className="text-orange">.</span>
             </h2>
+            <span className="block w-14 h-1 bg-orange rounded-full mt-5" />
+
+            <p className="text-muted mt-6 leading-relaxed max-w-md">
+              We don&apos;t start with technology. We start by understanding your
+              business, the challenge you&apos;re facing, and what a successful
+              outcome should look like.
+            </p>
+
+            <div className="border-t border-black/10 mt-8 pt-8 flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-orange/10 text-orange flex items-center justify-center shrink-0">
+                <Icon name="users" className="w-5 h-5" />
+              </div>
+              <p className="text-muted leading-relaxed">
+                Our approach is built on collaboration, clarity, and a commitment to
+                delivering real, lasting impact.
+              </p>
+            </div>
+
+            <p className="border-l-2 border-orange pl-4 mt-8 text-ink/80 leading-relaxed">
+              No unnecessary complexity.
+              <br />
+              Just the right technology, applied thoughtfully.
+            </p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-8 relative">
+          {/* RIGHT: dark vertical flow */}
+          <div className="bg-navy rounded-3xl p-7 md:p-9">
             {ABOUT_APPROACH.map((a, i) => (
-              <div key={a.title} className="relative text-center sm:text-left">
-                {i < ABOUT_APPROACH.length - 1 && (
-                  <span className="hidden sm:block absolute top-6 left-[calc(50%+32px)] right-[calc(-50%+32px)] border-t border-dashed border-orange/30" aria-hidden />
-                )}
-                <div className="relative w-12 h-12 rounded-full bg-white/10 text-orange flex items-center justify-center mx-auto sm:mx-0">
-                  <Icon name={a.icon} className="w-5 h-5" />
+              <div
+                key={a.title}
+                className={`grid grid-cols-[auto_auto_1fr] gap-x-6 ${
+                  i < ABOUT_APPROACH.length - 1 ? 'pb-6 mb-6 border-b border-white/10' : ''
+                }`}
+              >
+                <span className="font-display font-bold text-5xl text-orange leading-none">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+
+                <div className="flex flex-col items-center">
+                  <span className="w-4 h-4 rounded-full border-2 border-orange shrink-0" />
+                  {i < ABOUT_APPROACH.length - 1 && <span className="w-px h-16 bg-orange/40 mt-1" />}
                 </div>
-                <h3 className="font-display font-semibold mt-4">{a.title}</h3>
-                <p className="text-sm text-white/50 mt-2 leading-relaxed">{a.description}</p>
+
+                <div>
+                  <h3 className="font-display font-bold text-white text-lg">{a.title}</h3>
+                  <p className="text-sm text-white/50 mt-2 leading-relaxed">{a.description}</p>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* STATS STRIP */}
-      <section className="section py-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
-          {ABOUT_STATS.map((s, i) => (
-            <div key={s.label} className="flex items-start gap-4">
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${i % 2 === 0 ? 'bg-orange/10 text-orange' : 'bg-navy text-orange'}`}>
-                <Icon name={s.icon} className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-display font-bold text-xl text-ink leading-none">{s.value}</p>
-                <h4 className="font-display font-semibold text-ink text-sm mt-1.5">{s.label}</h4>
-                <p className="text-xs text-muted mt-1 leading-relaxed">{s.description}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
