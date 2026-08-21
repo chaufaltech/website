@@ -94,21 +94,32 @@ export default function About() {
       </section>
 
       {/* WHAT WE BELIEVE */}
-      <section className="bg-cream/40 py-20">
+      <section className="bg-navy text-white py-20">
         <div className="section">
           <span className="eyebrow">What We Believe</span>
-          <h2 className="font-display font-bold text-3xl md:text-4xl mt-3 text-ink">
-            Our Principles Guide Everything We Do.
+          <h2 className="font-display font-bold text-3xl md:text-4xl mt-3">
+            Our Principles Guide Everything We Do<span className="text-orange">.</span>
           </h2>
+          <p className="text-white/50 mt-4 max-w-lg leading-relaxed">
+            These principles shape our decisions, our work, and the way we partner
+            with every client.
+          </p>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
-            {ABOUT_PRINCIPLES.map((p) => (
-              <div key={p.title} className="text-center">
-                <div className="w-14 h-14 rounded-full bg-orange/10 text-orange flex items-center justify-center mx-auto">
-                  <Icon name={p.icon} className="w-6 h-6" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
+            {ABOUT_PRINCIPLES.map((p, i) => (
+              <div
+                key={p.title}
+                className="relative rounded-2xl border border-white/10 p-7 overflow-hidden"
+                style={{ background: 'linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01) 60%)' }}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <span className="font-display font-bold text-6xl text-amber leading-none">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <img src={p.image} alt="" className="w-40 h-40 object-contain shrink-0 -mt-1" />
                 </div>
-                <h3 className="font-display font-bold text-ink mt-4">{p.title}</h3>
-                <p className="text-sm text-muted mt-2 leading-relaxed">{p.description}</p>
+                <h3 className="font-display font-bold text-white text-lg mt-5 leading-snug">{p.title}</h3>
+                <p className="text-sm text-white/50 mt-2 leading-relaxed">{p.description}</p>
               </div>
             ))}
           </div>

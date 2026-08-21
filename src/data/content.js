@@ -156,10 +156,10 @@ export const ABOUT_CAPABILITIES = [
 ]
 
 export const ABOUT_PRINCIPLES = [
-  { icon: 'users', title: 'Business Before Technology', description: 'We start with the problem, not the tool.' },
-  { icon: 'bulb', title: 'Keep It Practical', description: 'Solutions should be understandable, maintainable and useful.' },
-  { icon: 'shield', title: 'Build for the Long Term', description: "We think beyond launch day and build for what's next." },
-  { icon: 'message', title: 'Trust Through Transparency', description: 'Clear communication, realistic expectations and no unnecessary complexity.' },
+  { icon: 'users', title: 'Business Before Technology', description: 'We start with the problem, not the tool.', image: '/images/01-business-before-technology.png' },
+  { icon: 'bulb', title: 'Keep It Practical', description: 'Solutions should be understandable, maintainable and useful.', image: '/images/02-keep-it-practical.png' },
+  { icon: 'shield', title: 'Build for the Long Term', description: "We think beyond launch day and build for what's next.", image: '/images/03-build-for-long-term.png' },
+  { icon: 'message', title: 'Trust Through Transparency', description: 'Clear communication, realistic expectations and no unnecessary complexity.', image: '/images/04-trust-through-transparency.png' },
 ]
 
 export const ABOUT_APPROACH = [
