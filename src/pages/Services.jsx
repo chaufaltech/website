@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import PageHero from '../components/PageHero.jsx'
+import ServicesHero from '../components/ServicesHero.jsx'
 import Icon from '../components/Icon.jsx'
 import CtaBanner from '../components/CtaBanner.jsx'
 import { SERVICES } from '../data/content.js'
@@ -7,11 +7,7 @@ import { SERVICES } from '../data/content.js'
 export default function Services() {
   return (
     <>
-      <PageHero
-        eyebrow="What We Do"
-        title="Digital Solutions That Drive Growth"
-        subtitle="Enterprise-grade websites, software, automation, and consulting — built around measurable outcomes."
-      />
+      <ServicesHero />
 
       <section className="section py-20 space-y-16">
         {SERVICES.map((s, i) => (
