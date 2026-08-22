@@ -1,5 +1,5 @@
 import Icon from '../components/Icon.jsx'
-import CtaBanner from '../components/CtaBanner.jsx'
+import AboutCta from '../components/AboutCta.jsx'
 import {
   ABOUT_CAPABILITIES,
   ABOUT_PRINCIPLES,
@@ -190,22 +190,48 @@ export default function About() {
       </section>
 
       {/* WHO WE WORK WITH */}
-      <section className="bg-cream/40 py-20">
-        <div className="section">
-          <span className="eyebrow">Who We Work With</span>
-          <h2 className="font-display font-bold text-3xl md:text-4xl mt-3 text-ink max-w-xl">
-            Built for Businesses That Need Technology to Move Forward.
-          </h2>
+      <section className="bg-navy text-white py-20 overflow-hidden">
+        <div className="section grid lg:grid-cols-[minmax(0,1fr)_2fr] gap-12 items-center">
+          {/* LEFT: editorial content */}
+          <div className="relative">
+            <span className="eyebrow">Who We Work With</span>
+            <h2 className="font-display font-bold text-3xl md:text-4xl mt-3 leading-tight">
+              Built for Businesses That Need Technology to Move Forward<span className="text-orange">.</span>
+            </h2>
+            <span className="block w-14 h-1 bg-orange rounded-full mt-5" />
+            <p className="text-white/50 mt-6 leading-relaxed max-w-sm">
+              We partner with organizations at different stages of their journey,
+              helping them solve real challenges and build for what&apos;s next.
+            </p>
+          </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mt-14">
-            {ABOUT_WHO_WE_WORK_WITH.map((w) => (
-              <div key={w.title} className="bg-white rounded-2xl shadow-sm border border-black/5 overflow-hidden">
-                <div className="aspect-[16/9] bg-gradient-to-br from-navy to-navy-light flex items-center justify-center text-orange">
-                  <Icon name={w.icon} className="w-10 h-10" />
+          {/* RIGHT: stacked numbered cards */}
+          <div className="space-y-6">
+            {ABOUT_WHO_WE_WORK_WITH.map((w, i) => (
+              <div
+                key={w.title}
+                className="border border-white/10 rounded-2xl p-6 md:p-8 grid grid-cols-[auto_auto_1fr] md:grid-cols-[auto_auto_1fr_auto] gap-x-5 items-start"
+              >
+                <span className="font-display font-bold text-[42px] text-orange leading-none">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="w-4 h-4 rounded-full border-2 border-orange shrink-0 mt-1" />
+
+                <div>
+                  <h3 className="font-display font-bold text-white text-lg">{w.title}</h3>
+                  <p className="text-sm text-white/70 mt-2 leading-relaxed max-w-md">{w.description}</p>
+                  <div className="flex flex-wrap items-center gap-2 mt-4">
+                    {w.tags.map((tag, ti) => (
+                      <span key={tag} className="flex items-center gap-2">
+                        {ti > 0 && <span className="text-orange text-xs">•</span>}
+                        <span className="text-xs border border-white/15 rounded-full px-3 py-1 text-white/70">{tag}</span>
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="font-display font-bold text-ink">{w.title}</h3>
-                  <p className="text-sm text-muted mt-2 leading-relaxed">{w.description}</p>
+
+                <div className="hidden md:flex items-center justify-center w-24 h-24 text-orange/70 shrink-0">
+                  <Icon name={w.icon} className="w-16 h-16" strokeWidth={1.2} />
                 </div>
               </div>
             ))}
@@ -213,9 +239,7 @@ export default function About() {
         </div>
       </section>
 
-      <CtaBanner
-        subtitle="Tell us where your business is today and where you want to take it. We'll help you explore the right way forward."
-      />
+      <AboutCta />
     </>
   )
 }

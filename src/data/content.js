@@ -176,9 +176,24 @@ export const ABOUT_STATS = [
 ]
 
 export const ABOUT_WHO_WE_WORK_WITH = [
-  { icon: 'building', title: 'Growing Businesses', description: 'that need a stronger digital presence or custom systems to scale.' },
-  { icon: 'gear', title: 'Teams With Manual Processes', description: 'that want to automate repetitive work and connect their tools.' },
-  { icon: 'cloud', title: 'Businesses Modernizing Technology', description: 'that need to improve legacy systems, infrastructure or digital operations.' },
+  {
+    icon: 'building',
+    title: 'Growing Businesses',
+    description: 'Need a stronger digital presence, custom applications, or scalable systems to support growth.',
+    tags: ['Websites', 'Web Apps', 'Scalability'],
+  },
+  {
+    icon: 'gear',
+    title: 'Teams Buried in Manual Work',
+    description: 'Want to automate repetitive processes, connect tools, and spend less time on routine tasks.',
+    tags: ['Automation', 'Integrations', 'Workflows'],
+  },
+  {
+    icon: 'cloud-upload',
+    title: 'Businesses Modernizing Technology',
+    description: 'Need to improve legacy systems, infrastructure, or digital operations without unnecessary disruption.',
+    tags: ['Modernization', 'Cloud', 'Digital Systems'],
+  },
 ]
 
 export const TESTIMONIALS = [
