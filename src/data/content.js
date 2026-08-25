@@ -6,6 +6,33 @@ export const TRUSTED_LOGOS = [
   { icon: 'check', label: 'Logoipsum' },
 ]
 
+export const SOLVE_CARDS = [
+  {
+    image: '/images/01-build-something-new.png',
+    title: 'Build Something New',
+    description: 'Launch a new website, web application, or digital platform that drives growth.',
+    linkLabel: 'Explore Web Solutions',
+  },
+  {
+    image: '/images/02-automate-manual-work.png',
+    title: 'Automate Manual Work',
+    description: 'Eliminate repetitive tasks and connect your tools to save time and reduce errors.',
+    linkLabel: 'Explore Automation',
+  },
+  {
+    image: '/images/03-modernize-what-you-have.png',
+    title: 'Modernize What You Have',
+    description: 'Upgrade legacy systems, infrastructure, and workflows to improve performance.',
+    linkLabel: 'Explore Modernization',
+  },
+  {
+    image: '/images/04-get-expert-direction.png',
+    title: 'Get Expert Direction',
+    description: 'Make better technology decisions with strategy, architecture, and guidance.',
+    linkLabel: 'Explore Consulting',
+  },
+]
+
 export const SERVICES = [
   {
     slug: 'web-design-development',
