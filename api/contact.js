@@ -1,10 +1,12 @@
-import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import { appendContactSubmission } from './lib/googleSheets.js'
 
-// Service-role key — server-side only, never exposed to the client bundle
-// (that's why these aren't VITE_-prefixed). Set in Vercel project settings.
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
-const resend = new Resend(process.env.RESEND_API_KEY)
+// All credentials are server-side only; do not use VITE_-prefixed variables.
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
+
+function cleanText(value) {
+  return typeof value === 'string' ? value.trim() : ''
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -12,41 +14,41 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { name, email, company, message } = req.body || {}
+  const name = cleanText(req.body?.name)
+  const email = cleanText(req.body?.email)
+  const company = cleanText(req.body?.company)
+  const message = cleanText(req.body?.message)
 
   if (!name || !email || !message) {
     return res.status(400).json({ error: 'Name, email, and message are required.' })
   }
 
+  if (name.length > 200 || email.length > 320 || company.length > 200 || message.length > 5000) {
+    return res.status(400).json({ error: 'One or more fields are too long.' })
+  }
+
   try {
-    const { data, error } = await supabase
-      .from('contact_submissions')
-      .insert([{ name, email, company: company || null, message }])
-      .select()
-      .single()
+    const submission = await appendContactSubmission({ name, email, company, message })
 
-    if (error) throw error
-
-    // Notification email is best-effort — the submission is already saved
-    // in Supabase above regardless of whether this succeeds.
-    try {
-      await resend.emails.send({
-        // Swap this for an address on your own verified sending domain once
-        // one is set up in Resend — onboarding@resend.dev only works for
-        // testing / low volume.
-        from: 'Chaufal Tech Website <onboarding@resend.dev>',
-        to: process.env.CONTACT_NOTIFY_EMAIL,
-        replyTo: email,
-        subject: `New inquiry from ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\nCompany: ${company || '—'}\n\n${message}`,
-      })
-    } catch (emailError) {
-      console.error('Notification email failed (submission was still saved):', emailError)
+    // Notification email is best-effort; the submission is already saved.
+    if (resend && process.env.CONTACT_NOTIFY_EMAIL) {
+      try {
+        await resend.emails.send({
+          // Replace this after configuring your own verified Resend domain.
+          from: 'Chaufal Tech Website <onboarding@resend.dev>',
+          to: process.env.CONTACT_NOTIFY_EMAIL,
+          replyTo: email,
+          subject: `New inquiry from ${name}`,
+          text: `Name: ${name}\nEmail: ${email}\nCompany: ${company || '-'}\n\n${message}`,
+        })
+      } catch (emailError) {
+        console.error('Notification email failed (submission was still saved):', emailError)
+      }
     }
 
-    return res.status(200).json({ success: true, id: data.id })
-  } catch (err) {
-    console.error('Contact form submission error:', err)
+    return res.status(200).json({ success: true, id: submission.id })
+  } catch (error) {
+    console.error('Contact form submission error:', error)
     return res.status(500).json({ error: 'Something went wrong. Please try again or email us directly.' })
   }
 }
