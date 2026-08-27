@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import ServicesHero from '../components/ServicesHero.jsx'
 import Icon from '../components/Icon.jsx'
 import CtaBanner from '../components/CtaBanner.jsx'
-import { SERVICES, SOLVE_CARDS } from '../data/content.js'
+import ServiceDetail from '../components/ServiceDetail.jsx'
+import { SERVICES, SOLVE_CARDS, SERVICE_DETAILS } from '../data/content.js'
 
 export default function Services() {
   return (
@@ -38,6 +39,10 @@ export default function Services() {
           ))}
         </div>
       </section>
+
+      {SERVICE_DETAILS.map((s) => (
+        <ServiceDetail key={s.number} {...s} />
+      ))}
 
       <section className="section py-20 space-y-16">
         {SERVICES.map((s, i) => (

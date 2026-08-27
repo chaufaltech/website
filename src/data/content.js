@@ -33,6 +33,27 @@ export const SOLVE_CARDS = [
   },
 ]
 
+export const SERVICE_DETAILS = [
+  {
+    number: '01',
+    category: 'Web Design & Development',
+    title: 'Fast, secure, and scalable websites and web applications.',
+    description:
+      'We design and build digital experiences that are responsive, high-performing, and tailored to your business goals.',
+    features: [
+      'Custom Websites',
+      'Web Applications',
+      'Responsive Design',
+      'CMS Solutions',
+      'Performance Optimization',
+      'Accessibility',
+    ],
+    image: '/images/web-design-laptop-phone-right-side.png',
+    ctaLabel: 'Explore Web Development',
+    imageSide: 'right',
+  },
+]
+
 export const SERVICES = [
   {
     slug: 'web-design-development',
