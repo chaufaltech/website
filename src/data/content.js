@@ -52,6 +52,48 @@ export const SERVICE_DETAILS = [
     ctaLabel: 'Explore Web Development',
     imageSide: 'right',
   },
+  {
+    number: '02',
+    category: 'Automation & Integrations',
+    title: 'Automate workflows. Connect everything.',
+    titleLines: ['Automate workflows.', 'Connect everything.'],
+    description:
+      'We help you streamline operations by automating repetitive tasks and integrating the tools you already use.',
+    features: [
+      'Workflow Automation',
+      'Tool Integrations',
+      'Process Optimization',
+      'Data Sync & Migration',
+      'Custom Workflows',
+      'Reporting & Alerts',
+    ],
+    image: '/images/workflow-automation-illustration.png',
+    imageAlt: 'Workflow automation connecting business tools to validation, CRM, and notification actions',
+    ctaLabel: 'Explore Automation',
+    imageSide: 'left',
+    theme: 'light',
+  },
+  {
+    number: '03',
+    category: 'Digital Modernization',
+    title: 'Modernize systems. Unlock new potential.',
+    titleLines: ['Modernize systems.', 'Unlock new potential.'],
+    description:
+      'We upgrade legacy applications, infrastructure, and architectures to improve performance, security, and scalability.',
+    features: [
+      'Legacy System Upgrade',
+      'Cloud Migration',
+      'Infrastructure Modernization',
+      'Application Refactoring',
+      'Security Improvements',
+      'Scalability & Reliability',
+    ],
+    image: '/images/digital-modernization-cloud-infrastructure.png',
+    imageAlt: 'Cloud migration and server infrastructure modernization illustration',
+    imageScale: 1.1,
+    ctaLabel: 'Explore Modernization',
+    imageSide: 'right',
+  },
 ]
 
 export const SERVICES = [
