@@ -11,6 +11,7 @@ export default function ServiceDetail({
   image,
   imageAlt = '',
   imageScale = 1,
+  imageObjectPosition = 'center',
   ctaLabel,
   imageSide = 'right',
   theme = 'dark',
@@ -101,11 +102,14 @@ export default function ServiceDetail({
               src={image}
               alt={imageAlt}
               className="absolute inset-0 w-full h-full object-cover"
-              style={imageScale !== 1 ? { transform: `scale(${imageScale})` } : undefined}
+              style={{
+                objectPosition: imageObjectPosition,
+                transform: imageScale !== 1 ? `scale(${imageScale})` : undefined,
+              }}
             />
           </div>
         </div>
       </div>
     </section>
   )
-}
+} 
