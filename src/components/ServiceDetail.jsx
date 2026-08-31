@@ -29,7 +29,7 @@ export default function ServiceDetail({
           Everything below is wrapped in the same `.section` container the
           Navbar uses, so content lines up with the header instead of
           bleeding to the viewport edge. */}
-      <div className="section py-16 lg:py-24">
+      <div className="section py-14 lg:py-[84px]">
         <div className="grid lg:grid-cols-[minmax(0,560px)_1fr] gap-10 lg:gap-16 items-center">
           {/* CONTENT */}
           <div className={`flex gap-4 ${imageFirst ? 'lg:order-2' : 'lg:order-1'}`}>
@@ -112,4 +112,4 @@ export default function ServiceDetail({
       </div>
     </section>
   )
-} 
+}

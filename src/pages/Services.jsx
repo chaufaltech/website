@@ -24,13 +24,13 @@ export default function Services() {
               key={c.title}
               className="bg-white border border-black/5 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden"
             >
-              <div className="aspect-[4/3] bg-cream/40 flex items-center justify-center p-4">
+              <div className="aspect-[4/3.2] bg-cream/40 flex items-center justify-center p-4">
                 <img src={c.image} alt="" className="w-full h-full object-contain" />
               </div>
-              <div className="p-6">
+              <div className="px-[26px] py-[23px] sm:p-[26px]">
                 <h3 className="font-display font-bold text-ink">{c.title}</h3>
-                <p className="text-sm text-muted mt-2 leading-relaxed">{c.description}</p>
-                <Link to="/contact" className="inline-flex items-center gap-1.5 text-orange text-sm font-semibold mt-6">
+                <p className="text-sm text-muted mt-1.5 sm:mt-2 leading-relaxed">{c.description}</p>
+                <Link to="/contact" className="inline-flex items-center gap-1.5 text-orange text-sm font-semibold mt-4 sm:mt-6">
                   {c.linkLabel} <span aria-hidden>→</span>
                 </Link>
               </div>

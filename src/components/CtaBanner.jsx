@@ -9,7 +9,7 @@ export default function CtaBanner({
   return (
     <section className="section py-16">
       {/* Card is now navy — page background behind it is untouched. */}
-      <div className="relative bg-navy border border-white/10 rounded-2xl px-8 py-10 md:px-12 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden">
+      <div className="relative bg-navy border border-white/10 rounded-2xl px-6 py-10 sm:px-8 md:px-12 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden">
         {/* subtle circuit accent bleeding off the right edge */}
         <svg viewBox="0 0 220 160" className="hidden md:block absolute -right-6 top-1/2 -translate-y-1/2 w-56 h-40 text-orange/25 pointer-events-none" aria-hidden>
           <g stroke="currentColor" strokeWidth="1.5" fill="none">
@@ -35,10 +35,13 @@ export default function CtaBanner({
         {/* Divider only makes sense once the two groups sit side by side. */}
         <span className="hidden md:block w-px h-16 bg-white/10 shrink-0" aria-hidden />
 
-        <div className="relative flex flex-col sm:flex-row items-center gap-6">
+        <div className="relative flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
           <p className="text-sm text-white/60 max-w-xs text-center md:text-left">{subtitle}</p>
-          <div className="flex flex-col items-center shrink-0">
-            <Link to="/contact" className="btn-primary">
+          <div className="flex flex-col items-center shrink-0 w-full sm:w-auto">
+            <Link
+              to="/contact"
+              className="btn-primary w-full max-w-[260px] justify-center sm:w-auto sm:max-w-none"
+            >
               Let&apos;s Talk <span aria-hidden>→</span>
             </Link>
             <p className="flex items-center gap-2 text-[13px] text-white/70 mt-3 whitespace-nowrap">

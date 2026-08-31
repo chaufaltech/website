@@ -14,7 +14,7 @@ export default function ServicesHero() {
         className="absolute inset-0 bg-[linear-gradient(to_right,rgba(13,27,42,1)_0%,rgba(13,27,42,0.9)_45%,rgba(13,27,42,0.55)_70%,rgba(13,27,42,0.15)_100%)]"
         aria-hidden
       />
-      <div className="section pt-36 pb-16 lg:pt-48 lg:pb-24 relative">
+      <div className="section pt-36 pb-20 lg:pt-48 lg:pb-24 relative">
         <span className="eyebrow">Our Services</span>
         <h1 className="font-display font-bold text-4xl md:text-[45px] leading-tight mt-4 max-w-2xl">
           The Right Technology for the Problem at Hand<span className="text-orange">.</span>
