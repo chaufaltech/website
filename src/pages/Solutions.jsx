@@ -1,6 +1,7 @@
-import PageHero from '../components/PageHero.jsx'
+import SolutionsHero from '../components/SolutionsHero.jsx'
 import Icon from '../components/Icon.jsx'
 import CtaBanner from '../components/CtaBanner.jsx'
+import { SOLUTIONS_CHALLENGES } from '../data/content.js'
 
 const AUDIENCES = [
   {
@@ -32,13 +33,39 @@ const OUTCOMES = [
 export default function Solutions() {
   return (
     <>
-      <PageHero
-        eyebrow="Solutions"
-        title="Enterprise-Quality Technology, Without Enterprise Complexity"
-        subtitle="Every business deserves the same level of technology — we tailor how we deliver it to where you are."
-      />
+      <SolutionsHero />
 
-      <section className="section py-20">
+      <section id="solutions-detail" className="section py-20">
+        <div className="text-center max-w-2xl mx-auto">
+          <span className="eyebrow justify-center">Common Business Challenges</span>
+          <h2 className="font-display font-bold text-3xl md:text-4xl mt-3 text-ink">
+            What&apos;s Getting in the Way?
+          </h2>
+          <p className="text-muted mt-4">
+            We help businesses overcome the technology challenges that slow down work,
+            limit growth, and create unnecessary complexity.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mt-14">
+          {SOLUTIONS_CHALLENGES.map((c) => (
+            <a
+              key={c.title}
+              href="#who-we-work-with"
+              className="group bg-white border border-black/5 rounded-xl2 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+            >
+              <Icon name={c.icon} className="w-9 h-9 text-orange" strokeWidth={1.6} />
+              <h3 className="font-display font-bold text-ink text-[15px] leading-snug mt-4">{c.title}</h3>
+              <p className="text-xs text-muted mt-2.5 leading-relaxed">{c.description}</p>
+              <span className="inline-flex text-orange mt-4 transition-transform group-hover:translate-x-1" aria-hidden>
+                →
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="who-we-work-with" className="section py-20">
         <div className="text-center max-w-2xl mx-auto">
           <span className="eyebrow">Who We Work With</span>
           <h2 className="font-display font-bold text-3xl md:text-4xl mt-3 text-ink">

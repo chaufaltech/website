@@ -6,6 +6,39 @@ export const TRUSTED_LOGOS = [
   { icon: 'check', label: 'Logoipsum' },
 ]
 
+export const SOLUTIONS_CHALLENGES = [
+  {
+    icon: 'clock',
+    title: 'Too Much Manual Work',
+    description: 'Repetitive tasks consume time and lead to unnecessary errors.',
+  },
+  {
+    icon: 'network',
+    title: 'Disconnected Tools & Data',
+    description: "Important information is scattered across systems that don't work together.",
+  },
+  {
+    icon: 'database',
+    title: 'Outdated Technology',
+    description: 'Legacy systems make change slower, harder and more expensive.',
+  },
+  {
+    icon: 'puzzle',
+    title: "Systems That Don't Fit",
+    description: "Off-the-shelf software doesn't match the way your business actually operates.",
+  },
+  {
+    icon: 'monitor-trend',
+    title: 'Digital Experiences Falling Behind',
+    description: 'Your website or digital platform no longer supports where the business is going.',
+  },
+  {
+    icon: 'shield-check',
+    title: 'Technology That Needs Constant Attention',
+    description: 'Performance, reliability, security, or maintenance issues keep getting in the way.',
+  },
+]
+
 export const SOLVE_CARDS = [
   {
     image: '/images/01-build-something-new.png',
