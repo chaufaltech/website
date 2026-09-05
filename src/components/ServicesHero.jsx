@@ -1,37 +1,49 @@
+import { Link } from 'react-router-dom'
 import Icon from './Icon.jsx'
 
-const STEPS = [
-  { icon: 'browser', label: 'Build' },
-  { icon: 'gear', label: 'Automate' },
-  { icon: 'cloud-upload', label: 'Modernize' },
-  { icon: 'message', label: 'Support & Evolve' },
+const FEATURES = [
+  { icon: 'target', title: 'Business First', description: 'We start with your goals.' },
+  { icon: 'puzzle', title: 'Solution Focused', description: 'We solve the right problem.' },
+  { icon: 'chart', title: 'Measurable Impact', description: 'We deliver real outcomes.' },
 ]
 
-export default function ServicesHero() {
+export default function SolutionsHero() {
   return (
-    <section className="bg-navy text-white overflow-hidden relative bg-[url('/images/services-hero-background-clean.png')] bg-cover bg-right lg:bg-center bg-no-repeat">
+    <section className="bg-navy text-white overflow-hidden relative bg-[url('/images/solutions-hero-background-with-content.png')] bg-cover bg-right lg:bg-center bg-no-repeat">
       <div
-        className="absolute inset-0 bg-[linear-gradient(to_right,rgba(13,27,42,1)_0%,rgba(13,27,42,0.9)_45%,rgba(13,27,42,0.55)_70%,rgba(13,27,42,0.15)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(to_right,rgba(13,27,42,0.85)_0%,rgba(13,27,42,0.6)_45%,rgba(13,27,42,0.35)_70%,rgba(13,27,42,0.12)_100%)]"
         aria-hidden
       />
+      {/* Extra flat darkening for mobile only — less horizontal room there
+          for the gradient alone to keep text readable over the artwork. */}
+      <div className="absolute inset-0 bg-navy/40 sm:hidden" aria-hidden />
       <div className="section pt-36 pb-20 lg:pt-48 lg:pb-24 relative">
-        <span className="eyebrow">Our Services</span>
-        <h1 className="font-display font-bold text-4xl md:text-[45px] leading-tight mt-4 max-w-2xl">
-          The Right Technology for the Problem at Hand<span className="text-orange">.</span>
+        <span className="eyebrow">Solutions</span>
+        <h1 className="font-display font-bold text-4xl sm:text-[42px] leading-tight mt-4 max-w-lg">
+          Turn Business Challenges Into
+          <br />
+          <span className="text-orange">Better Systems.</span>
         </h1>
-        <p className="text-white/75 mt-5 max-w-lg leading-relaxed">
-          From websites and custom applications to automation and modernization, we
-          design practical solutions around what your business actually needs.
+        <p className="text-white/60 mt-5 max-w-lg leading-relaxed">
+          Whether you&apos;re dealing with manual processes, disconnected tools,
+          outdated technology, or systems that no longer fit the way you work, we
+          help you find and build the practical way forward.
         </p>
 
-        <div className="inline-flex flex-wrap items-center gap-2.5 border border-white/15 rounded-2xl px-5 py-3.5 mt-8 bg-white/[0.03]">
-          {STEPS.map((s, i) => (
-            <div key={s.label} className="flex items-center gap-2.5">
-              {i > 0 && <Icon name="chevron" className="w-[18px] h-[18px] text-white/30 mx-1" strokeWidth={2} />}
-              <Icon name={s.icon} className="w-[18px] h-[18px] text-orange" strokeWidth={1.8} />
-              <span className="font-mono text-[13px] font-semibold tracking-wide uppercase text-white/80">
-                {s.label}
-              </span>
+        <Link to="#solutions-detail" className="btn-primary mt-8">
+          Explore Solutions <span aria-hidden>→</span>
+        </Link>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/10 max-w-2xl">
+          {FEATURES.map((f) => (
+            <div key={f.title} className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-orange/10 text-orange flex items-center justify-center shrink-0">
+                <Icon name={f.icon} className="w-[18px] h-[18px]" />
+              </div>
+              <div>
+                <h3 className="font-display font-semibold text-sm text-white">{f.title}</h3>
+                <p className="text-xs text-white/50 mt-1 leading-relaxed">{f.description}</p>
+              </div>
             </div>
           ))}
         </div>

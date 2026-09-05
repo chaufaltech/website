@@ -39,6 +39,117 @@ export const SOLUTIONS_CHALLENGES = [
   },
 ]
 
+export const SOLUTION_DETAILS = [
+  {
+    slug: 'automate-manual-processes',
+    number: '01',
+    eyebrow: 'Work Smarter',
+    title: 'Automate Manual Processes',
+    description:
+      'We connect systems and automate workflows so routine work happens consistently with less manual effort and fewer errors.',
+    benefits: [
+      { icon: 'check', label: 'Less Manual Work' },
+      { icon: 'check', label: 'Fewer Errors' },
+      { icon: 'check', label: 'Faster Operations' },
+    ],
+    poweredBy: ['Automation & Integrations', 'Custom Applications'],
+    image: '/images/automate-manual-processes-side-illustration.png',
+    imageAlt: 'Isometric illustration of a central automation hub connected to cloud and workflow nodes',
+    imageSide: 'right',
+  },
+  {
+    slug: 'bring-disconnected-systems-together',
+    number: '02',
+    eyebrow: 'Connect the Business',
+    title: 'Bring Disconnected Systems Together',
+    description:
+      'Different platforms, spreadsheets, and databases become one coordinated flow of information.',
+    benefits: [
+      { icon: 'check', label: 'Connected Data' },
+      { icon: 'check', label: 'Better Visibility' },
+      { icon: 'check', label: 'Fewer Silos' },
+    ],
+    poweredBy: ['Automation & Integrations', 'Custom Applications', 'Technology Consulting'],
+    image: '/images/bring-disconnected-systems-together-side-illustration.png',
+    imageAlt: 'Isometric illustration of disconnected platforms and databases converging into one connected data hub',
+    imageSide: 'left',
+    theme: 'light',
+  },
+  {
+    slug: 'move-beyond-outdated-technology',
+    number: '03',
+    eyebrow: 'Modernize',
+    title: 'Move Beyond Outdated Technology',
+    description:
+      'Improve aging applications, infrastructure and architecture without unnecessary complexity.',
+    benefits: [
+      { icon: 'check', label: 'Better Performance' },
+      { icon: 'check', label: 'Stronger Security' },
+      { icon: 'check', label: 'Greater Scalability' },
+    ],
+    poweredBy: ['Digital Modernization', 'Technology Consulting', 'Maintenance & Support'],
+    image: '/images/technology-modernisation.png',
+    imageAlt: 'Isometric illustration of legacy servers connecting into a modernized cloud infrastructure',
+    imageSide: 'right',
+  },
+  {
+    slug: 'create-technology-that-fits',
+    number: '04',
+    eyebrow: 'Build Around Your Business',
+    title: 'Create Technology That Fits the Way You Work',
+    titleLines: ['Create Technology That Fits', 'the Way You Work'],
+    description:
+      "When off-the-shelf software doesn't fit the way you work, we build purpose-designed applications, portals, and internal systems around your business.",
+    benefits: [
+      { icon: 'check', label: 'Better Workflows' },
+      { icon: 'check', label: 'More Control' },
+      { icon: 'check', label: 'Built to Scale' },
+    ],
+    poweredBy: ['Web Design & Development', 'Custom Web Applications', 'Automation & Integrations'],
+    image: '/images/custom-technology-built-around-business.png',
+    imageAlt: 'Isometric illustration of a central modular platform connected to workflow, data, and analytics modules',
+    imageSide: 'left',
+    theme: 'light',
+  },
+  {
+    slug: 'create-digital-experiences',
+    number: '05',
+    eyebrow: 'Improve the Experience',
+    title: 'Create Digital Experiences That Keep You Ahead.',
+    titleLines: ['Create Digital Experiences', 'That Keep You Ahead.'],
+    description:
+      'Modernize websites and digital experiences to make them faster, easier to use, and better aligned with where your business is going.',
+    benefits: [
+      { icon: 'check', label: 'Better User Experience' },
+      { icon: 'check', label: 'Faster Performance' },
+      { icon: 'check', label: 'Built for Growth' },
+    ],
+    poweredBy: ['Web Design & Development', 'Technology Consulting', 'Maintenance & Support'],
+    image: '/images/solution-05-modern-digital-experience.png',
+    imageAlt: 'Isometric illustration of a modern website interface displayed across laptop, tablet, and phone screens',
+    imageSide: 'right',
+  },
+  {
+    slug: 'keep-technology-reliable',
+    number: '06',
+    eyebrow: 'Keep Things Running',
+    title: 'Keep Technology Reliable Without Constant Attention.',
+    titleLines: ['Keep Technology Reliable', 'Without Constant Attention.'],
+    description:
+      'Keep critical systems secure, stable, and performing at their best with proactive monitoring, maintenance, and ongoing improvements.',
+    benefits: [
+      { icon: 'check', label: 'More Reliability' },
+      { icon: 'check', label: 'Fewer Disruptions' },
+      { icon: 'check', label: 'Peace of Mind' },
+    ],
+    poweredBy: ['Maintenance & Support', 'Digital Modernization', 'Technology Consulting'],
+    image: '/images/solution-06-reliable-technology.png',
+    imageAlt: 'Isometric illustration of a central system connected to security, monitoring, maintenance, and performance modules',
+    imageSide: 'left',
+    theme: 'light',
+  },
+]
+
 export const SOLVE_CARDS = [
   {
     image: '/images/01-build-something-new.png',

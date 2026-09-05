@@ -1,4 +1,10 @@
 const PATHS = {
+  refresh: (
+    <>
+      <path d="M21 12a9 9 0 1 1-3-6.7" />
+      <path d="M21 3v6h-6" />
+    </>
+  ),
   network: (
     <>
       <circle cx="12" cy="12" r="2.2" />
