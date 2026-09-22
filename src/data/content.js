@@ -386,36 +386,84 @@ export const SERVICES = [
   },
 ]
 
+export const PROCESS_VALUES = [
+  {
+    icon: 'users',
+    title: 'People First',
+    description: 'We listen before we build.',
+  },
+  {
+    icon: 'gear',
+    title: 'Practical Solutions',
+    description: 'Real-world, not theoretical.',
+  },
+  {
+    icon: 'chart',
+    title: 'Long-Term Impact',
+    description: "We build for what's next.",
+  },
+]
+
 export const PROCESS_STEPS = [
   {
     number: '01',
     title: 'Understand',
+    tagline: 'Start with the problem',
+    icon: 'search',
     description: 'We understand your business challenges and ideas before proposing anything.',
+    longDescription:
+      "We learn how your business works, what's getting in the way, what's already been tried, and what success should look like.",
+    highlights: ['Business & user discussions', 'Current state analysis', 'Goals & success metrics'],
   },
   {
     number: '02',
     title: 'Prepare',
+    tagline: 'Turn insights into a clear plan',
+    icon: 'document',
     description: 'We assess the current state and create the right strategy for your goals.',
+    longDescription:
+      'We assess the current state, define requirements, prioritize what matters and create the right strategy and roadmap for your goals.',
+    highlights: ['Solution design', 'Roadmap & milestones', 'Technology architecture'],
   },
   {
     number: '03',
     title: 'Build',
+    tagline: 'Develop in practical iterations',
+    icon: 'code',
     description: 'We design and develop, keeping you in the loop at every milestone.',
+    longDescription:
+      'We design and develop, keeping you in the loop at every milestone, with regular demos and feedback.',
+    highlights: ['Iterative development', 'Regular demos & feedback', 'Integrations & automation'],
   },
   {
     number: '04',
     title: 'Test & Refine',
+    tagline: 'Validate against the real need',
+    icon: 'check-circle',
     description: 'We test rigorously and refine details until it meets the bar we set for ourselves.',
+    longDescription:
+      'We test rigorously and refine details until it meets the bar we set for ourselves — and the outcomes you expect.',
+    highlights: ['Functional & user testing', 'Measure against goals', 'Refine based on feedback'],
   },
   {
     number: '05',
     title: 'Deliver',
+    tagline: 'Launch with confidence',
+    icon: 'send',
     description: 'We deliver on time, with documentation and training your team can rely on.',
+    longDescription:
+      'We deliver on time, with documentation and training so your team can rely on the solution from day one.',
+    highlights: ['Deployment & handover', 'Documentation & training', 'Smooth transition'],
   },
   {
     number: '06',
     title: 'Support',
+    tagline: 'Stay ahead, together',
+    icon: 'headset',
     description: 'We stay on for support, so growth never stalls on a technical issue.',
+    longDescription:
+      'We stay on for support, monitoring and continuous improvement, so your technology keeps delivering value as your business grows.',
+    highlights: ['Ongoing support', 'Performance monitoring', 'Future enhancements'],
   },
 ]
 

@@ -25,6 +25,7 @@ export default {
         display: ['Sora', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
+        hand: ['Caveat', 'cursive'],  // add this line
       },
       borderRadius: {
         xl2: '1.25rem',
