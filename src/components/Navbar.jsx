@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
 const NAV_LINKS = [
@@ -25,6 +25,22 @@ function Logo() {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const toggleRef = useRef(null)
+
+  // Escape closes the mobile menu and returns focus to the menu button.
+  useEffect(() => {
+    if (!open) return undefined
+
+    function onKeyDown(e) {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        toggleRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [open])
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-navy/70 backdrop-blur-md border-b border-white/10">
@@ -61,6 +77,7 @@ export default function Navbar() {
         </div>
 
         <button
+          ref={toggleRef}
           className="lg:hidden inline-flex flex-col gap-1.5 p-2 shrink-0"
           aria-label="Toggle menu"
           aria-expanded={open}

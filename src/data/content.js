@@ -172,6 +172,7 @@ export const SOLVE_CARDS = [
 export const SERVICE_DETAILS = [
   {
     number: '01',
+    slug: 'web-design-development',
     category: 'Web Design & Development',
     title: 'Fast, secure, and scalable websites and web applications.',
     description:
@@ -190,6 +191,7 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '02',
+    slug: 'automation-integrations',
     category: 'Automation & Integrations',
     title: 'Automate workflows. Connect everything.',
     titleLines: ['Automate workflows.', 'Connect everything.'],
@@ -211,6 +213,7 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '03',
+    slug: 'digital-modernization',
     category: 'Digital Modernization',
     title: 'Modernize systems. Unlock new potential.',
     titleLines: ['Modernize systems.', 'Unlock new potential.'],
@@ -232,6 +235,7 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '04',
+    slug: 'technology-consulting',
     category: 'Technology Consulting',
     title: 'Make better technology decisions. Move forward with confidence.',
     titleLines: ['Make better technology decisions.', 'Move forward with confidence.'],
@@ -255,6 +259,7 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '05',
+    slug: 'custom-web-applications',
     category: 'Custom Web Applications',
     title: 'Software built around the way your business works.',
     titleLines: ['Software built around', 'the way your business works.'],
@@ -275,6 +280,7 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '06',
+    slug: 'maintenance-support',
     category: 'Maintenance & Support',
     title: 'Keep your technology reliable. Keep your business moving.',
     titleLines: ['Keep your technology reliable.', 'Keep your business moving.'],

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Icon from './Icon.jsx'
 
 export default function ServiceDetail({
+  slug,
   number,
   category,
   title,
@@ -21,7 +22,8 @@ export default function ServiceDetail({
 
   return (
     <section
-      className={`overflow-hidden border-b ${
+      id={slug}
+      className={`overflow-hidden border-b scroll-mt-24 lg:scroll-mt-28 ${
         isLight ? 'bg-paper text-ink border-black/5' : 'bg-navy text-white border-white/5'
       }`}
     >

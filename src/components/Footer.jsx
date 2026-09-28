@@ -11,11 +11,12 @@ const QUICK_LINKS = [
   { label: 'Process', to: '/process' },
 ]
 
+// `slug` matches the section id on the Services page.
 const SERVICES = [
-  'Websites & Web Applications',
-  'Automation & Integrations',
-  'Digital Modernization',
-  'Technology Consulting',
+  { label: 'Websites & Web Applications', slug: 'web-design-development' },
+  { label: 'Automation & Integrations', slug: 'automation-integrations' },
+  { label: 'Digital Modernization', slug: 'digital-modernization' },
+  { label: 'Technology Consulting', slug: 'technology-consulting' },
 ]
 
 // Small inline glyphs — kept local to the footer since these are brand
@@ -128,9 +129,9 @@ export default function Footer() {
         <FooterColumn title="Services" id="services" openId={openId} setOpenId={setOpenId}>
           <ul className="space-y-2.5 text-sm pb-4 md:pb-0">
             {SERVICES.map((s) => (
-              <li key={s}>
-                <Link to="/services" className="hover:text-orange transition-colors">
-                  {s}
+              <li key={s.slug}>
+                <Link to={`/services#${s.slug}`} className="hover:text-orange transition-colors">
+                  {s.label}
                 </Link>
               </li>
             ))}

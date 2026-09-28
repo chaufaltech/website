@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
 
@@ -41,6 +41,30 @@ export default function Contact() {
   const [form, setForm] = useState(INITIAL_FORM)
   const [status, setStatus] = useState('idle') // idle | submitting | sent | error
   const [errorMessage, setErrorMessage] = useState('')
+  const closeButtonRef = useRef(null)
+
+  // Success dialog: move focus into it, close on Escape, keep Tab inside it
+  // (its only control is the Close button), and hand focus back afterwards.
+  useEffect(() => {
+    if (status !== 'sent') return undefined
+
+    const previouslyFocused = document.activeElement
+    closeButtonRef.current?.focus()
+
+    function onKeyDown(e) {
+      if (e.key === 'Escape') setStatus('idle')
+      if (e.key === 'Tab') {
+        e.preventDefault()
+        closeButtonRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      previouslyFocused?.focus?.()
+    }
+  }, [status])
 
   function handleChange(e) {
     const { id, value } = e.target
@@ -270,7 +294,7 @@ export default function Contact() {
             <p className="text-sm text-muted mt-2 leading-relaxed">
               Thanks — we&apos;ve got your message and will be in touch soon.
             </p>
-            <button type="button" onClick={closeModal} className="btn-primary w-full justify-center mt-6">
+            <button ref={closeButtonRef} type="button" onClick={closeModal} className="btn-primary w-full justify-center mt-6">
               Close
             </button>
           </div>

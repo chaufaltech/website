@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import Icon from './Icon.jsx'
 
 const FEATURES = [
@@ -27,9 +26,9 @@ export default function SolutionsHero() {
           help you find and build the practical way forward.
         </p>
 
-        <Link to="#solutions-detail" className="btn-primary mt-8">
+        <a href="#solutions-detail" className="btn-primary mt-8">
           Explore Solutions <span aria-hidden>→</span>
-        </Link>
+        </a>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/10 max-w-2xl">
           {FEATURES.map((f) => (
