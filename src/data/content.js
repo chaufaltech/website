@@ -1,11 +1,3 @@
-export const TRUSTED_LOGOS = [
-  { icon: 'globe', label: 'Logoipsum' },
-  { icon: 'gear', label: 'Logoipsum' },
-  { icon: 'cloud', label: 'LOGOIPSUM' },
-  { icon: 'chart', label: 'Logoipsum' },
-  { icon: 'check', label: 'Logoipsum' },
-]
-
 export const SOLUTIONS_CHALLENGES = [
   {
     icon: 'clock',
@@ -470,13 +462,13 @@ export const PROCESS_STEPS = [
 export const STATS = [
   {
     label: 'Projects Delivered',
-    value: '50+',
+    value: '10+',
     icon: 'briefcase',
     description: 'Successful projects delivered across diverse industries.',
   },
   {
     label: 'Clients Served',
-    value: '30+',
+    value: '5+',
     icon: 'users',
     description: 'Trusted by startups, SMEs and enterprises worldwide.',
   },
@@ -515,7 +507,7 @@ export const ABOUT_APPROACH = [
 ]
 
 export const ABOUT_STATS = [
-  { icon: 'briefcase', value: '50+', label: 'Projects Delivered', description: 'Successful projects delivered across diverse industries.' },
+  { icon: 'briefcase', value: '10+', label: 'Projects Delivered', description: 'Successful projects delivered across diverse industries.' },
   { icon: 'users', value: '9+', label: 'Years of Experience', description: 'Years of hands-on experience in delivering digital solutions.' },
   { icon: 'globe', value: 'Worldwide', label: 'Client Focus', description: 'We work with clients across countries and time zones.' },
   { icon: 'browser', value: 'Multiple', label: 'Technology Disciplines', description: 'Expertise across development, automation, integration and modernization.' },

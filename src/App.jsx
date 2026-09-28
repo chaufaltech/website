@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
+import CookieBanner from './components/CookieBanner.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Analytics from './components/Analytics.jsx'
 import Home from './pages/Home.jsx'
@@ -9,7 +10,6 @@ import Services from './pages/Services.jsx'
 import Solutions from './pages/Solutions.jsx'
 import Work from './pages/Work.jsx'
 import Process from './pages/Process.jsx'
-import Blog from './pages/Blog.jsx'
 import Contact from './pages/Contact.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
 import TermsOfService from './pages/TermsOfService.jsx'
@@ -29,7 +29,6 @@ export default function App() {
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/work" element={<Work />} />
           <Route path="/process" element={<Process />} />
-          <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
@@ -37,6 +36,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <CookieBanner />
     </div>
   )
 }

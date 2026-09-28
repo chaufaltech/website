@@ -43,7 +43,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="font-display font-bold text-white">
-                  <span className="text-orange text-xl">50+</span> Projects Delivered
+                  <span className="text-orange text-xl">10+</span> Projects Delivered
                 </p>
                 <p className="text-sm text-white/50 mt-1">Websites • Automation • Digital Solutions</p>
               </div>

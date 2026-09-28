@@ -21,9 +21,9 @@ export default function PrivacyPolicy() {
           <div>
             <h2 className="font-display font-semibold text-xl text-ink mb-3">Information We Collect</h2>
             <p>
-              We may collect information you provide directly, such as your name, email
-              address, phone number, and company details when you fill out a contact
-              form or request a proposal. We also collect usage data automatically —
+              When you fill out our contact form, we collect the information you
+              provide: your name, email address, company name (optional), and the
+              message you write. We also collect usage data automatically —
               pages visited, time on site, and general location — via analytics tools
               like Google Analytics.
             </p>
@@ -43,21 +43,42 @@ export default function PrivacyPolicy() {
             <h2 className="font-display font-semibold text-xl text-ink mb-3">Cookies &amp; Analytics</h2>
             <p>
               We use Google Analytics to understand site traffic and usage patterns.
-              Google Analytics uses cookies to collect anonymized usage data. You can
-              opt out of Google Analytics tracking using browser extensions such as the
-              Google Analytics Opt-out Browser Add-on, or by adjusting your browser&apos;s
-              cookie settings.
+              Google Analytics uses cookies to collect usage data. These analytics
+              cookies are only set if you click &quot;Accept&quot; in our cookie banner;
+              until then, Google Analytics is not loaded. You can change your choice at
+              any time using &quot;Cookie Settings&quot; in the footer of any page, and
+              declining or withdrawing consent removes the analytics cookies we have
+              set. You can also block cookies in your browser settings or use the Google
+              Analytics Opt-out Browser Add-on.
             </p>
           </div>
 
           <div>
             <h2 className="font-display font-semibold text-xl text-ink mb-3">Data Sharing</h2>
             <p>
-              We do not sell your personal information. We may share information with
-              trusted third-party service providers (such as hosting or email
-              providers) solely to operate our business, and only to the extent
-              necessary for them to perform their services.
+              We do not sell your personal information. We share information with
+              trusted third-party service providers solely to operate our business,
+              and only to the extent necessary for them to perform their services.
+              These providers currently include:
             </p>
+            <ul className="list-disc pl-5 space-y-2 mt-3">
+              <li>
+                <strong>Google Sheets (Google)</strong> — stores the details you submit
+                through our contact form
+              </li>
+              <li>
+                <strong>Resend</strong> — delivers the notification email we receive when
+                you submit the contact form
+              </li>
+              <li>
+                <strong>Google Analytics (Google)</strong> — provides anonymized website
+                usage statistics
+              </li>
+              <li>
+                <strong>Vercel</strong> — hosts this website and processes technical
+                request data such as IP addresses
+              </li>
+            </ul>
           </div>
 
           <div>
@@ -65,8 +86,8 @@ export default function PrivacyPolicy() {
             <p>
               You may request access to, correction of, or deletion of your personal
               information at any time by contacting us at{' '}
-              <a href="mailto:hello@chaufaltech.com" className="text-orange font-medium">
-                hello@chaufaltech.com
+              <a href="mailto:chaufaltech@gmail.com" className="text-orange font-medium">
+                chaufaltech@gmail.com
               </a>.
             </p>
           </div>
@@ -83,8 +104,8 @@ export default function PrivacyPolicy() {
             <h2 className="font-display font-semibold text-xl text-ink mb-3">Contact Us</h2>
             <p>
               Questions about this policy? Reach us at{' '}
-              <a href="mailto:hello@chaufaltech.com" className="text-orange font-medium">
-                hello@chaufaltech.com
+              <a href="mailto:chaufaltech@gmail.com" className="text-orange font-medium">
+                chaufaltech@gmail.com
               </a>.
             </p>
           </div>

@@ -34,7 +34,8 @@ const TRUST_FEATURES = [
 
 const CONTACT_EMAIL = 'chaufaltech@gmail.com'
 
-const INITIAL_FORM = { name: '', email: '', company: '', message: '' }
+// `website` is a honeypot: hidden from people, but bots tend to fill it in.
+const INITIAL_FORM = { name: '', email: '', company: '', message: '', website: '' }
 
 export default function Contact() {
   const [form, setForm] = useState(INITIAL_FORM)
@@ -137,6 +138,18 @@ export default function Contact() {
             <h2 className="font-display font-bold text-xl text-ink mb-6">Tell us about your project</h2>
 
             <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-5">
+              {/* Honeypot: invisible to real visitors, skipped by keyboard and screen readers. */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+                <label htmlFor="website">Leave this field empty</label>
+                <input
+                  id="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.website}
+                  onChange={handleChange}
+                />
+              </div>
               <div>
                 <label htmlFor="name" className="text-sm font-medium text-ink/80">
                   Full name <span className="text-orange">*</span>

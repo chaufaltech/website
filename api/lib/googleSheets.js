@@ -43,6 +43,13 @@ function createServiceAccountAssertion() {
   return `${unsignedToken}.${signer.sign(privateKey, 'base64url')}`
 }
 
+// Spreadsheet apps treat cells starting with = + - @ (or tab/CR) as formulas.
+// Prefixing an apostrophe forces them to be treated as plain text.
+function safeCell(value) {
+  const text = String(value ?? '')
+  return /^[=+\-@\t\r]/.test(text) ? `'${text}` : text
+}
+
 async function readError(response) {
   const body = await response.json().catch(() => null)
   return body?.error?.message || body?.error_description || `HTTP ${response.status}`
@@ -121,10 +128,10 @@ export async function appendContactSubmission({ name, email, company, message })
   const row = [
     submission.id,
     submission.createdAt,
-    submission.name,
-    submission.email,
-    submission.company,
-    submission.message,
+    safeCell(submission.name),
+    safeCell(submission.email),
+    safeCell(submission.company),
+    safeCell(submission.message),
   ]
 
   let response = await appendRow(url, row, await getAccessToken())

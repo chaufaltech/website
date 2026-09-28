@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { OPEN_SETTINGS_EVENT, analyticsAvailable } from '../lib/analytics.js'
 
 const QUICK_LINKS = [
   { label: 'Home', to: '/' },
@@ -8,7 +9,6 @@ const QUICK_LINKS = [
   { label: 'Solutions', to: '/solutions' },
   { label: 'Work', to: '/work' },
   { label: 'Process', to: '/process' },
-  { label: 'Blog', to: '/blog' },
 ]
 
 const SERVICES = [
@@ -177,6 +177,15 @@ export default function Footer() {
           <div className="flex items-center gap-6">
             <Link to="/privacy-policy" className="hover:text-orange transition-colors">Privacy Policy</Link>
             <Link to="/terms-of-service" className="hover:text-orange transition-colors">Terms of Service</Link>
+            {analyticsAvailable && (
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event(OPEN_SETTINGS_EVENT))}
+                className="hover:text-orange transition-colors"
+              >
+                Cookie Settings
+              </button>
+            )}
             <span>Building Trust Through Technology</span>
           </div>
         </div>

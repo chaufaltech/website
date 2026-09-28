@@ -80,8 +80,8 @@ export default function TermsOfService() {
             <h2 className="font-display font-semibold text-xl text-ink mb-3">Contact Us</h2>
             <p>
               Questions about these Terms? Reach us at{' '}
-              <a href="mailto:hello@chaufaltech.com" className="text-orange font-medium">
-                hello@chaufaltech.com
+              <a href="mailto:chaufaltech@gmail.com" className="text-orange font-medium">
+                chaufaltech@gmail.com
               </a>.
             </p>
           </div>
