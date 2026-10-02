@@ -1,3 +1,11 @@
+export const TRUSTED_LOGOS = [
+  { icon: 'globe', label: 'Logoipsum' },
+  { icon: 'gear', label: 'Logoipsum' },
+  { icon: 'cloud', label: 'LOGOIPSUM' },
+  { icon: 'chart', label: 'Logoipsum' },
+  { icon: 'check', label: 'Logoipsum' },
+]
+
 export const SOLUTIONS_CHALLENGES = [
   {
     icon: 'clock',
@@ -172,7 +180,6 @@ export const SOLVE_CARDS = [
 export const SERVICE_DETAILS = [
   {
     number: '01',
-    slug: 'web-design-development',
     category: 'Web Design & Development',
     title: 'Fast, secure, and scalable websites and web applications.',
     description:
@@ -191,7 +198,6 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '02',
-    slug: 'automation-integrations',
     category: 'Automation & Integrations',
     title: 'Automate workflows. Connect everything.',
     titleLines: ['Automate workflows.', 'Connect everything.'],
@@ -213,7 +219,6 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '03',
-    slug: 'digital-modernization',
     category: 'Digital Modernization',
     title: 'Modernize systems. Unlock new potential.',
     titleLines: ['Modernize systems.', 'Unlock new potential.'],
@@ -235,7 +240,6 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '04',
-    slug: 'technology-consulting',
     category: 'Technology Consulting',
     title: 'Make better technology decisions. Move forward with confidence.',
     titleLines: ['Make better technology decisions.', 'Move forward with confidence.'],
@@ -259,7 +263,6 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '05',
-    slug: 'custom-web-applications',
     category: 'Custom Web Applications',
     title: 'Software built around the way your business works.',
     titleLines: ['Software built around', 'the way your business works.'],
@@ -280,7 +283,6 @@ export const SERVICE_DETAILS = [
   },
   {
     number: '06',
-    slug: 'maintenance-support',
     category: 'Maintenance & Support',
     title: 'Keep your technology reliable. Keep your business moving.',
     titleLines: ['Keep your technology reliable.', 'Keep your business moving.'],
@@ -468,13 +470,13 @@ export const PROCESS_STEPS = [
 export const STATS = [
   {
     label: 'Projects Delivered',
-    value: '10+',
+    value: '50+',
     icon: 'briefcase',
     description: 'Successful projects delivered across diverse industries.',
   },
   {
     label: 'Clients Served',
-    value: '5+',
+    value: '30+',
     icon: 'users',
     description: 'Trusted by startups, SMEs and enterprises worldwide.',
   },
@@ -513,7 +515,7 @@ export const ABOUT_APPROACH = [
 ]
 
 export const ABOUT_STATS = [
-  { icon: 'briefcase', value: '10+', label: 'Projects Delivered', description: 'Successful projects delivered across diverse industries.' },
+  { icon: 'briefcase', value: '50+', label: 'Projects Delivered', description: 'Successful projects delivered across diverse industries.' },
   { icon: 'users', value: '9+', label: 'Years of Experience', description: 'Years of hands-on experience in delivering digital solutions.' },
   { icon: 'globe', value: 'Worldwide', label: 'Client Focus', description: 'We work with clients across countries and time zones.' },
   { icon: 'browser', value: 'Multiple', label: 'Technology Disciplines', description: 'Expertise across development, automation, integration and modernization.' },
@@ -586,6 +588,69 @@ export const PROJECTS = [
     title: 'E-commerce Platform Modernization',
     category: 'Digital Modernization',
   },
+]
+
+// Shown on the Work page. `ctaLabel`/the "Learn more" links on these tools are
+// placeholders — point them at real tool URLs once each one has a live page.
+export const WORK_FEATURED_TOOLS = [
+  {
+    slug: 'seo-geo-calculator',
+    badge: 'Internal Product',
+    titleLines: ['SEO / GEO', 'Calculator'],
+    description:
+      "Analyze, optimize and track your content's visibility — across search engines and AI platforms.",
+    features: [
+      'SERP & GEO score analysis',
+      'Keyword and topic insights',
+      'Actionable recommendations',
+      'Clean, easy-to-use interface',
+    ],
+    ctaLabel: 'Explore Tool',
+  },
+  {
+    slug: 'qa-automation-tool',
+    badge: 'Internal Product',
+    title: 'QA Automation Tool',
+    description: 'Simplify testing, improve reliability, and ship with confidence.',
+    features: [
+      'Automated test execution',
+      'Bug reporting & tracking',
+      'CI/CD integration',
+      'Detailed test reports',
+    ],
+    ctaLabel: 'Explore Tool',
+  },
+]
+
+export const WORK_OTHER_TOOLS = [
+  {
+    icon: 'link',
+    title: 'URL Metadata Extractor',
+    description: 'Fetch and analyze metadata from any URL in seconds.',
+  },
+  {
+    icon: 'file-text',
+    title: 'PDF to Text Converter',
+    description: 'Extract clean, editable text from PDF files with ease.',
+  },
+  {
+    icon: 'image',
+    title: 'Image Optimizer',
+    description: 'Compress and optimize images for faster web performance.',
+    to: '/work/image-optimizer',
+  },
+  {
+    icon: 'gear',
+    title: 'Automation Scripts',
+    description: 'Save time with custom scripts for repetitive tasks.',
+  },
+]
+
+export const WORK_IMPACT_STATS = [
+  { value: '6+', label: 'Tools Built' },
+  { value: '100%', label: 'In-House Developed' },
+  { value: 'Real', label: 'Problem Solving' },
+  { value: 'Future', label: 'Ready' },
 ]
 
 export const BLOG_POSTS = [
