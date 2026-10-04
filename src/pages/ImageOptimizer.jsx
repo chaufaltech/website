@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
 
@@ -59,12 +59,51 @@ function formatSize(bytes) {
     : `${Math.max(1, Math.round(bytes / 1024))} KB`
 }
 
-function canEncode(mime) {
-  try {
-    return document.createElement('canvas').toDataURL(mime).startsWith(`data:${mime}`)
-  } catch {
-    return false
+// AVIF: browsers can't reliably encode it through canvas (Firefox and Safari
+// can't), so we use a small WebAssembly encoder, loaded only when AVIF is
+// actually chosen. The single-threaded build is used on purpose — the
+// multi-threaded one needs special server headers.
+let avifEncoderPromise = null
+
+function getAvifEncoder() {
+  if (!avifEncoderPromise) {
+    avifEncoderPromise = (async () => {
+      const [{ default: factory }, { default: wasmUrl }] = await Promise.all([
+        import('@jsquash/avif/codec/enc/avif_enc.js'),
+        import('@jsquash/avif/codec/enc/avif_enc.wasm?url'),
+      ])
+      return factory({
+        noInitialRun: true,
+        locateFile: (path) => (path.endsWith('.wasm') ? wasmUrl : path),
+      })
+    })().catch((err) => {
+      avifEncoderPromise = null // allow a retry
+      throw err
+    })
   }
+  return avifEncoderPromise
+}
+
+async function encodeAvif(canvas, quality) {
+  const encoder = await getAvifEncoder()
+  const { width, height } = canvas
+  const { data } = canvas.getContext('2d').getImageData(0, 0, width, height)
+  const out = encoder.encode(new Uint8Array(data.buffer), width, height, {
+    quality,
+    qualityAlpha: -1,
+    denoiseLevel: 0,
+    tileRowsLog2: 0,
+    tileColsLog2: 0,
+    speed: 8,
+    subsample: 1,
+    chromaDeltaQ: false,
+    sharpness: 0,
+    tune: 0,
+    enableSharpYUV: false,
+    bitDepth: 8,
+  })
+  if (!out) throw new Error('AVIF encoding failed.')
+  return new Blob([out], { type: 'image/avif' })
 }
 
 // Work out the output size from the resize settings.
@@ -98,10 +137,31 @@ async function processImage(img, { w, h }, format, mode, quality, targetKB) {
   }
   ctx.drawImage(img, 0, 0, w, h)
 
-  const getBlob = (q) => new Promise((resolve) => canvas.toBlob(resolve, format, q))
+  const getBlob = (q) =>
+    format === 'image/avif'
+      ? encodeAvif(canvas, Math.round(q * 100))
+      : new Promise((resolve) => canvas.toBlob(resolve, format, q))
 
   if (format === 'image/png') return getBlob()
   if (mode === 'quality') return getBlob(quality / 100)
+
+  // AVIF encodes are slow, so binary-search the quality instead of stepping.
+  if (format === 'image/avif') {
+    let lo = 0.05
+    let hi = 0.95
+    let best = null
+    for (let i = 0; i < 6; i += 1) {
+      const mid = (lo + hi) / 2
+      const blob = await getBlob(mid)
+      if (blob.size / 1024 <= targetKB) {
+        best = blob
+        lo = mid
+      } else {
+        hi = mid
+      }
+    }
+    return best || getBlob(0.05)
+  }
 
   let q = 0.95
   let blob = await getBlob(q)
@@ -143,8 +203,6 @@ export default function ImageOptimizer() {
   const resultsRef = useRef({})
   filesRef.current = files
   resultsRef.current = results
-
-  const avifSupported = useMemo(() => canEncode('image/avif'), [])
 
   // Release every object URL when leaving the page.
   useEffect(() => {
@@ -225,6 +283,7 @@ export default function ImageOptimizer() {
   async function handleOptimize() {
     if (!files.length || processing) return
     setProcessing(true)
+    setNotice('')
     clearResults()
 
     const w = resizeMode === 'custom' && width && parseInt(width, 10) > 0 ? parseInt(width, 10) : null
@@ -234,7 +293,12 @@ export default function ImageOptimizer() {
 
     for (const item of files) {
       const size = targetSize(item.img, resizeMode, w, h, maintainRatio)
-      const blob = await processImage(item.img, size, outFormat, compression, quality, kb)
+      let blob = null
+      try {
+        blob = await processImage(item.img, size, outFormat, compression, quality, kb)
+      } catch {
+        setNotice(`Couldn't optimize ${item.file.name}. Try another format.`)
+      }
       if (!blob) continue
       setResults((prev) => ({
         ...prev,
@@ -293,7 +357,7 @@ export default function ImageOptimizer() {
           </h1>
           <p className="text-white/70 mt-5 max-w-lg leading-relaxed">
             Resize, compress and convert images directly in your browser. Optimize
-            JPG, PNG and WebP images without uploading them to a server — faster,
+            JPG, PNG, WebP and AVIF images without uploading them to a server — faster,
             easier and safer.
           </p>
           <div className="inline-flex items-center gap-3 mt-7 border border-emerald-400/40 bg-emerald-400/10 text-emerald-300 rounded-full px-4 py-2 text-xs font-semibold">
@@ -550,10 +614,10 @@ export default function ImageOptimizer() {
                     className="mt-2.5 w-full border border-black/15 rounded-lg px-3 py-2.5 text-sm focus:border-orange outline-none bg-white"
                   >
                     <option value="auto">Auto (Recommended)</option>
-                    <option value="image/jpeg">JPEG</option>
+                    <option value="image/jpeg">JPG</option>
                     <option value="image/webp">WebP</option>
                     <option value="image/png">PNG</option>
-                    {avifSupported && <option value="image/avif">AVIF</option>}
+                    <option value="image/avif">AVIF</option>
                   </select>
                   {format === 'auto' && (
                     <p className="text-[11px] text-muted mt-2">Auto converts to WebP for the best size-to-quality balance.</p>
@@ -688,9 +752,9 @@ export default function ImageOptimizer() {
             provides a better experience for your visitors. Here&apos;s everything you
             need to know about image optimization.
           </p>
-          <a href="#guide-steps" className="btn-outline-light mt-7 text-sm py-2.5 px-5 !border-orange/60 !text-orange">
+          <Link to="/guides/image-optimization" className="btn-outline-light mt-7 text-sm py-2.5 px-5 !border-orange/60 !text-orange">
             Read the full guide <span aria-hidden>→</span>
-          </a>
+          </Link>
         </div>
 
         <ol id="guide-steps" className="space-y-5 scroll-mt-28">

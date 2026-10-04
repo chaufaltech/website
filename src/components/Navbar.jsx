@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useLocation } from 'react-router-dom'
 
 const NAV_LINKS = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
   { label: 'Solutions', to: '/solutions' },
-  { label: 'Work', to: '/work' },
+  { label: 'Work', to: '/work', alsoActive: ['/tools', '/guides'] },
   { label: 'Process', to: '/process' },
   { label: 'Contact', to: '/contact' },
 ]
@@ -26,6 +26,10 @@ function Logo() {
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const toggleRef = useRef(null)
+  const { pathname } = useLocation()
+  // Tool and guide pages live under the Work section of the nav.
+  const isActiveLink = (link, isActive) =>
+    isActive || (link.alsoActive || []).some((prefix) => pathname.startsWith(prefix))
 
   // Escape closes the mobile menu and returns focus to the menu button.
   useEffect(() => {
@@ -53,13 +57,14 @@ export default function Navbar() {
               key={link.to}
               to={link.to}
               end={link.to === '/'}
-              className={({ isActive }) =>
-                `relative text-[13px] xl:text-[15px] font-medium whitespace-nowrap transition-colors pb-1.5 ${
+              className={({ isActive: routeActive }) => {
+                const isActive = isActiveLink(link, routeActive)
+                return `relative text-[13px] xl:text-[15px] font-medium whitespace-nowrap transition-colors pb-1.5 ${
                   isActive
                     ? 'text-orange after:absolute after:left-0 after:right-0 after:-bottom-0 after:h-0.5 after:bg-orange after:rounded-full'
                     : 'text-white/75 hover:text-orange'
                 }`
-              }
+              }}
             >
               {link.label}
             </NavLink>
@@ -98,11 +103,12 @@ export default function Navbar() {
                 to={link.to}
                 end={link.to === '/'}
                 onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `py-3 text-sm font-medium border-b border-white/10 last:border-0 ${
+                className={({ isActive: routeActive }) => {
+                  const isActive = isActiveLink(link, routeActive)
+                  return `py-3 text-sm font-medium border-b border-white/10 last:border-0 ${
                     isActive ? 'text-orange' : 'text-white/75'
                   }`
-                }
+                }}
               >
                 {link.label}
               </NavLink>

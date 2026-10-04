@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import CookieBanner from './components/CookieBanner.jsx'
@@ -10,6 +10,7 @@ import Services from './pages/Services.jsx'
 import Solutions from './pages/Solutions.jsx'
 import Work from './pages/Work.jsx'
 import ImageOptimizer from './pages/ImageOptimizer.jsx'
+import ImageOptimizationGuide from './pages/ImageOptimizationGuide.jsx'
 import Process from './pages/Process.jsx'
 import Contact from './pages/Contact.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
@@ -29,7 +30,10 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/work" element={<Work />} />
-          <Route path="/work/image-optimizer" element={<ImageOptimizer />} />
+          <Route path="/tools/image-optimizer" element={<ImageOptimizer />} />
+          {/* Old URL: keep working for anyone who bookmarked or linked it. */}
+          <Route path="/work/image-optimizer" element={<Navigate to="/tools/image-optimizer" replace />} />
+          <Route path="/guides/image-optimization" element={<ImageOptimizationGuide />} />
           <Route path="/process" element={<Process />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

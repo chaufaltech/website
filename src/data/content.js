@@ -637,7 +637,7 @@ export const WORK_OTHER_TOOLS = [
     icon: 'image',
     title: 'Image Optimizer',
     description: 'Compress and optimize images for faster web performance.',
-    to: '/work/image-optimizer',
+    to: '/tools/image-optimizer',
   },
   {
     icon: 'gear',
