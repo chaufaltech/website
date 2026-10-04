@@ -358,13 +358,13 @@ export default function ImageOptimizationGuide() {
 
       {/* TOC + QUICK TAKE */}
       <section className="section py-12 lg:py-14">
-        <div className="grid lg:grid-cols-[1fr_300px] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
           <nav aria-label="Table of contents" className="bg-white border border-orange/20 rounded-2xl p-6 md:p-7 shadow-sm">
             <h2 className="flex items-center gap-3 font-display font-bold text-ink">
               <Icon name="document" className="w-5 h-5 text-orange" />
               Table of Contents
             </h2>
-            <ol className="grid sm:grid-cols-2 gap-x-10 gap-y-3 mt-5 sm:grid-flow-col sm:grid-rows-5">
+            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3 mt-5 sm:grid-flow-col sm:grid-rows-5">
               {TOC.map((item, i) => (
                 <li key={item.id}>
                   <a href={`#${item.id}`} className="flex items-center gap-3 text-sm text-ink/80 hover:text-orange transition-colors">
@@ -391,7 +391,7 @@ export default function ImageOptimizationGuide() {
       </section>
 
       {/* 1. WHY IT MATTERS */}
-      <section id="why-it-matters" className="section py-12 scroll-mt-28 grid lg:grid-cols-2 gap-10 items-center">
+      <section id="why-it-matters" className="section py-12 scroll-mt-28 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div>
           <SectionHeading number="1" title="Why Image Optimization Matters" />
           <p className="text-muted mt-4 leading-relaxed max-w-md">
@@ -426,7 +426,7 @@ export default function ImageOptimizationGuide() {
       </section>
 
       {/* 2. DIMENSIONS */}
-      <section id="dimensions" className="section py-12 scroll-mt-28 grid lg:grid-cols-[minmax(0,320px)_1fr] gap-10 items-center">
+      <section id="dimensions" className="section py-12 scroll-mt-28 grid grid-cols-1 lg:grid-cols-[minmax(0,320px)_1fr] gap-10 items-center">
         <div>
           <SectionHeading number="2" title="Start with the Right Dimensions" />
           <p className="text-muted mt-4 leading-relaxed">
@@ -472,7 +472,7 @@ export default function ImageOptimizationGuide() {
           type, quality needs and browser support.
         </p>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
           {FORMATS.map((f) => (
             <article key={f.name} className="bg-white border border-black/10 rounded-xl p-5 shadow-sm">
               <h3 className="flex items-center gap-3 font-display font-bold text-ink">
@@ -509,7 +509,7 @@ export default function ImageOptimizationGuide() {
       </section>
 
       {/* 4 + 5 */}
-      <section className="section py-12 grid lg:grid-cols-2 gap-12 items-start">
+      <section className="section py-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         {/* 4. COMPRESSION */}
         <div id="compression" className="scroll-mt-28">
           <SectionHeading number="4" title="Compression: Lossy vs Lossless" />
@@ -519,7 +519,7 @@ export default function ImageOptimizationGuide() {
             balance between size and quality.
           </p>
 
-          <div className="grid sm:grid-cols-[1fr_200px] gap-4 mt-6" aria-hidden="true">
+          <div className="grid grid-cols-1 sm:grid-cols-[1fr_200px] gap-4 mt-6" aria-hidden="true">
             <div>
               <div className="relative rounded-xl overflow-hidden border border-black/10">
                 <Mountain className="w-full h-44" />
@@ -555,7 +555,7 @@ export default function ImageOptimizationGuide() {
           </div>
           <Illustrative />
 
-          <div className="grid sm:grid-cols-2 gap-4 mt-5 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 text-sm">
             <div className="border-l-2 border-orange pl-4">
               <h3 className="font-display font-semibold text-ink">Lossy (JPG, WebP, AVIF)</h3>
               <p className="text-muted text-xs mt-1 leading-relaxed">Smaller files by discarding detail the eye barely notices. Best for photographs.</p>
@@ -575,11 +575,11 @@ export default function ImageOptimizationGuide() {
             speed and saves bandwidth.
           </p>
 
-          <div className="flex items-end justify-around gap-4 mt-6" aria-hidden="true">
+          <div className="flex items-end justify-around gap-3 sm:gap-4 mt-6" aria-hidden="true">
             {[
-              { label: '1280px', sub: '(desktop)', w: 'w-36', h: 'h-24' },
-              { label: '768px', sub: '(tablet)', w: 'w-24', h: 'h-20' },
-              { label: '320px', sub: '(mobile)', w: 'w-12', h: 'h-20' },
+              { label: '1280px', sub: '(desktop)', w: 'w-28 sm:w-36', h: 'h-20 sm:h-24' },
+              { label: '768px', sub: '(tablet)', w: 'w-20 sm:w-24', h: 'h-16 sm:h-20' },
+              { label: '320px', sub: '(mobile)', w: 'w-10 sm:w-12', h: 'h-16 sm:h-20' },
             ].map((d) => (
               <div key={d.label} className="text-center">
                 <div className={`${d.w} ${d.h} bg-navy rounded-lg p-1 mx-auto`}>
@@ -591,7 +591,7 @@ export default function ImageOptimizationGuide() {
             ))}
           </div>
 
-          <pre className="mt-6 bg-sky-50 border border-sky-100 rounded-xl p-4 overflow-x-auto text-[11px] leading-relaxed text-ink/80">
+          <pre className="mt-6 max-w-full bg-sky-50 border border-sky-100 rounded-xl p-4 overflow-x-auto text-[11px] leading-relaxed text-ink/80">
             <code className="font-mono">{PICTURE_SNIPPET}</code>
           </pre>
           <p className="text-xs text-muted mt-3 leading-relaxed">
@@ -602,7 +602,7 @@ export default function ImageOptimizationGuide() {
       </section>
 
       {/* 6, 7, 8 */}
-      <section className="section py-12 grid lg:grid-cols-3 gap-10 items-start">
+      <section className="section py-12 grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
         {/* 6. METADATA */}
         <div id="metadata" className="scroll-mt-28">
           <SectionHeading number="6" title="Remove Unnecessary Metadata" className="!text-xl" />
@@ -688,7 +688,7 @@ export default function ImageOptimizationGuide() {
       {/* 9. COMMON MISTAKES */}
       <section id="common-mistakes" className="section py-12 scroll-mt-28">
         <SectionHeading number="9" title="Common Mistakes" />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
           {MISTAKES.map((m) => (
             <div key={m.title} className="border border-black/10 bg-white rounded-xl p-5">
               <h3 className="font-display font-semibold text-ink text-sm flex items-start gap-2.5">
@@ -739,7 +739,7 @@ export default function ImageOptimizationGuide() {
       <section id="faq" className="section py-12 scroll-mt-28">
         <h2 className="font-display font-bold text-2xl text-ink">Frequently Asked Questions</h2>
         <p className="text-sm text-muted mt-1">Quick answers to common questions.</p>
-        <div className="grid md:grid-cols-2 gap-x-6 gap-y-3 mt-6 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mt-6 items-start">
           {FAQS.map((f) => (
             <details key={f.q} className="group border border-black/10 bg-white rounded-lg">
               <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-4 py-3.5 text-sm text-ink/80 [&::-webkit-details-marker]:hidden">
@@ -758,7 +758,7 @@ export default function ImageOptimizationGuide() {
         <p className="text-sm text-muted mt-1">
           Explore more resources and tools to help you build faster, smarter and better.
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
           {RELATED.map((r) => (
             <Link
               key={r.title}
