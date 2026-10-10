@@ -436,29 +436,19 @@ export default function ImageOptimizationGuide() {
           </p>
         </div>
 
-        <div>
-          <div className="bg-white border border-black/10 rounded-2xl p-5 shadow-sm grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-3" aria-hidden="true">
-            <div>
-              <Mountain className="w-full h-24 rounded-md" />
-              <p className="text-[10px] font-semibold text-ink mt-2">Original image</p>
-              <p className="text-[10px] text-muted">4000 × 2670 (3.8 MB)</p>
-            </div>
-            <span className="text-orange">→</span>
-            <div>
-              <Mountain className="w-full h-24 rounded-md" />
-              <p className="text-[10px] font-semibold text-ink mt-2">Resize to actual display</p>
-              <p className="text-[10px] text-muted">1200 × 800 (120 KB)</p>
-            </div>
-            <span className="text-orange">→</span>
-            <div>
-              <div className="flex items-end gap-1.5 h-24">
-                <Mountain className="w-1/3 h-14 rounded-sm" />
-                <Mountain className="w-1/3 h-20 rounded-sm" />
-                <Mountain className="w-1/3 h-24 rounded-sm" />
-              </div>
-              <p className="text-[10px] font-semibold text-ink mt-2">Responsive variants</p>
-              <p className="text-[10px] text-muted">320px / 768px / 1280px</p>
-            </div>
+        <div className="min-w-0">
+          {/* The artwork has small captions baked in, so on narrow screens it
+              keeps a readable minimum width and scrolls inside this box
+              (the page itself never scrolls sideways). */}
+          <div className="overflow-x-auto">
+            <img
+              src="/images/image-optimization-right-dimensions.png"
+              alt="Resizing workflow: an original 4000 × 2670 image (3.8 MB) is resized to its actual display size of 1200 × 800 (780 KB), then exported as responsive variants — desktop 1600 × 1067 (780 KB), tablet 1000 × 667 (420 KB) and mobile 640 × 427 (180 KB)."
+              width="2170"
+              height="725"
+              loading="lazy"
+              className="block w-full min-w-[620px] sm:min-w-0 h-auto"
+            />
           </div>
           <Illustrative />
         </div>
@@ -519,22 +509,16 @@ export default function ImageOptimizationGuide() {
             balance between size and quality.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-[1fr_200px] gap-4 mt-6" aria-hidden="true">
-            <div>
-              <div className="relative rounded-xl overflow-hidden border border-black/10">
-                <Mountain className="w-full h-44" />
-                <div className="absolute inset-y-0 left-1/2 w-0.5 bg-white" />
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-[10px] text-ink">
-                  ‹ ›
-                </span>
-              </div>
-              <div className="flex justify-between text-[10px] text-muted mt-1.5">
-                <span>Original (2.4 MB)</span>
-                <span>Compressed (684 KB)</span>
-              </div>
-            </div>
-
-            <div className="bg-white border border-black/10 rounded-xl p-4 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-[1fr_200px] gap-4 mt-6 items-start">
+            <img
+              src="/images/image-compression-comparison.webp"
+              alt="Side-by-side comparison of the same mountain lake photo: the original at 2.4 MB on the left and the compressed version at 684 KB on the right, with no visible loss in quality."
+              width="1200"
+              height="862"
+              loading="lazy"
+              className="block w-full h-auto rounded-xl"
+            />
+            <div className="bg-white border border-black/10 rounded-xl p-4 text-xs" aria-hidden="true">
               <p className="font-semibold text-ink">Choose your approach</p>
               <p className="flex items-center gap-2 text-muted mt-3">
                 <span className="w-7 h-3.5 rounded-full bg-sky-500 relative"><span className="absolute right-0.5 top-0.5 w-2.5 h-2.5 rounded-full bg-white" /></span>
@@ -575,21 +559,14 @@ export default function ImageOptimizationGuide() {
             speed and saves bandwidth.
           </p>
 
-          <div className="flex items-end justify-around gap-3 sm:gap-4 mt-6" aria-hidden="true">
-            {[
-              { label: '1280px', sub: '(desktop)', w: 'w-28 sm:w-36', h: 'h-20 sm:h-24' },
-              { label: '768px', sub: '(tablet)', w: 'w-20 sm:w-24', h: 'h-16 sm:h-20' },
-              { label: '320px', sub: '(mobile)', w: 'w-10 sm:w-12', h: 'h-16 sm:h-20' },
-            ].map((d) => (
-              <div key={d.label} className="text-center">
-                <div className={`${d.w} ${d.h} bg-navy rounded-lg p-1 mx-auto`}>
-                  <Mountain className="w-full h-full rounded-sm" />
-                </div>
-                <p className="text-xs font-semibold text-ink mt-2">{d.label}</p>
-                <p className="text-[10px] text-muted">{d.sub}</p>
-              </div>
-            ))}
-          </div>
+          <img
+            src="/images/image-responsive-devices.webp"
+            alt="The same mountain lake photo shown on three devices: a 1280px desktop laptop, a 768px tablet and a 320px mobile phone, each served an image sized for its screen."
+            width="1200"
+            height="670"
+            loading="lazy"
+            className="block w-full h-auto mt-6"
+          />
 
           <pre className="mt-6 max-w-full bg-sky-50 border border-sky-100 rounded-xl p-4 overflow-x-auto text-[11px] leading-relaxed text-ink/80">
             <code className="font-mono">{PICTURE_SNIPPET}</code>
@@ -610,28 +587,14 @@ export default function ImageOptimizationGuide() {
             Images often contain EXIF data (camera settings, GPS location, etc.).
             Removing it helps protect privacy and reduces file size.
           </p>
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 mt-5" aria-hidden="true">
-            <div className="bg-white border border-black/10 rounded-lg p-2">
-              <Mountain className="w-full h-20 rounded" />
-              <p className="text-[10px] font-semibold text-orange mt-2">EXIF data</p>
-              <ul className="text-[9px] text-muted leading-relaxed mt-1">
-                <li>• Camera model</li>
-                <li>• GPS location</li>
-                <li>• Date &amp; time</li>
-                <li>• Device info</li>
-              </ul>
-            </div>
-            <span className="text-orange">→</span>
-            <div className="bg-white border border-black/10 rounded-lg p-2">
-              <Mountain className="w-full h-20 rounded" />
-              <p className="text-[10px] font-semibold text-emerald-700 mt-2">Clean</p>
-              <p className="text-[9px] text-muted mt-1">No hidden data</p>
-            </div>
-          </div>
-          <div className="flex justify-between text-[10px] text-muted mt-1.5 px-1" aria-hidden="true">
-            <span>Before</span>
-            <span>After</span>
-          </div>
+          <img
+            src="/images/image-metadata-before-after.webp"
+            alt="Before and after removing metadata: the original photo carries EXIF data (camera model, GPS location, date and time, device info); the optimized photo has none."
+            width="1200"
+            height="670"
+            loading="lazy"
+            className="block w-full h-auto mt-5"
+          />
         </div>
 
         {/* 7. WORKFLOW */}
@@ -706,9 +669,15 @@ export default function ImageOptimizationGuide() {
       {/* CTA */}
       <section className="section py-8">
         <div className="relative bg-orange/10 border border-orange/20 rounded-2xl px-6 py-8 md:px-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10 overflow-hidden">
-          <span className="w-16 h-16 rounded-2xl bg-white shadow-md text-orange flex items-center justify-center shrink-0">
-            <Icon name="image" className="w-8 h-8" strokeWidth={1.5} />
-          </span>
+          <img
+            src="/images/image-optimizer-cta-icon.webp"
+            alt=""
+            aria-hidden="true"
+            width="192"
+            height="192"
+            loading="lazy"
+            className="w-20 h-20 rounded-full shadow-md shrink-0"
+          />
           <div className="flex-1">
             <span className="eyebrow !text-[12px]">Put it into practice</span>
             <h2 className="font-display font-bold text-2xl text-ink mt-2">Optimize your images now</h2>
