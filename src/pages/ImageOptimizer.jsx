@@ -1,11 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
+import Seo from '../components/Seo.jsx'
+import { SITE_URL, breadcrumbSchema } from '../lib/seo.js'
 
 // Processing runs entirely in the browser (canvas + toBlob). Re-encoding
 // through canvas also drops EXIF data (GPS, camera info, etc.), so metadata
 // removal is always on. "Target file size" mode steps quality down until the
 // result fits (or quality bottoms out).
+
+const TOOL_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Free Image Optimizer & Compressor',
+  url: `${SITE_URL}/tools/image-optimizer`,
+  description:
+    'Resize, compress and convert JPG, PNG, WebP and AVIF images in your browser. Nothing is uploaded.',
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Any (web browser)',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  publisher: { '@type': 'Organization', name: 'Chaufal Tech', url: `${SITE_URL}/` },
+}
 
 const MAX_FILE_BYTES = 50 * 1024 * 1024
 
@@ -333,6 +348,20 @@ export default function ImageOptimizer() {
 
   return (
     <>
+      <Seo
+        title="Free Image Optimizer & Compressor | Chaufal Tech"
+        description="Resize, compress and convert JPG, PNG, WebP and AVIF images in your browser. No uploads, no sign-up — your images never leave your device."
+        path="/tools/image-optimizer"
+        image="/images/image-optimizer-hero-bg.png"
+        jsonLd={[
+          TOOL_SCHEMA,
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Work', path: '/work' },
+            { name: 'Image Optimizer', path: '/tools/image-optimizer' },
+          ]),
+        ]}
+      />
       {/* HERO */}
       <section className="bg-navy text-white overflow-hidden relative bg-[url('/images/image-optimizer-hero-bg.png')] bg-cover bg-right lg:bg-center bg-no-repeat">
         <div

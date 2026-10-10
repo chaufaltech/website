@@ -4,10 +4,15 @@ import { OPEN_SETTINGS_EVENT, analyticsAvailable, getConsent, setConsent } from 
 
 // Shown until the visitor makes a choice, and again whenever they click
 // "Cookie Settings" in the footer. Accept and Decline are equally easy to reach.
+//
+// It starts hidden and decides after the page loads in the browser: the static
+// HTML generated at build time can't know a visitor's saved choice, so showing
+// the banner in that HTML would flash it at people who already answered.
 export default function CookieBanner() {
-  const [visible, setVisible] = useState(() => analyticsAvailable && getConsent() === null)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
+    if (analyticsAvailable && getConsent() === null) setVisible(true)
     const open = () => setVisible(true)
     window.addEventListener(OPEN_SETTINGS_EVENT, open)
     return () => window.removeEventListener(OPEN_SETTINGS_EVENT, open)

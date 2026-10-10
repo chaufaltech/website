@@ -1,15 +1,17 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
+import Seo from '../components/Seo.jsx'
+import { SITE_URL, breadcrumbSchema } from '../lib/seo.js'
 
 // ---------------------------------------------------------------------------
 // SEO
 // ---------------------------------------------------------------------------
-const SEO_TITLE =
-  'How to Optimize Images for a Website — Complete Image Optimization Guide | Chaufal Tech'
+const SEO_TITLE = 'How to Optimize Images for a Website | Chaufal Tech'
 const SEO_DESCRIPTION =
-  'Learn how to resize, compress, and choose the right image format for your website. A practical guide to JPG, PNG, WebP, AVIF, responsive images, metadata, and web performance.'
-const CANONICAL_URL = 'https://chaufaltech.com/guides/image-optimization/'
+  'Learn how to resize, compress and choose the right image format for your website. A practical guide to JPG, PNG, WebP, AVIF and responsive images.'
+const GUIDE_PATH = '/guides/image-optimization'
+const GUIDE_IMAGE = '/images/image-optimization-guide-hero-bg.png'
+const UPDATED_ISO = '2026-10-04'
 
 const FAQS = [
   {
@@ -38,56 +40,38 @@ const FAQS = [
   },
 ]
 
-// Sets the page title, meta description, canonical link and FAQ structured
-// data while this page is mounted, and puts everything back afterwards.
-function useGuideSeo() {
-  useEffect(() => {
-    const previousTitle = document.title
-    document.title = SEO_TITLE
-
-    const added = []
-    let meta = document.querySelector('meta[name="description"]')
-    const previousDescription = meta?.getAttribute('content') ?? null
-    if (!meta) {
-      meta = document.createElement('meta')
-      meta.setAttribute('name', 'description')
-      document.head.appendChild(meta)
-      added.push(meta)
-    }
-    meta.setAttribute('content', SEO_DESCRIPTION)
-
-    let canonical = document.querySelector('link[rel="canonical"]')
-    const previousCanonical = canonical?.getAttribute('href') ?? null
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.setAttribute('rel', 'canonical')
-      document.head.appendChild(canonical)
-      added.push(canonical)
-    }
-    canonical.setAttribute('href', CANONICAL_URL)
-
-    const jsonLd = document.createElement('script')
-    jsonLd.type = 'application/ld+json'
-    jsonLd.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: FAQS.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    })
-    document.head.appendChild(jsonLd)
-    added.push(jsonLd)
-
-    return () => {
-      document.title = previousTitle
-      if (previousDescription !== null && !added.includes(meta)) meta.setAttribute('content', previousDescription)
-      if (previousCanonical !== null && !added.includes(canonical)) canonical.setAttribute('href', previousCanonical)
-      added.forEach((el) => el.remove())
-    }
-  }, [])
-}
+const GUIDE_SCHEMAS = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'How to Optimize Images for a Website',
+    description: SEO_DESCRIPTION,
+    image: `${SITE_URL}${GUIDE_IMAGE}`,
+    datePublished: UPDATED_ISO,
+    dateModified: UPDATED_ISO,
+    mainEntityOfPage: `${SITE_URL}${GUIDE_PATH}`,
+    author: { '@type': 'Organization', name: 'Chaufal Tech', url: `${SITE_URL}/` },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Chaufal Tech',
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo/logo-icon.svg` },
+    },
+  },
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Guides', path: '/guides' },
+    { name: 'Image Optimization', path: GUIDE_PATH },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQS.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+]
 
 // ---------------------------------------------------------------------------
 // Content
@@ -297,17 +281,23 @@ function YesNo({ yes }) {
 // Page
 // ---------------------------------------------------------------------------
 export default function ImageOptimizationGuide() {
-  useGuideSeo()
-
   return (
     <>
+      <Seo
+        title={SEO_TITLE}
+        description={SEO_DESCRIPTION}
+        path={GUIDE_PATH}
+        image={GUIDE_IMAGE}
+        type="article"
+        jsonLd={GUIDE_SCHEMAS}
+      />
       {/* HERO */}
       <section className="bg-navy text-white overflow-hidden relative">
         <div className="section pt-36 pb-6 lg:pt-44 lg:pb-28 relative z-10">
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-xs text-white/50 mb-7">
             <Link to="/" className="hover:text-orange transition-colors">Home</Link>
             <span aria-hidden>/</span>
-            <span>Guides</span>
+            <Link to="/guides" className="hover:text-orange transition-colors">Guides</Link>
             <span aria-hidden>/</span>
             <span className="text-white/70" aria-current="page">Image Optimization</span>
           </nav>

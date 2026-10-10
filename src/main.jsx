@@ -1,13 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App.jsx'
+import { ViteReactSSG } from 'vite-react-ssg'
+import { routes } from './routes.jsx'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-)
+// vite-react-ssg renders every route to static HTML at build time, then
+// hydrates it in the browser. `npm run dev` still runs as a normal SPA.
+export const createRoot = ViteReactSSG({ routes })
