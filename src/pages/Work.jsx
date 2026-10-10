@@ -1,3 +1,4 @@
+import Seo from '../components/Seo.jsx'
 import { Link } from 'react-router-dom'
 import WorkHero from '../components/WorkHero.jsx'
 import Icon from '../components/Icon.jsx'
@@ -172,6 +173,11 @@ function OtherToolCard({ tool }) {
 export default function Work() {
   return (
     <>
+      <Seo
+        title="Our Work — Tools & Products Built by Chaufal Tech"
+        description="Explore the tools and products built by Chaufal Tech, from free browser-based utilities to automation and analysis tools."
+        path="/work"
+      />
       <WorkHero />
 
       {/* FEATURED PROJECTS */}

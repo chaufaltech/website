@@ -1,8 +1,15 @@
+import Seo from '../components/Seo.jsx'
 import PageHero from '../components/PageHero.jsx'
 
 export default function PrivacyPolicy() {
   return (
     <>
+      <Seo
+        title="Privacy Policy | Chaufal Tech"
+        description="How Chaufal Tech collects, uses and protects information when you visit our website or engage us for services."
+        path="/privacy-policy"
+        noindex
+      />
       <PageHero
         eyebrow="Legal"
         title="Privacy Policy"
@@ -113,4 +120,4 @@ export default function PrivacyPolicy() {
       </section>
     </>
   )
-} 
+}

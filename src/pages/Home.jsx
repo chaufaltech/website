@@ -1,3 +1,5 @@
+import Seo from '../components/Seo.jsx'
+import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '../lib/seo.js'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
 import ClosingCta from '../components/ClosingCta.jsx'
@@ -8,6 +10,12 @@ import { SERVICES, PROCESS_STEPS, STATS } from '../data/content.js'
 export default function Home() {
   return (
     <>
+      <Seo
+        title="Chaufal Tech — Websites, Automation & Modernization"
+        description="We help businesses build websites and web apps, automate workflows and modernize legacy systems — enterprise-quality technology without the complexity."
+        path="/"
+        jsonLd={[ORGANIZATION_SCHEMA, WEBSITE_SCHEMA]}
+      />
       {/* HERO */}
       <section
         className="bg-navy text-white overflow-hidden relative bg-[url('/images/home-hero-image.png')] bg-cover bg-right lg:bg-center bg-no-repeat"

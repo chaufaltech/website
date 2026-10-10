@@ -1,3 +1,4 @@
+import Seo from '../components/Seo.jsx'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
@@ -102,6 +103,11 @@ export default function Contact() {
 
   return (
     <>
+      <Seo
+        title="Contact Chaufal Tech | Start Your Project"
+        description="Tell us what you want to build, improve, automate or modernize. We usually reply within 24 business hours."
+        path="/contact"
+      />
       {/* HERO */}
       <section className="bg-navy text-white overflow-hidden relative">
         <div className="absolute inset-0 bg-blueprint [mask-image:linear-gradient(to_right,transparent,black)]" aria-hidden />

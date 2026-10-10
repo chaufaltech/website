@@ -1,3 +1,4 @@
+import Seo from '../components/Seo.jsx'
 import Icon from '../components/Icon.jsx'
 import AboutCta from '../components/AboutCta.jsx'
 import {
@@ -10,6 +11,11 @@ import {
 export default function About() {
   return (
     <>
+      <Seo
+        title="About Chaufal Tech | Practical Technology Solutions"
+        description="Chaufal Tech helps businesses build, automate, modernize and improve their digital systems with practical solutions designed around real business needs."
+        path="/about"
+      />
       {/* HERO */}
       <section className="bg-navy text-white overflow-hidden relative bg-[url('/images/about-hero-image.png')] bg-cover bg-right lg:bg-center bg-no-repeat">
         <div
@@ -242,4 +248,4 @@ export default function About() {
       <AboutCta />
     </>
   )
-}
+} 

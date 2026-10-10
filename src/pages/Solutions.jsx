@@ -1,3 +1,4 @@
+import Seo from '../components/Seo.jsx'
 import SolutionsHero from '../components/SolutionsHero.jsx'
 import SolutionDetail from '../components/SolutionDetail.jsx'
 import Icon from '../components/Icon.jsx'
@@ -16,6 +17,11 @@ const CHALLENGE_ANCHORS = {
 export default function Solutions() {
   return (
     <>
+      <Seo
+        title="Business Technology Solutions | Chaufal Tech"
+        description="Stuck with manual work, disconnected tools or outdated systems? See how we turn business challenges into better, practical systems."
+        path="/solutions"
+      />
       <SolutionsHero />
 
       <section id="solutions-detail" className="section py-20">

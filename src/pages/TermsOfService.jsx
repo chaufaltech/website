@@ -1,8 +1,15 @@
+import Seo from '../components/Seo.jsx'
 import PageHero from '../components/PageHero.jsx'
 
 export default function TermsOfService() {
   return (
     <>
+      <Seo
+        title="Terms of Service | Chaufal Tech"
+        description="The terms that govern your use of the Chaufal Tech website and services."
+        path="/terms-of-service"
+        noindex
+      />
       <PageHero
         eyebrow="Legal"
         title="Terms of Service"

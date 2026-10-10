@@ -1,3 +1,4 @@
+import Seo from '../components/Seo.jsx'
 import { Link } from 'react-router-dom'
 import ServicesHero from '../components/ServicesHero.jsx'
 import CtaBanner from '../components/CtaBanner.jsx'
@@ -7,6 +8,11 @@ import { SOLVE_CARDS, SERVICE_DETAILS } from '../data/content.js'
 export default function Services() {
   return (
     <>
+      <Seo
+        title="Web, Automation & Modernization Services | Chaufal Tech"
+        description="Websites, custom web apps, workflow automation, modernization, consulting and support — practical technology services built around your business."
+        path="/services"
+      />
       <ServicesHero />
 
       {/* WHAT ARE YOU TRYING TO SOLVE */}

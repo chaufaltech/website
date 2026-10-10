@@ -1,3 +1,4 @@
+import Seo from '../components/Seo.jsx'
 import ProcessHero from '../components/ProcessHero.jsx'
 import CtaBanner from '../components/CtaBanner.jsx'
 import Icon from '../components/Icon.jsx'
@@ -6,6 +7,11 @@ import { PROCESS_STEPS, PROCESS_VALUES } from '../data/content.js'
 export default function Process() {
   return (
     <>
+      <Seo
+        title="Our Process — From First Call to Ongoing Support | Chaufal Tech"
+        description="How we work: understand the problem, plan, build, test, deliver and support. A clear, practical process built around your goals."
+        path="/process"
+      />
       <ProcessHero />
 
       <section className="bg-paper border-b border-black/5">
