@@ -16,7 +16,7 @@ async function apiPost(action, url, timeoutMs = 30000) {
       signal: controller.signal,
     })
     const body = await res.json().catch(() => ({}))
-    if (!res.ok) throw new Error(body.error || `The audit service returned an error (${res.status}).`)
+    if (!res.ok) throw new Error(body.error || `The audit service had a problem (error ${res.status}). Please try again in a moment.`)
     return body
   } finally {
     clearTimeout(timer)
@@ -643,6 +643,20 @@ function buildCategoryMeta(hasKeyword, keyword) {
   return m;
 }
 
+
+// Many sites answer automated requests with a short "Access Denied" / "verify you are human"
+// page, sometimes with a normal 200 status. The report still runs on what we received,
+// but it is flagged so the results aren't mistaken for the real page's.
+const BLOCK_TITLE = /^(access denied|403 forbidden|forbidden|request blocked|blocked|just a moment\.{0,3}|attention required.*|pardon our interruption.*|access to this page has been denied.*|are you a robot.*|robot check|security check|human verification|please verify you are a human.*|error 1020.*|one more step.*)$/i;
+const BLOCK_BODY = /don['\u2019]t have permission to access|request unsuccessful\. incapsula|verify you are (a )?human|enable javascript and cookies to continue|checking your browser before accessing|access to this page has been denied|reference #\d+\.[0-9a-f.]+/i;
+
+function looksLikeBlockPage(doc) {
+  if (visibleWordCount(doc) > 300) return false;
+  const title = textOf(doc.querySelector('title'));
+  const body = textOf(doc.body);
+  return BLOCK_TITLE.test(title) || BLOCK_BODY.test(body);
+}
+
 async function auditUrl(url, opts) {
   opts = opts || {};
   const onProgress = opts.onProgress || function () {};
@@ -656,13 +670,21 @@ async function auditUrl(url, opts) {
       ? `The site responded ${page.status} ${page.statusText}. It may block automated requests or require a login, so it can't be audited from here.`
       : `Fetch failed — the server responded ${page.status} ${page.statusText}.`);
   }
-  if (page.contentType && !/html|xml/i.test(page.contentType)) {
-    throw new Error('That URL does not return a web page (HTML), so there is nothing to audit.');
+  // Some servers label real HTML with the wrong content type, so also look at the markup itself.
+  const looksLikeHtml = /<(?:!doctype\s+html|html|head|body)\b/i.test((page.html || '').slice(0, 5000));
+  if (page.contentType && !/html|xml/i.test(page.contentType) && !looksLikeHtml) {
+    const type = page.contentType.split(';')[0].trim();
+    throw new Error(`That URL returned "${type}" instead of a web page. Sites that block automated requests often do this, so it can't be audited from here.`);
+  }
+  if (!page.html || !page.html.trim()) {
+    throw new Error('The page came back empty, so there was nothing to audit. The site may block automated requests.');
   }
   // Use the address we ended up on (after redirects) for every address-based check.
   url = page.finalUrl;
   const headers = { get: (name) => (String(name).toLowerCase() === 'x-robots-tag' ? page.xRobotsTag || '' : '') };
   const doc = new DOMParser().parseFromString(page.html, 'text/html');
+  // Don't refuse: still audit what we received, but flag it so the report can say so.
+  const accessDenied = looksLikeBlockPage(doc);
 
   const targetKeyword = (opts.targetKeyword || '').trim();
   const hasKeyword = !!targetKeyword;
@@ -719,6 +741,8 @@ async function auditUrl(url, opts) {
     url,
     title: textOf(doc.querySelector('title')) || '(no title)',
     targetKeyword: hasKeyword ? targetKeyword : null,
+    pageTruncated: !!page.truncated,
+    accessDenied,
     fetchedAt: new Date().toISOString(),
     tookMs: Date.now() - startedAt,
     overallScore10,

@@ -1,9 +1,58 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const SITE_URL = 'https://www.chaufaltech.com'
+
+// `npm run dev` only serves the front end; the files in /api are Vercel serverless
+// functions. This runs them locally too (contact form, SEO / GEO Calculator), so
+// they work on http://localhost without the Vercel CLI. It only applies to the dev
+// server; builds and production are unaffected. Secrets (e.g. PSI_API_KEY) are read
+// from your local .env file.
+function localApiRoutes() {
+  let env = {}
+  return {
+    name: 'local-api-routes',
+    configResolved(config) {
+      env = loadEnv(config.mode, config.root, '')
+    },
+    configureServer(server) {
+      for (const [key, value] of Object.entries(env)) {
+        if (process.env[key] === undefined) process.env[key] = value
+      }
+
+      server.middlewares.use(async (req, res, next) => {
+        const match = /^\/api\/([a-z0-9-]+)(?:\?.*)?$/i.exec(req.url || '')
+        if (!match || !fs.existsSync(path.resolve('api', `${match[1]}.js`))) return next()
+
+        const send = (status, body) => {
+          res.statusCode = status
+          res.setHeader('Content-Type', 'application/json')
+          res.end(JSON.stringify(body))
+        }
+
+        try {
+          // Same helpers Vercel gives its functions.
+          let raw = ''
+          for await (const chunk of req) raw += chunk
+          req.body = raw && /json/i.test(req.headers['content-type'] || '') ? JSON.parse(raw) : raw || undefined
+          res.status = (code) => {
+            res.statusCode = code
+            return res
+          }
+          res.json = (body) => send(res.statusCode || 200, body)
+
+          const mod = await server.ssrLoadModule(`/api/${match[1]}.js`)
+          await mod.default(req, res)
+        } catch (err) {
+          console.error(`[local api] /api/${match[1]} failed:`, err)
+          if (!res.headersSent) send(500, { error: 'The local API route failed. Check the terminal for details.' })
+        }
+      })
+    },
+  }
+}
 
 // Pages that are built but kept out of the sitemap. Privacy Policy and Terms
 // still contain placeholder text (and are marked noindex in their <Seo> tag);
@@ -13,7 +62,7 @@ const SITEMAP_EXCLUDE = new Set(['/404', '/privacy-policy', '/terms-of-service']
 let sitemapPaths = []
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), localApiRoutes()],
   optimizeDeps: { exclude: ['@jsquash/avif'] },
 
   // Static site generation (vite-react-ssg): every route is rendered to real

@@ -1,4 +1,4 @@
-import { AuditFetchError, resolvePublicTarget, safeGet } from './_lib/safeFetch.js'
+import { AuditFetchError, resolvePublicTarget, safeGet, slimHtml } from './_lib/safeFetch.js'
 
 // Backend for the SEO / GEO Calculator (src/pages/SeoGeoCalculator.jsx).
 //
@@ -53,17 +53,28 @@ function isAllowedOrigin(req) {
 
 const ALLOWED_TEXT_PATHS = new Set(['/robots.txt', '/sitemap.xml', '/llms.txt'])
 
+// Vercel rejects function responses over 4.5 MB, so stay well below that.
+const MAX_HTML_CHARS = 2_500_000
+
 async function handlePage(url) {
   const page = await safeGet(url, { maxBytes: 3 * 1024 * 1024, timeoutMs: 15000 })
+  let html = ''
+  let truncated = page.truncated
+  if (page.status >= 200 && page.status < 300) {
+    html = slimHtml(page.text)
+    if (html.length > MAX_HTML_CHARS) {
+      html = html.slice(0, MAX_HTML_CHARS)
+      truncated = true
+    }
+  }
   return {
     finalUrl: page.finalUrl,
     status: page.status,
     statusText: page.statusText,
     contentType: page.contentType,
     xRobotsTag: page.xRobotsTag,
-    truncated: page.truncated,
-    // Only return a body for successful HTML responses.
-    html: page.status >= 200 && page.status < 300 ? page.text : '',
+    truncated,
+    html,
   }
 }
 
@@ -166,7 +177,7 @@ export default async function handler(req, res) {
     return res.status(200).json(await handlePsi(url))
   } catch (error) {
     if (error instanceof AuditFetchError) return res.status(error.status).json({ error: error.message })
-    console.error('Audit endpoint error:', error)
+    console.error('Audit endpoint error:', error && error.stack ? error.stack : error)
     return res.status(500).json({ error: 'Something went wrong while auditing that page.' })
   }
 }

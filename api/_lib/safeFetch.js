@@ -111,18 +111,53 @@ export async function resolvePublicTarget(raw) {
   return { url, ip: pick.address, family: pick.family }
 }
 
-function decodeBody(buffer, encoding) {
-  switch ((encoding || '').toLowerCase()) {
-    case 'gzip':
-    case 'x-gzip':
-      return zlib.gunzipSync(buffer)
-    case 'deflate':
-      return zlib.inflateSync(buffer)
-    case 'br':
-      return zlib.brotliDecompressSync(buffer)
-    default:
-      return buffer
+const MAX_DECODED_BYTES = 8 * 1024 * 1024
+
+// Decompresses at most `limit` bytes, so a small compressed response can't
+// balloon into gigabytes in memory. Corrupt or cut-off data just yields
+// whatever could be read.
+function decodeLimited(buffer, encoding, limit) {
+  const enc = (encoding || '').toLowerCase()
+  const make =
+    enc === 'gzip' || enc === 'x-gzip'
+      ? zlib.createGunzip
+      : enc === 'deflate'
+        ? zlib.createInflate
+        : enc === 'br'
+          ? zlib.createBrotliDecompress
+          : null
+
+  if (!make) {
+    return Promise.resolve({ body: buffer.length > limit ? buffer.subarray(0, limit) : buffer, truncated: buffer.length > limit })
   }
+
+  return new Promise((resolve) => {
+    const stream = make()
+    const chunks = []
+    let size = 0
+    let truncated = false
+    let settled = false
+    const finish = () => {
+      if (settled) return
+      settled = true
+      resolve({ body: Buffer.concat(chunks), truncated })
+    }
+    stream.on('data', (chunk) => {
+      size += chunk.length
+      if (size > limit) {
+        truncated = true
+        chunks.push(chunk.subarray(0, chunk.length - (size - limit)))
+        stream.destroy()
+        finish()
+        return
+      }
+      chunks.push(chunk)
+    })
+    stream.on('end', finish)
+    stream.on('error', finish)
+    stream.on('close', finish)
+    stream.end(buffer)
+  })
 }
 
 // One HTTP request, pinned to an already-validated IP. Exported for testing.
@@ -162,24 +197,26 @@ export function requestPinned(url, ip, family, { maxBytes, timeoutMs }) {
           chunks.push(chunk)
         })
         const finish = () => {
-          try {
-            const raw = Buffer.concat(chunks)
-            let body = raw
-            try {
-              body = decodeBody(raw, res.headers['content-encoding'])
-            } catch {
-              body = truncated ? Buffer.alloc(0) : raw
-            }
-            resolve({ status: res.statusCode || 0, statusText: res.statusMessage || '', headers: res.headers, body, truncated })
-          } catch (err) {
-            reject(err)
-          }
+          const raw = Buffer.concat(chunks)
+          decodeLimited(raw, res.headers['content-encoding'], MAX_DECODED_BYTES)
+            .then(({ body, truncated: decodedTruncated }) =>
+              resolve({
+                status: res.statusCode || 0,
+                statusText: res.statusMessage || '',
+                headers: res.headers,
+                body,
+                truncated: truncated || decodedTruncated,
+              })
+            )
+            .catch(reject)
         }
         res.on('end', finish)
         res.on('close', () => {
           if (truncated) finish()
         })
-        res.on('error', reject)
+        res.on('error', () =>
+          reject(new AuditFetchError('The website closed the connection before the page finished loading.', 502))
+        )
       }
     )
     req.on('timeout', () => req.destroy(new AuditFetchError('The website took too long to respond.', 504)))
@@ -224,4 +261,14 @@ export async function safeGet(rawUrl, { maxBytes = 3 * 1024 * 1024, timeoutMs = 
     }
   }
   throw new AuditFetchError('That page redirects too many times.', 502)
+}
+
+// The audit only needs the page's markup and its JSON-LD. Dropping other
+// scripts and all <style> blocks removes most of the weight of modern pages
+// (framework state blobs, inline CSS), which keeps the response well under
+// Vercel's 4.5 MB limit without changing any result.
+export function slimHtml(html) {
+  return html
+    .replace(/<script\b(?![^>]*\bapplication\/ld\+json)[^>]*>[\s\S]*?<\/script\s*>/gi, '')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, '')
 }

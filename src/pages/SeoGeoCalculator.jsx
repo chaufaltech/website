@@ -197,6 +197,20 @@ function Report({ r, reportRef }) {
           <Stamp value={r.rankingReadiness} label="Ranking readiness" tone={pctTone(r.rankingReadiness)} tilt="rotate-1" />
         </div>
       </div>
+      {r.accessDenied && (
+        <div role="note" className="mt-6 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3.5 text-sm leading-relaxed">
+          <b className="block mb-1">This site denied access to our server</b>
+          The site&apos;s bot protection blocked our automated request and returned an &ldquo;access denied&rdquo; or
+          bot-check page. The scores and findings below describe <em>that page</em>, not the site&apos;s real page, so
+          don&apos;t rely on them. Sites with strict bot protection can&apos;t be audited accurately from here.
+        </div>
+      )}
+      {r.pageTruncated && (
+        <p className="text-xs text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-3 mt-6 leading-relaxed">
+          This page is very large, so only the first part of it was analysed. Results for content further down the page
+          may be incomplete.
+        </p>
+      )}
       <p className="font-mono text-[10.5px] text-muted leading-relaxed border-l-2 border-black/10 pl-3 mt-6">
         &ldquo;Ranking readiness&rdquo; is a heuristic composite of the on-page factors that influence organic performance
         (technical health, content quality, GEO signals). It is not a live Google position: real rank also depends on
