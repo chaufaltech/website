@@ -197,7 +197,7 @@ const RELATED = [
     tint: 'bg-indigo-100 text-indigo-600',
     title: 'SEO / GEO Calculator',
     description: "Analyze, optimize and track your content's visibility across search engines and AI platforms.",
-    to: '/work',
+    to: '/tools/seo-geo-calculator',
     cta: 'Open Tool',
   },
   {

@@ -137,10 +137,16 @@ function FeaturedToolCard({ tool }) {
             </li>
           ))}
         </ul>
-        {/* Placeholder: point this at the tool's real URL once it's live. */}
-        <span className="inline-flex items-center gap-1.5 text-orange text-sm font-semibold mt-6">
-          {tool.ctaLabel} <span aria-hidden>→</span>
-        </span>
+        {tool.to ? (
+          <Link to={tool.to} className="inline-flex items-center gap-1.5 text-orange text-sm font-semibold mt-6">
+            {tool.ctaLabel} <span aria-hidden>{'\u2192'}</span>
+          </Link>
+        ) : (
+          // No page yet for this tool: plain text instead of a dead link.
+          <span className="inline-flex items-center gap-1.5 text-orange text-sm font-semibold mt-6">
+            {tool.ctaLabel} <span aria-hidden>{'\u2192'}</span>
+          </span>
+        )}
       </div>
 
       {Mockup && <Mockup />}

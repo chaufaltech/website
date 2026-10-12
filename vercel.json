@@ -4,7 +4,12 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "chaufaltech.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "chaufaltech.com"
+        }
+      ],
       "destination": "https://www.chaufaltech.com/$1",
       "permanent": true
     },
@@ -17,11 +22,26 @@
   "headers": [
     {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/images/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        }
+      ]
     }
-  ]
+  ],
+  "functions": {
+    "api/audit.js": {
+      "maxDuration": 60
+    }
+  }
 }

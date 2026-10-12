@@ -59,12 +59,14 @@ const MORE_TOOLS = [
     title: 'SEO / GEO Calculator',
     description: "Analyze, optimize and track your content's visibility — across search engines and AI platforms.",
     tint: 'bg-indigo-100 text-indigo-600',
+    to: '/tools/seo-geo-calculator',
   },
   {
     icon: 'check-circle',
     title: 'QA Automation Tool',
     description: 'Simplify testing, improve reliability, and ship with confidence.',
     tint: 'bg-emerald-100 text-emerald-600',
+    to: '/work',
   },
 ]
 
@@ -847,7 +849,7 @@ export default function ImageOptimizer() {
             {MORE_TOOLS.map((t) => (
               <Link
                 key={t.title}
-                to="/work"
+                to={t.to}
                 className="flex items-start gap-4 bg-white border border-black/5 rounded-xl p-5 shadow-sm hover:shadow-lg transition-shadow"
               >
                 <span className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${t.tint}`}>

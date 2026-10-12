@@ -5,6 +5,7 @@ import Services from './pages/Services.jsx'
 import Solutions from './pages/Solutions.jsx'
 import Work from './pages/Work.jsx'
 import ImageOptimizer from './pages/ImageOptimizer.jsx'
+import SeoGeoCalculator from './pages/SeoGeoCalculator.jsx'
 import Guides from './pages/Guides.jsx'
 import ImageOptimizationGuide from './pages/ImageOptimizationGuide.jsx'
 import Process from './pages/Process.jsx'
@@ -27,6 +28,7 @@ export const routes = [
       { path: 'solutions', Component: Solutions, entry: 'src/pages/Solutions.jsx' },
       { path: 'work', Component: Work, entry: 'src/pages/Work.jsx' },
       { path: 'tools/image-optimizer', Component: ImageOptimizer, entry: 'src/pages/ImageOptimizer.jsx' },
+      { path: 'tools/seo-geo-calculator', Component: SeoGeoCalculator, entry: 'src/pages/SeoGeoCalculator.jsx' },
       { path: 'guides', Component: Guides, entry: 'src/pages/Guides.jsx' },
       { path: 'guides/image-optimization', Component: ImageOptimizationGuide, entry: 'src/pages/ImageOptimizationGuide.jsx' },
       { path: 'process', Component: Process, entry: 'src/pages/Process.jsx' },

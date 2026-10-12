@@ -595,6 +595,7 @@ export const PROJECTS = [
 export const WORK_FEATURED_TOOLS = [
   {
     slug: 'seo-geo-calculator',
+    to: '/tools/seo-geo-calculator',
     badge: 'Internal Product',
     titleLines: ['SEO / GEO', 'Calculator'],
     description:
