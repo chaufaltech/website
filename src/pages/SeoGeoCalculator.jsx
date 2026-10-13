@@ -197,6 +197,15 @@ function Report({ r, reportRef }) {
           <Stamp value={r.rankingReadiness} label="Ranking readiness" tone={pctTone(r.rankingReadiness)} tilt="rotate-1" />
         </div>
       </div>
+      {r.partial && (
+        <div role="note" className="mt-6 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg px-4 py-3.5 text-sm leading-relaxed">
+          <b className="block mb-1">Partial report &mdash; data from Google PageSpeed Insights</b>
+          This site blocked our direct request, so we used the results Google&apos;s PageSpeed Insights produced
+          instead. They cover meta tags, indexing, links, accessibility and performance, but{' '}
+          <b>not {r.skipped.join(', ')}</b>, which need the page&apos;s content. The scores below only reflect the
+          checks that could be run, so they aren&apos;t directly comparable with a full audit.
+        </div>
+      )}
       {r.accessDenied && (
         <div role="note" className="mt-6 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3.5 text-sm leading-relaxed">
           <b className="block mb-1">This site denied access to our server</b>
@@ -372,8 +381,7 @@ export default function SeoGeoCalculator() {
 
       {/* HERO */}
       <section className="bg-navy text-white overflow-hidden relative">
-        <div className="absolute inset-0 bg-blueprint [mask-image:linear-gradient(to_right,transparent,black)]" aria-hidden />
-        <div className="section pt-36 pb-16 lg:pt-44 lg:pb-20 relative">
+        <div className="section pt-36 pb-6 lg:pt-44 lg:pb-24 relative z-10">
           <Link
             to="/work"
             className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-orange transition-colors mb-6"
@@ -384,14 +392,14 @@ export default function SeoGeoCalculator() {
           <div>
             <span className="eyebrow">Free Tool</span>
           </div>
-          <h1 className="font-display font-bold text-4xl md:text-5xl leading-tight mt-4 max-w-2xl">
+          <h1 className="font-display font-bold text-4xl md:text-5xl leading-tight mt-4 max-w-md">
             SEO / GEO Calculator
           </h1>
-          <p className="text-white/70 mt-5 max-w-xl leading-relaxed">
+          <p className="text-white/75 mt-5 max-w-lg leading-relaxed">
             Analyze, optimize and track your content&apos;s visibility &mdash; across search engines and AI platforms.
             Audit any page and get a 1&ndash;10 score with a prioritized list of fixes.
           </p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2 mt-7 text-xs text-white/70">
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 mt-7 text-xs text-white/80">
             {['SEO', 'Accessibility', 'Core Web Vitals', 'AI-search readiness'].map((t) => (
               <li key={t} className="flex items-center gap-2">
                 <span className="w-4 h-4 rounded-full border border-orange text-orange flex items-center justify-center">
@@ -402,6 +410,27 @@ export default function SeoGeoCalculator() {
             ))}
           </ul>
         </div>
+
+        {/* The artwork is its own layer (not a CSS background) so it sits to the right of
+            the text instead of behind it. It stacks below the text on small screens and
+            fades into the navy at its edges. */}
+        <img
+          src="/images/seo-geo-calculator-hero-bg.webp"
+          alt=""
+          aria-hidden="true"
+          width="1920"
+          height="714"
+          fetchPriority="high"
+          className="block w-full h-auto pointer-events-none select-none lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-[85%] lg:max-w-none xl:w-full"
+          style={{
+            WebkitMaskImage:
+              'linear-gradient(to right, transparent 0%, #000 28%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)',
+            maskImage:
+              'linear-gradient(to right, transparent 0%, #000 28%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)',
+            WebkitMaskComposite: 'source-in',
+            maskComposite: 'intersect',
+          }}
+        />
       </section>
 
       {/* TOOL */}

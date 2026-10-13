@@ -5,14 +5,14 @@
 
 
 // ---- Talking to /api/audit ------------------------------------------------
-async function apiPost(action, url, timeoutMs = 30000) {
+async function apiPost(action, url, timeoutMs = 30000, extra = {}) {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), timeoutMs)
   try {
     const res = await fetch('/api/audit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, url }),
+      body: JSON.stringify({ action, url, ...extra }),
       signal: controller.signal,
     })
     const body = await res.json().catch(() => ({}))
@@ -452,6 +452,10 @@ async function checkPerformance(pageUrl) {
     return out;
   }
 
+  return performanceChecksFromData(data, out);
+}
+
+function performanceChecksFromData(data, out) {
   const lh = data.lighthouseResult;
   const audits = lh && lh.audits ? lh.audits : {};
   const perfScore = lh && lh.categories && lh.categories.performance ? Math.round(lh.categories.performance.score * 100) : null;
@@ -657,6 +661,111 @@ function looksLikeBlockPage(doc) {
   return BLOCK_TITLE.test(title) || BLOCK_BODY.test(body);
 }
 
+/* ---------------- FALLBACK: GOOGLE PAGESPEED INSIGHTS ----------------
+   When a site blocks our own fetch, Google's PageSpeed Insights (which loads the page
+   itself, and is allowed in by many sites) can still tell us a lot. It can't see the
+   content, so the result is a clearly-labelled partial report. */
+const PSI_LABELS = {
+  'document-title': 'Title tag', 'meta-description': 'Meta description', canonical: 'Canonical URL',
+  'is-crawlable': 'Indexability', 'http-status-code': 'HTTP status', hreflang: 'Language alternates (hreflang)',
+  'meta-viewport': 'Mobile viewport tag', 'html-has-lang': 'Declared language', 'html-lang-valid': 'Valid language code',
+  'robots-txt': 'robots.txt', 'link-text': 'Link text', 'crawlable-anchors': 'Crawlable links', 'font-size': 'Legible font sizes',
+  'tap-targets': 'Tap target size', 'image-alt': 'Image alt text', 'input-image-alt': 'Image button alt text',
+  'color-contrast': 'Color contrast', label: 'Form labels', 'button-name': 'Button names', 'link-name': 'Link names',
+  'heading-order': 'Heading order', bypass: 'Skip links / landmarks', 'target-size': 'Touch target size',
+};
+const PSI_FIXES = {
+  'document-title': 'Add a unique, descriptive <title> of roughly 50–60 characters.',
+  'meta-description': 'Add a meta description (140–160 characters) that summarizes the page and gives searchers a reason to click.',
+  canonical: 'Add <link rel="canonical" href="…"> pointing to the preferred version of this URL.',
+  'is-crawlable': 'Remove noindex directives (meta robots or X-Robots-Tag) and any robots.txt rules that block this page.',
+  'meta-viewport': 'Add <meta name="viewport" content="width=device-width, initial-scale=1">.',
+  'html-has-lang': 'Add lang="en" (or the right language code) to the <html> tag.',
+  'link-text': 'Replace generic link text like "click here" or "read more" with words that describe the destination.',
+  'image-alt': 'Give every meaningful image a short, descriptive alt attribute (and alt="" for decorative ones).',
+};
+const PSI_IMPACT = {
+  'document-title': 'high', 'is-crawlable': 'high', 'http-status-code': 'high', 'meta-viewport': 'high',
+  'meta-description': 'medium', canonical: 'medium', 'robots-txt': 'medium', 'crawlable-anchors': 'medium',
+  'html-has-lang': 'medium', 'image-alt': 'medium', 'color-contrast': 'medium', label: 'medium', 'link-name': 'medium', 'button-name': 'medium',
+};
+const PSI_META = new Set(['document-title', 'meta-description', 'canonical', 'is-crawlable', 'http-status-code', 'hreflang', 'meta-viewport', 'html-has-lang', 'html-lang-valid']);
+const PSI_IMAGES = new Set(['image-alt', 'input-image-alt', 'image-redundant-alt', 'object-alt', 'role-img-alt', 'svg-img-alt']);
+const PSI_TECH = new Set(['robots-txt', 'crawlable-anchors', 'link-text', 'font-size', 'tap-targets']);
+
+function psiAuditToCheck(a) {
+  const impact = PSI_IMPACT[a.id] || (a.weight >= 7 ? 'high' : a.weight >= 3 ? 'medium' : 'low');
+  const status = a.score >= 0.9 ? 'pass' : (a.score === 0 && impact === 'high' ? 'fail' : 'warn');
+  const detail = [a.title, a.displayValue].filter(Boolean).join(' — ') + (a.items ? ` (${a.items} affected)` : '');
+  return chk(`psi-${a.id}`, PSI_LABELS[a.id] || a.title, status, detail, impact, PSI_FIXES[a.id] || a.description || 'See the Lighthouse audit for this check at pagespeed.web.dev.');
+}
+
+function buildPartialReport(url, data, opts, startedAt) {
+  const targetKeyword = (opts.targetKeyword || '').trim();
+  const categories = { meta: [], images: [], accessibility: [], technical: [] };
+  data.audits.forEach((a) => {
+    const bucket = PSI_META.has(a.id) ? 'meta' : PSI_IMAGES.has(a.id) ? 'images' : PSI_TECH.has(a.id) ? 'technical' : 'accessibility';
+    categories[bucket].push(psiAuditToCheck(a));
+  });
+  categories.performance = performanceChecksFromData(data, []);
+  Object.keys(categories).forEach((k) => { if (!categories[k].length) delete categories[k]; });
+
+  const ALL_META = buildCategoryMeta(false, '');
+  const categoryMeta = {};
+  Object.keys(categories).forEach((k) => { categoryMeta[k] = ALL_META[k]; });
+
+  const categoryScores = {};
+  let wSum = 0, wTotal = 0;
+  Object.keys(categories).forEach((k) => {
+    categoryScores[k] = scoreCategory(categories[k]);
+    wSum += categoryScores[k] * categoryMeta[k].weight;
+    wTotal += categoryMeta[k].weight;
+  });
+  const overall100 = Math.round(wSum / wTotal);
+
+  const rankingWeights = { meta: 1.2, images: 0.5, accessibility: 0.7, technical: 1.3, performance: 1.3 };
+  let rSum = 0, rTotal = 0;
+  Object.keys(categoryScores).forEach((k) => { rSum += categoryScores[k] * rankingWeights[k]; rTotal += rankingWeights[k]; });
+
+  const allChecks = Object.keys(categories).flatMap((k) => categories[k].map((c) => ({ ...c, category: k })));
+  const finalUrl = data.finalUrl || url;
+  let title = finalUrl;
+  try { const u = new URL(finalUrl); title = u.hostname + (u.pathname !== '/' ? u.pathname : ''); } catch (e) { /* keep url */ }
+
+  return {
+    url: finalUrl,
+    title,
+    targetKeyword: targetKeyword || null,
+    partial: true,
+    skipped: ['Content & Structure', 'GEO / AI-Search Readiness'].concat(targetKeyword ? ['Target keyword'] : []),
+    pageTruncated: false,
+    accessDenied: false,
+    fetchedAt: new Date().toISOString(),
+    tookMs: Date.now() - startedAt,
+    overallScore10: Math.round((overall100 / 10) * 10) / 10,
+    rankingReadiness: Math.round(rSum / rTotal),
+    categoryScores,
+    categoryMeta,
+    categories,
+    wins: allChecks.filter((c) => c.status === 'pass'),
+    issues: allChecks.filter((c) => c.status !== 'pass').sort((a, b) => IMPACT_WEIGHT[b.impact] - IMPACT_WEIGHT[a.impact]),
+  };
+}
+
+// Returns a partial report, or null if Google couldn't read the page either.
+async function tryPsiFallback(url, opts, startedAt) {
+  let data;
+  try {
+    data = await apiPost('psi', url, 58000, { full: true });
+  } catch (e) {
+    return null;
+  }
+  if (!data || data.psiError || data.runtimeError || !Array.isArray(data.audits) || !data.audits.length) return null;
+  // A tiny document is almost certainly a block page, not the real thing.
+  if (data.domSize != null && data.domSize < 30) return null;
+  return buildPartialReport(url, data, opts, startedAt);
+}
+
 async function auditUrl(url, opts) {
   opts = opts || {};
   const onProgress = opts.onProgress || function () {};
@@ -664,27 +773,46 @@ async function auditUrl(url, opts) {
 
   onProgress('Fetching page…');
   const page = await apiPost('page', url, 30000);
+
+  // Work out whether the site refused us (or hid the real page) rather than the page being missing.
+  let blockMessage = null;
   if (page.status < 200 || page.status >= 300) {
-    const blocked = page.status === 401 || page.status === 403 || page.status === 429;
-    throw new Error(blocked
-      ? `The site responded ${page.status} ${page.statusText}. It may block automated requests or require a login, so it can't be audited from here.`
-      : `Fetch failed — the server responded ${page.status} ${page.statusText}.`);
+    if (page.status === 401 || page.status === 403 || page.status === 429) {
+      blockMessage = `The site responded ${page.status} ${page.statusText}. It may block automated requests or require a login, so it can't be audited directly from here.`;
+    } else {
+      throw new Error(`Fetch failed — the server responded ${page.status} ${page.statusText}.`);
+    }
+  } else {
+    // Some servers label real HTML with the wrong content type, so also look at the markup itself.
+    const looksLikeHtml = /<(?:!doctype\s+html|html|head|body)\b/i.test((page.html || '').slice(0, 5000));
+    if (page.contentType && !/html|xml/i.test(page.contentType) && !looksLikeHtml) {
+      const type = page.contentType.split(';')[0].trim();
+      blockMessage = `That URL returned "${type}" instead of a web page. Sites that block automated requests often do this.`;
+    } else if (!page.html || !page.html.trim()) {
+      blockMessage = 'The page came back empty. The site may block automated requests.';
+    }
   }
-  // Some servers label real HTML with the wrong content type, so also look at the markup itself.
-  const looksLikeHtml = /<(?:!doctype\s+html|html|head|body)\b/i.test((page.html || '').slice(0, 5000));
-  if (page.contentType && !/html|xml/i.test(page.contentType) && !looksLikeHtml) {
-    const type = page.contentType.split(';')[0].trim();
-    throw new Error(`That URL returned "${type}" instead of a web page. Sites that block automated requests often do this, so it can't be audited from here.`);
+
+  let doc = null;
+  let headers = null;
+  let accessDenied = false;
+  if (!blockMessage) {
+    // Use the address we ended up on (after redirects) for every address-based check.
+    url = page.finalUrl;
+    headers = { get: (name) => (String(name).toLowerCase() === 'x-robots-tag' ? page.xRobotsTag || '' : '') };
+    doc = new DOMParser().parseFromString(page.html, 'text/html');
+    accessDenied = looksLikeBlockPage(doc);
+    if (accessDenied) blockMessage = 'The site answered with an "access denied" or bot-check page.';
   }
-  if (!page.html || !page.html.trim()) {
-    throw new Error('The page came back empty, so there was nothing to audit. The site may block automated requests.');
+
+  // Blocked: ask Google PageSpeed Insights instead. It can't see the content, so the report is partial.
+  if (blockMessage) {
+    onProgress('This site blocked our direct request — trying Google PageSpeed Insights instead (this can take up to a minute)…');
+    const partial = await tryPsiFallback(url, opts, startedAt);
+    if (partial) return partial;
+    if (!doc) throw new Error(`${blockMessage} Google PageSpeed Insights couldn't read the page either, so it can't be audited from here.`);
+    // Otherwise carry on with the block page we received; the report will flag it (accessDenied).
   }
-  // Use the address we ended up on (after redirects) for every address-based check.
-  url = page.finalUrl;
-  const headers = { get: (name) => (String(name).toLowerCase() === 'x-robots-tag' ? page.xRobotsTag || '' : '') };
-  const doc = new DOMParser().parseFromString(page.html, 'text/html');
-  // Don't refuse: still audit what we received, but flag it so the report can say so.
-  const accessDenied = looksLikeBlockPage(doc);
 
   const targetKeyword = (opts.targetKeyword || '').trim();
   const hasKeyword = !!targetKeyword;

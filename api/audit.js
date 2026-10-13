@@ -6,7 +6,9 @@ import { AuditFetchError, resolvePublicTarget, safeGet, slimHtml } from './_lib/
 // asks this endpoint to do the fetching. POST { action, url }:
 //   page  fetch the page being audited and return its HTML
 //   text  fetch /robots.txt, /sitemap.xml or /llms.txt from the same site
-//   psi   run Google PageSpeed Insights (uses the optional PSI_API_KEY env var)
+//   psi   run Google PageSpeed Insights (uses the optional PSI_API_KEY env var);
+//         with full: true it also returns SEO + accessibility results, used as a
+//         fallback when a site blocks our own fetch
 //
 // Nothing is stored. Credentials are server-side only; do not use VITE_-prefixed variables.
 
@@ -110,17 +112,60 @@ function pickField(experience) {
   return { metrics: out }
 }
 
-async function handlePsi(url) {
+// Lighthouse writes descriptions in markdown with a trailing "Learn more" link.
+function plainText(text, max = 300) {
+  const cleaned = String(text || '')
+    .replace(/\s*\[Learn more[^\]]*\]\([^)]*\)\.?/gi, '')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/`/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return cleaned.length > max ? `${cleaned.slice(0, max - 1)}\u2026` : cleaned
+}
+
+// For the "site blocked us" fallback: the SEO and accessibility results Google
+// worked out when it loaded the page itself. Only scored, applicable audits.
+function trimFallbackAudits(lh) {
+  const out = []
+  const seen = new Set()
+  for (const categoryId of ['seo', 'accessibility']) {
+    const category = lh.categories && lh.categories[categoryId]
+    if (!category) continue
+    for (const ref of category.auditRefs || []) {
+      const audit = lh.audits && lh.audits[ref.id]
+      if (!audit || seen.has(ref.id)) continue
+      if (!['binary', 'numeric'].includes(audit.scoreDisplayMode) || audit.score == null) continue
+      seen.add(ref.id)
+      out.push({
+        id: ref.id,
+        category: categoryId,
+        weight: ref.weight,
+        score: audit.score,
+        title: plainText(audit.title, 160),
+        displayValue: plainText(audit.displayValue, 80),
+        description: plainText(audit.description),
+        items: audit.details && Array.isArray(audit.details.items) ? audit.details.items.length : null,
+      })
+    }
+  }
+  return out
+}
+
+async function handlePsi(url, full) {
   await resolvePublicTarget(url) // same public-address rules as everything else
 
   const endpoint = new URL('https://www.googleapis.com/pagespeedonline/v5/runPagespeed')
   endpoint.searchParams.set('url', url)
   endpoint.searchParams.set('strategy', 'mobile')
-  endpoint.searchParams.set('category', 'performance')
+  endpoint.searchParams.append('category', 'performance')
+  if (full) {
+    endpoint.searchParams.append('category', 'seo')
+    endpoint.searchParams.append('category', 'accessibility')
+  }
   if (PSI_API_KEY) endpoint.searchParams.set('key', PSI_API_KEY)
 
   const controller = new AbortController()
-  const timer = setTimeout(() => controller.abort(), 50000)
+  const timer = setTimeout(() => controller.abort(), 52000)
   try {
     const res = await fetch(endpoint.href, { signal: controller.signal })
     if (!res.ok) {
@@ -131,10 +176,12 @@ async function handlePsi(url) {
     const lh = data.lighthouseResult || {}
     const audits = lh.audits || {}
     const num = (id) => (audits[id] ? { numericValue: audits[id].numericValue } : undefined)
+    const score = (id) => (lh.categories && lh.categories[id] ? lh.categories[id].score : null)
+
     // Return only what the audit uses; the full response is several MB.
-    return {
+    const out = {
       lighthouseResult: {
-        categories: { performance: { score: lh.categories && lh.categories.performance ? lh.categories.performance.score : null } },
+        categories: { performance: { score: score('performance') } },
         audits: {
           'largest-contentful-paint': num('largest-contentful-paint'),
           'cumulative-layout-shift': num('cumulative-layout-shift'),
@@ -144,6 +191,14 @@ async function handlePsi(url) {
       loadingExperience: pickField(data.loadingExperience),
       originLoadingExperience: pickField(data.originLoadingExperience),
     }
+    if (full) {
+      out.finalUrl = lh.finalDisplayedUrl || lh.finalUrl || url
+      out.runtimeError = lh.runtimeError ? { code: lh.runtimeError.code, message: plainText(lh.runtimeError.message, 200) } : undefined
+      out.domSize = audits['dom-size'] ? audits['dom-size'].numericValue : null
+      out.categoryScores = { seo: score('seo'), accessibility: score('accessibility') }
+      out.audits = trimFallbackAudits(lh)
+    }
+    return out
   } catch (err) {
     if (err && err.name === 'AbortError') return { psiError: { status: 504, message: 'timed out' } }
     return { psiError: { status: 502, message: 'Could not reach PageSpeed Insights.' } }
@@ -174,7 +229,7 @@ export default async function handler(req, res) {
   try {
     if (action === 'page') return res.status(200).json(await handlePage(url))
     if (action === 'text') return res.status(200).json(await handleText(url))
-    return res.status(200).json(await handlePsi(url))
+    return res.status(200).json(await handlePsi(url, req.body.full === true))
   } catch (error) {
     if (error instanceof AuditFetchError) return res.status(error.status).json({ error: error.message })
     console.error('Audit endpoint error:', error && error.stack ? error.stack : error)
