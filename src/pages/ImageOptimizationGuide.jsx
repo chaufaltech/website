@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
 import Seo from '../components/Seo.jsx'
+import FaqList from '../components/FaqList.jsx'
 import { SITE_URL, breadcrumbSchema } from '../lib/seo.js'
 
 // ---------------------------------------------------------------------------
@@ -698,17 +699,10 @@ export default function ImageOptimizationGuide() {
       <section id="faq" className="section py-12 scroll-mt-28">
         <h2 className="font-display font-bold text-2xl text-ink">Frequently Asked Questions</h2>
         <p className="text-sm text-muted mt-1">Quick answers to common questions.</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mt-6 items-start">
-          {FAQS.map((f) => (
-            <details key={f.q} className="group border border-black/10 bg-white rounded-lg">
-              <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-4 py-3.5 text-sm text-ink/80 [&::-webkit-details-marker]:hidden">
-                {f.q}
-                <Icon name="chevron" className="w-4 h-4 rotate-90 text-muted shrink-0" strokeWidth={2} />
-              </summary>
-              <p className="px-4 pb-4 text-sm text-muted leading-relaxed">{f.a}</p>
-            </details>
-          ))}
-        </div>
+        <FaqList
+          items={FAQS.map((f) => ({ q: f.q, a: f.a }))}
+          className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mt-6 items-start"
+        />
       </section>
 
       {/* RELATED */}

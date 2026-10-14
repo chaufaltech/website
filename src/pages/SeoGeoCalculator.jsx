@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
 import Seo from '../components/Seo.jsx'
-import CtaBanner from '../components/CtaBanner.jsx'
+import FaqList from '../components/FaqList.jsx'
 import { SITE_URL, breadcrumbSchema } from '../lib/seo.js'
 import { trackEvent } from '../lib/analytics.js'
 import { auditUrl } from '../lib/seoAudit.js'
@@ -66,11 +66,64 @@ const WHAT_IT_CHECKS = [
   },
 ]
 
-const LIMITATIONS = [
-  'It reads the page\u2019s HTML as a crawler would. Content that only appears after JavaScript runs isn\u2019t seen.',
-  'Colour contrast can\u2019t be measured from HTML alone, so the report flags it for a manual check.',
-  '\u201CRanking readiness\u201D is a heuristic score for on-page factors. It is not a live Google position, since real rankings also depend on backlinks, domain history and competition.',
-  'Sites that block automated requests (or need a login) can\u2019t be audited.',
+const STEPS = [
+  {
+    icon: 'link',
+    title: 'Enter your URL',
+    text: 'Paste the page you want to analyze (and an optional keyword).',
+  },
+  {
+    icon: 'gear',
+    title: 'Run the audit',
+    text: 'Our tool scans your page across SEO, performance, accessibility and GEO factors.',
+  },
+  {
+    icon: 'file-text',
+    title: 'Get your results',
+    text: 'See a clear score, key insights and a prioritized list of fixes.',
+  },
+]
+
+const CANT_SEE = [
+  'Human intent and business context',
+  'Competitive strength (domain authority, brand, links)',
+  'Real user behavior and conversions',
+  'Content that only appears after JavaScript runs',
+  'Colour contrast (flagged for a manual check)',
+]
+
+const WHY_POINTS = [
+  { icon: 'search', text: 'Rank higher in Google' },
+  { icon: 'message', text: 'Get cited in AI answers' },
+  { icon: 'smile', text: 'Improve user experience' },
+  { icon: 'chart', text: 'Stay ahead of competitors' },
+]
+
+const FAQS = [
+  {
+    q: 'Is this tool free to use?',
+    a: 'Yes. The SEO / GEO Calculator is free, with no account or sign-up required.',
+  },
+  {
+    q: 'Can I audit multiple pages?',
+    a: 'It audits one page at a time. Run it again for each page you want to check. To prevent abuse, each connection can run a limited number of audits every few minutes.',
+  },
+  {
+    q: 'How accurate is the SEO score?',
+    a: 'The score reflects on-page checks of the page\u2019s HTML plus Google PageSpeed Insights data. It is a strong starting point, but it is not a prediction of your Google ranking, which also depends on backlinks, domain history and competition. Content that only appears after JavaScript runs isn\u2019t seen, and sites that block automated tools may only get a partial report.',
+  },
+  {
+    q: 'What does GEO mean?',
+    a: 'GEO stands for Generative Engine Optimization: making your content easy for AI answer engines, such as Google\u2019s AI Overviews, ChatGPT, Gemini and Perplexity, to find, understand and cite.',
+  },
+  {
+    q: 'Does it check for AI search visibility?',
+    a: 'It checks the signals that help AI answer engines use your page, such as structured data, author and dates, an answer-first opening, semantic HTML, citations and llms.txt. It does not measure whether you are being cited by AI tools today.',
+  },
+  {
+    q: 'How often should I run an audit?',
+    a: 'Run one after any significant change, such as a new page, a redesign or a migration, and as a regular check-up, for example monthly or quarterly.',
+  },
 ]
 
 // ---------------------------------------------------------------------------
@@ -325,6 +378,12 @@ export default function SeoGeoCalculator() {
   const [error, setError] = useState('')
   const [report, setReport] = useState(null)
   const reportRef = useRef(null)
+  const urlInputRef = useRef(null)
+
+  function goToTool() {
+    document.getElementById('audit-tool')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    window.setTimeout(() => urlInputRef.current?.focus({ preventScroll: true }), 400)
+  }
 
   // When a report appears, bring it into view and move focus to it.
   useEffect(() => {
@@ -376,6 +435,15 @@ export default function SeoGeoCalculator() {
             { name: 'Work', path: '/work' },
             { name: 'SEO / GEO Calculator', path: '/tools/seo-geo-calculator' },
           ]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: FAQS.map((f) => ({
+              '@type': 'Question',
+              name: f.q,
+              acceptedAnswer: { '@type': 'Answer', text: f.a },
+            })),
+          },
         ]}
       />
 
@@ -434,7 +502,7 @@ export default function SeoGeoCalculator() {
       </section>
 
       {/* TOOL */}
-      <section className="bg-cream/40 py-14 lg:py-16">
+      <section id="audit-tool" className="bg-cream/40 py-14 lg:py-16 scroll-mt-20">
         <div className="section max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl shadow-lg border border-black/5 p-6 md:p-10">
             <form onSubmit={handleSubmit} noValidate>
@@ -443,6 +511,7 @@ export default function SeoGeoCalculator() {
               </label>
               <div className="flex flex-col sm:flex-row gap-3">
                 <input
+                  ref={urlInputRef}
                   id="audit-url"
                   type="text"
                   inputMode="url"
@@ -528,36 +597,133 @@ export default function SeoGeoCalculator() {
         </div>
       </section>
 
-      {/* GOOD TO KNOW */}
-      <section className="bg-navy text-white py-16 lg:py-20">
-        <div className="section grid grid-cols-1 lg:grid-cols-[minmax(0,380px)_1fr] gap-10 lg:gap-16 items-start">
+      {/* HOW IT WORKS + WHAT IT CAN'T SEE */}
+      <section className="section pt-4 pb-10 lg:pb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-8 lg:gap-12 items-start">
           <div>
-            <span className="eyebrow">Good to know</span>
-            <h2 className="font-display font-bold text-3xl md:text-4xl mt-3 leading-tight">
-              What this tool can&apos;t see<span className="text-orange">.</span>
+            <span className="eyebrow">How it works</span>
+            <h2 className="font-display font-bold text-2xl md:text-3xl text-ink mt-3 leading-tight">
+              Get your score in 3 simple steps
             </h2>
-            <p className="text-white/60 mt-5 leading-relaxed">
-              An audit of one page is a strong starting point, not the whole picture. Here is where its limits are.
-            </p>
+
+            <ol className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 mt-8">
+              {STEPS.map((step, i) => (
+                <li key={step.title} className="relative flex sm:block gap-4">
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="w-7 h-7 rounded-full bg-orange text-ink text-xs font-bold flex items-center justify-center shrink-0">
+                      {i + 1}
+                    </span>
+                    <span className="w-11 h-11 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center shrink-0">
+                      <Icon name={step.icon} className="w-5 h-5" />
+                    </span>
+                  </div>
+                  <div className="sm:mt-4">
+                    <h3 className="font-display font-bold text-ink text-[15px]">{step.title}</h3>
+                    <p className="text-sm text-muted mt-1.5 leading-relaxed">{step.text}</p>
+                  </div>
+                  {i < STEPS.length - 1 && (
+                    <span className="hidden sm:block absolute top-4 -right-5 text-sky-600" aria-hidden>&rarr;</span>
+                  )}
+                </li>
+              ))}
+            </ol>
           </div>
-          <ul className="space-y-4">
-            {LIMITATIONS.map((text) => (
-              <li key={text} className="flex items-start gap-3 text-sm text-white/80 leading-relaxed">
-                <span className="w-5 h-5 rounded-full border border-orange text-orange flex items-center justify-center shrink-0 mt-0.5">
-                  <Icon name="check" className="w-3 h-3" strokeWidth={3} />
+
+          <aside className="bg-sky-50 border border-sky-100 rounded-2xl p-6">
+            <h3 className="flex items-center gap-2.5 font-display font-bold text-ink text-sm">
+              <span className="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center" aria-hidden>
+                i
+              </span>
+              What this tool can&apos;t see
+            </h3>
+            <p className="text-xs text-muted mt-3 leading-relaxed">
+              An audit is a strong starting point, not the whole picture. Here&apos;s what it can&apos;t detect:
+            </p>
+            <ul className="mt-4 space-y-2.5">
+              {CANT_SEE.map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-[13px] text-ink/80 leading-snug">
+                  <span className="w-4 h-4 rounded-full bg-orange text-ink flex items-center justify-center shrink-0 mt-0.5">
+                    <Icon name="check" className="w-2.5 h-2.5" strokeWidth={3.5} />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      {/* WHY IT MATTERS */}
+      <section className="section pb-10 lg:pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] gap-6">
+          <div className="bg-sky-50 border border-sky-100 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <img
+              src="/images/seo-geo-why-it-matters.webp"
+              alt=""
+              aria-hidden="true"
+              width="360"
+              height="325"
+              loading="lazy"
+              className="w-28 sm:w-36 h-auto shrink-0 select-none"
+            />
+            <div>
+              <h2 className="font-display font-bold text-ink text-xl">Why it matters for SEO &amp; GEO</h2>
+              <p className="text-sm text-muted mt-3 leading-relaxed">
+                Search engines and AI platforms look for the same things: clear content, strong structure, fast
+                performance and trustworthy signals. This tool helps you optimize for both traditional search and
+                AI-powered discovery.
+              </p>
+            </div>
+          </div>
+
+          <ul className="bg-sky-50 border border-sky-100 rounded-2xl p-6 space-y-3.5 self-stretch flex flex-col justify-center">
+            {WHY_POINTS.map((p) => (
+              <li key={p.text} className="flex items-center gap-3 text-sm text-ink/80">
+                <span className="w-7 h-7 rounded-lg bg-white text-sky-700 flex items-center justify-center shrink-0 shadow-sm">
+                  <Icon name={p.icon} className="w-4 h-4" strokeWidth={2} />
                 </span>
-                {text}
+                {p.text}
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      <CtaBanner
-        title="Want expert help with your results?"
-        highlight="Let's Talk About It."
-        subtitle="We can fix the issues this audit finds, improve your site's speed and build the structured data search engines and AI answers rely on."
-      />
+      {/* CTA */}
+      <section className="section pb-14 lg:pb-16">
+        <div className="relative bg-navy text-white rounded-2xl px-6 py-8 md:px-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-8 overflow-hidden">
+          <div className="absolute inset-0 bg-blueprint opacity-40 [mask-image:linear-gradient(to_right,transparent,black)]" aria-hidden />
+          <img
+            src="/images/seo-geo-cta-rocket.webp"
+            alt=""
+            aria-hidden="true"
+            width="288"
+            height="288"
+            loading="lazy"
+            className="relative w-20 h-20 md:w-24 md:h-24 shrink-0 select-none"
+          />
+          <div className="relative flex-1">
+            <h2 className="font-display font-bold text-xl md:text-2xl">Ready to make your content work harder?</h2>
+            <p className="text-sm text-white/70 mt-2 leading-relaxed max-w-xl">
+              Use the SEO / GEO Calculator and get a clear roadmap to improve your visibility &mdash; in search and AI.
+            </p>
+          </div>
+          <button type="button" onClick={goToTool} className="relative btn-primary shrink-0 self-start md:self-auto">
+            Run Audit Now <span aria-hidden>&rarr;</span>
+          </button>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section pb-20 lg:pb-24">
+        <span className="eyebrow">Frequently asked questions</span>
+        <h2 className="font-display font-bold text-2xl md:text-3xl text-ink mt-3">Quick Answers</h2>
+        <FaqList
+          items={FAQS.map((f) => ({ q: f.q, a: f.a }))}
+          className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-3 mt-6 items-start"
+          itemClassName="shadow-sm"
+        />
+      </section>
     </>
   )
 }
