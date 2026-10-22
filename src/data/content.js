@@ -628,6 +628,7 @@ export const WORK_OTHER_TOOLS = [
     icon: 'link',
     title: 'URL Metadata Extractor',
     description: 'Fetch and analyze metadata from any URL in seconds.',
+    to: '/tools/url-metadata-extractor',
   },
   {
     icon: 'file-text',

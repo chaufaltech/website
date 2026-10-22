@@ -240,11 +240,13 @@ function decodeText(buffer, contentType) {
 // Fetches a public URL (following validated redirects) and returns its text.
 export async function safeGet(rawUrl, { maxBytes = 3 * 1024 * 1024, timeoutMs = 12000 } = {}) {
   let current = rawUrl
+  const redirects = [] // { status, url } for every redirect followed, in order
   for (let hop = 0; hop <= MAX_REDIRECTS; hop += 1) {
     const { url, ip, family } = await resolvePublicTarget(current)
     const res = await requestPinned(url, ip, family, { maxBytes, timeoutMs })
 
     if ([301, 302, 303, 307, 308].includes(res.status) && res.headers.location) {
+      redirects.push({ status: res.status, url: url.href })
       current = new URL(res.headers.location, url).href
       continue
     }
@@ -258,6 +260,7 @@ export async function safeGet(rawUrl, { maxBytes = 3 * 1024 * 1024, timeoutMs = 
       xRobotsTag: String(res.headers['x-robots-tag'] || ''),
       text: decodeText(res.body, contentType),
       truncated: res.truncated,
+      redirects,
     }
   }
   throw new AuditFetchError('That page redirects too many times.', 502)

@@ -5,6 +5,7 @@ import { AuditFetchError, resolvePublicTarget, safeGet, slimHtml } from './_lib/
 // A website can't read other sites directly (browser CORS rules), so the page
 // asks this endpoint to do the fetching. POST { action, url }:
 //   page  fetch the page being audited and return its HTML
+//   meta  the same fetch for the URL Metadata Extractor, with its own rate limit
 //   text  fetch /robots.txt, /sitemap.xml or /llms.txt from the same site
 //   psi   run Google PageSpeed Insights (uses the optional PSI_API_KEY env var);
 //         with full: true it also returns SEO + accessibility results, used as a
@@ -18,8 +19,8 @@ const PSI_API_KEY = process.env.PSI_API_KEY || ''
 // Stops casual abuse; it resets on cold starts and isn't shared across
 // instances. For stronger protection add Vercel's WAF rate limiting.
 const WINDOW_MS = 10 * 60 * 1000
-const LIMITS = { page: 10, text: 40, psi: 10 }
-const hits = { page: new Map(), text: new Map(), psi: new Map() }
+const LIMITS = { page: 10, text: 40, psi: 10, meta: 30 }
+const hits = { page: new Map(), text: new Map(), psi: new Map(), meta: new Map() }
 
 function isRateLimited(action, ip) {
   const now = Date.now()
@@ -76,6 +77,7 @@ async function handlePage(url) {
     contentType: page.contentType,
     xRobotsTag: page.xRobotsTag,
     truncated,
+    redirects: page.redirects,
     html,
   }
 }
@@ -227,7 +229,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    if (action === 'page') return res.status(200).json(await handlePage(url))
+    // 'meta' is the URL Metadata Extractor: same fetch as 'page', with its own (higher) limit.
+    if (action === 'page' || action === 'meta') return res.status(200).json(await handlePage(url))
     if (action === 'text') return res.status(200).json(await handleText(url))
     return res.status(200).json(await handlePsi(url, req.body.full === true))
   } catch (error) {
