@@ -14,8 +14,13 @@
       "permanent": true
     },
     {
-      "source": "/work/image-optimizer",
-      "destination": "/tools/image-optimizer",
+      "source": "/work",
+      "destination": "/tools",
+      "permanent": true
+    },
+    {
+      "source": "/work/:path*",
+      "destination": "/tools/:path*",
       "permanent": true
     }
   ],

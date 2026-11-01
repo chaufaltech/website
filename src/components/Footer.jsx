@@ -7,7 +7,7 @@ const QUICK_LINKS = [
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
   { label: 'Solutions', to: '/solutions' },
-  { label: 'Work', to: '/work' },
+  { label: 'Tools', to: '/tools' },
   { label: 'Process', to: '/process' },
 ]
 

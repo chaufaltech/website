@@ -6,7 +6,7 @@ const NAV_LINKS = [
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
   { label: 'Solutions', to: '/solutions' },
-  { label: 'Work', to: '/work', alsoActive: ['/tools', '/guides'] },
+  { label: 'Tools', to: '/tools', alsoActive: ['/guides'] },
   { label: 'Process', to: '/process' },
   { label: 'Contact', to: '/contact' },
 ]
@@ -27,7 +27,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const toggleRef = useRef(null)
   const { pathname } = useLocation()
-  // Tool and guide pages live under the Work section of the nav.
+  // Guide pages live under the Tools section of the nav (tool pages match /tools by themselves).
   const isActiveLink = (link, isActive) =>
     isActive || (link.alsoActive || []).some((prefix) => pathname.startsWith(prefix))
 

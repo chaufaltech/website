@@ -66,7 +66,7 @@ const MORE_TOOLS = [
     title: 'QA Automation Tool',
     description: 'Simplify testing, improve reliability, and ship with confidence.',
     tint: 'bg-emerald-100 text-emerald-600',
-    to: '/work',
+    to: '/tools',
   },
 ]
 
@@ -359,7 +359,7 @@ export default function ImageOptimizer() {
           TOOL_SCHEMA,
           breadcrumbSchema([
             { name: 'Home', path: '/' },
-            { name: 'Work', path: '/work' },
+            { name: 'Tools', path: '/tools' },
             { name: 'Image Optimizer', path: '/tools/image-optimizer' },
           ]),
         ]}
@@ -372,11 +372,11 @@ export default function ImageOptimizer() {
         />
         <div className="section pt-36 pb-16 lg:pt-44 lg:pb-24 relative">
           <Link
-            to="/work"
+            to="/tools"
             className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-orange transition-colors mb-6"
           >
             <Icon name="chevron" className="w-4 h-4 rotate-180" strokeWidth={2} />
-            Back to Work
+            Back to Tools
           </Link>
           <div>
             <span className="eyebrow">Our Tool</span>

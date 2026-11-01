@@ -206,7 +206,7 @@ const RELATED = [
     tint: 'bg-emerald-100 text-emerald-600',
     title: 'QA Automation Tool',
     description: 'Simplify testing, improve reliability, and ship with confidence.',
-    to: '/work',
+    to: '/tools',
     cta: 'Open Tool',
   },
   {

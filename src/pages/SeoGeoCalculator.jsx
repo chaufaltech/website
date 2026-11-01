@@ -432,7 +432,7 @@ export default function SeoGeoCalculator() {
           TOOL_SCHEMA,
           breadcrumbSchema([
             { name: 'Home', path: '/' },
-            { name: 'Work', path: '/work' },
+            { name: 'Tools', path: '/tools' },
             { name: 'SEO / GEO Calculator', path: '/tools/seo-geo-calculator' },
           ]),
           {
@@ -451,11 +451,11 @@ export default function SeoGeoCalculator() {
       <section className="bg-navy text-white overflow-hidden relative">
         <div className="section pt-36 pb-6 lg:pt-44 lg:pb-24 relative z-10">
           <Link
-            to="/work"
+            to="/tools"
             className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-orange transition-colors mb-6"
           >
             <Icon name="chevron" className="w-4 h-4 rotate-180" strokeWidth={2} />
-            Back to Work
+            Back to Tools
           </Link>
           <div>
             <span className="eyebrow">Free Tool</span>

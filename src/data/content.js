@@ -590,27 +590,27 @@ export const PROJECTS = [
   },
 ]
 
-// Shown on the Work page. `ctaLabel`/the "Learn more" links on these tools are
-// placeholders — point them at real tool URLs once each one has a live page.
-export const WORK_FEATURED_TOOLS = [
+// Shown on the Tools page. Tools with a `to` link to their live page; tools without
+// one are shown as "Coming soon" until they have a page of their own.
+export const TOOLS_FEATURED = [
   {
     slug: 'seo-geo-calculator',
     to: '/tools/seo-geo-calculator',
-    badge: 'Internal Product',
+    badge: 'Free Tool',
     titleLines: ['SEO / GEO', 'Calculator'],
     description:
       "Analyze, optimize and track your content's visibility — across search engines and AI platforms.",
     features: [
-      'SERP & GEO score analysis',
-      'Keyword and topic insights',
+      'SEO, speed & accessibility checks',
+      'AI-search (GEO) readiness',
       'Actionable recommendations',
       'Clean, easy-to-use interface',
     ],
-    ctaLabel: 'Explore Tool',
+    ctaLabel: 'Open Tool',
   },
   {
     slug: 'qa-automation-tool',
-    badge: 'Internal Product',
+    badge: 'Coming Soon',
     title: 'QA Automation Tool',
     description: 'Simplify testing, improve reliability, and ship with confidence.',
     features: [
@@ -619,11 +619,11 @@ export const WORK_FEATURED_TOOLS = [
       'CI/CD integration',
       'Detailed test reports',
     ],
-    ctaLabel: 'Explore Tool',
+    ctaLabel: 'Open Tool',
   },
 ]
 
-export const WORK_OTHER_TOOLS = [
+export const TOOLS_OTHER = [
   {
     icon: 'link',
     title: 'URL Metadata Extractor',
@@ -634,6 +634,7 @@ export const WORK_OTHER_TOOLS = [
     icon: 'file-text',
     title: 'PDF to Text Converter',
     description: 'Extract clean, editable text from PDF files with ease.',
+    to: '/tools/pdf-to-text-converter',
   },
   {
     icon: 'image',
@@ -646,13 +647,6 @@ export const WORK_OTHER_TOOLS = [
     title: 'Automation Scripts',
     description: 'Save time with custom scripts for repetitive tasks.',
   },
-]
-
-export const WORK_IMPACT_STATS = [
-  { value: '6+', label: 'Tools Built' },
-  { value: '100%', label: 'In-House Developed' },
-  { value: 'Real', label: 'Problem Solving' },
-  { value: 'Future', label: 'Ready' },
 ]
 
 export const BLOG_POSTS = [
